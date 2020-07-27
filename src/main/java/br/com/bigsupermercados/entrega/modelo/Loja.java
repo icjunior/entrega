@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "loja")
@@ -14,18 +15,42 @@ public class Loja {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	@NotBlank(message = "Razão social não pode ser em branco")
 	private String razao;
+
+	@NotBlank(message = "Nome fantasia não pode ser em branco")
 	private String apelido;
+
+	@NotBlank(message = "CNPJ não pode ser em branco")
 	private String cnpj;
+
+	@NotBlank(message = "IE não pode ser em branco")
 	private String ie;
+
+	@NotBlank(message = "Telefone não pode ser em branco")
 	private String telefone;
+
+	@NotBlank(message = "Endereço não pode ser em branco")
 	private String endereco;
+
+	@NotBlank(message = "Número não pode ser em branco")
 	private String numero;
+
+	@NotBlank(message = "Bairro não pode ser em branco")
 	private String bairro;
+
+	@NotBlank(message = "Cidade não pode ser em branco")
 	private String cidade;
+
+	@NotBlank(message = "CEP não pode ser em branco")
 	private String cep;
-	private boolean ativo;
+
+	private boolean ativo = true;
+
+	@NotBlank(message = "Email do gerente não pode ser em branco")
 	private String emailGerente;
+
+	@NotBlank(message = "Email do supervisor não pode ser em branco")
 	private String emailSupervisor;
 
 	public String getTelefone() {

@@ -4,23 +4,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cidade")
-public class Cidade {
+@Table(name = "estado")
+public class Estado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	private String idUf;
 	private String nome;
-
-	private String cep;
-
-	@ManyToOne
-	private Estado estado;
+	private String faixaCep1Ini;
+	private String faixaCep1Fim;
+	private String faixaCep2Ini;
+	private String faixaCep2Fim;
 
 	public Long getCodigo() {
 		return codigo;
@@ -38,20 +37,44 @@ public class Cidade {
 		this.nome = nome;
 	}
 
-	public String getCep() {
-		return cep;
+	public String getFaixaCep1Ini() {
+		return faixaCep1Ini;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setFaixaCep1Ini(String faixaCep1Ini) {
+		this.faixaCep1Ini = faixaCep1Ini;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public String getFaixaCep1Fim() {
+		return faixaCep1Fim;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setFaixaCep1Fim(String faixaCep1Fim) {
+		this.faixaCep1Fim = faixaCep1Fim;
+	}
+
+	public String getFaixaCep2Ini() {
+		return faixaCep2Ini;
+	}
+
+	public void setFaixaCep2Ini(String faixaCep2Ini) {
+		this.faixaCep2Ini = faixaCep2Ini;
+	}
+
+	public String getFaixaCep2Fim() {
+		return faixaCep2Fim;
+	}
+
+	public void setFaixaCep2Fim(String faixaCep2Fim) {
+		this.faixaCep2Fim = faixaCep2Fim;
+	}
+
+	public String getIdUf() {
+		return idUf;
+	}
+
+	public void setIdUf(String idUf) {
+		this.idUf = idUf;
 	}
 
 	@Override
@@ -70,7 +93,7 @@ public class Cidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Estado other = (Estado) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -78,4 +101,5 @@ public class Cidade {
 			return false;
 		return true;
 	}
+
 }

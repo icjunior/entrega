@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "cliente")
@@ -18,17 +19,30 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	@NotBlank(message = "Nome não pode ser em branco")
 	private String nome;
+	
+	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
+	
+	
 	private LocalDate dataNascimento;
 
 	@ManyToOne
 	private Endereco endereco;
-	private LocalDateTime dataHoraInclusao;
 	
+	@NotBlank(message = "Número não pode ser em branco")
+	private String numero;
+	
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
+	
+	@NotBlank(message = "Telefone não pode ser em branco")
+	private String telefone;
+
 	@ManyToOne
 	private Usuario usuario;
-	private boolean ativo;
+	
+	private boolean ativo = true;
 
 	public Long getCodigo() {
 		return codigo;
@@ -92,6 +106,22 @@ public class Cliente {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	@Override

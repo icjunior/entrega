@@ -19,7 +19,10 @@ public class Endereco {
 
 	@ManyToOne
 	private Bairro bairro;
+
 	private String cep;
+
+	private String complemento;
 
 	public Long getCodigo() {
 		return codigo;
@@ -51,6 +54,14 @@ public class Endereco {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	@Override

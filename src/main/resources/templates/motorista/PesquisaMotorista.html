@@ -6,7 +6,7 @@
 	xmlns:brewer="http://brewer.algaworks.com"
 	xmlns:data="http://www.thymeleaf.org/extras/data">
 <head>
-<title>Pesquisa de lojas</title>
+<title>Pesquisa de motoristas</title>
 </head>
 
 <body>
@@ -15,14 +15,14 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-10">
-						<h1>Pesquisa de lojas</h1>
+						<h1>Pesquisa de motoristas</h1>
 					</div>
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-default" th:href="@{/loja/nova}"> <i
+							<a class="btn btn-default" th:href="@{/motorista/nova}"> <i
 								class="glyphicon glyphicon-plus-sign"></i> <span
-								class="hidden-xs hidden-sm">Nova loja</span>
+								class="hidden-xs hidden-sm">Novo motorista</span>
 							</a>
 						</div>
 					</div>
@@ -36,32 +36,34 @@
 					<thead>
 						<tr>
 							<th class="table-cervejas-col-foto">Código</th>
-							<th class="table-cervejas-col-sku">Apelido</th>
-							<th class="table-cervejas-col-nome">Razão social</th>
-							<th class="table-cervejas-col-estilo">CNPJ</th>
-							<th class="table-cervejas-col-origem">IE</th>
+							<th class="table-cervejas-col-sku">Nome</th>
+							<th class="table-cervejas-col-nome">CPF</th>
+							<th class="table-cervejas-col-estilo">RG</th>
+							<th class="table-cervejas-col-origem">CNH</th>
+							<th class="table-cervejas-col-origem">Telefone</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr th:each="loja : ${lojas}">
-							<td class="text-center" th:text="${loja.codigo}">AA1111</td>
-							<td th:text="${loja.razao}">Teste</td>
-							<td th:text="${loja.apelido}"></td>
-							<td th:text="${loja.cnpj}"></td>
-							<td class="text-right" th:text="ie"></td>
+						<tr th:each="motorista : ${motoristas}">
+							<td class="text-center" th:text="${motorista.codigo}">AA1111</td>
+							<td th:text="${motorista.nome}">Teste</td>
+							<td th:text="${motorista.cpf}"></td>
+							<td th:text="${motorista.rg}"></td>
+							<td th:text="${motorista.cnh}"></td>
+							<td th:text="${motorista.telefone}"></td>
 							<td class="text-center"><a
 								class="btn btn-link btn-xs js-tooltip" title="Editar"
-								th:href="@{/loja/{codigo}(codigo=${loja.codigo})}"> <i
+								th:href="@{/motorista/{codigo}(codigo=${motorista.codigo})}"> <i
 									class="glyphicon glyphicon-pencil"></i>
 							</a> <a class="btn btn-link btn-xs js-tooltip js-exclusao-btn"
-								title="Excluir" data:objeto="${loja.razao}" href="#"
-								data:url="@{/loja/{codigo}(codigo=${loja.codigo})}"> <i
+								title="Excluir" data:objeto="${motorista.nome}" href="#"
+								data:url="@{/motorista/{codigo}(codigo=${motorista.codigo})}"> <i
 									class="glyphicon glyphicon-remove"></i>
 							</a></td>
 						</tr>
-						<tr th:if="${lojas == null}">
-							<td colspan="7">Nenhuma loja encontrada</td>
+						<tr th:if="${motoristas == null}">
+							<td colspan="7">Nenhum motorista encontrado</td>
 						</tr>
 					</tbody>
 				</table>

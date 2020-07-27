@@ -42,6 +42,7 @@ public class LojaController {
 	@PostMapping("/nova")
 	public ModelAndView salvar(@Valid Loja loja, BindingResult result, Model model,
 			RedirectAttributes attributes) {
+		
 		if (result.hasErrors()) {
 			return nova(loja);
 		}

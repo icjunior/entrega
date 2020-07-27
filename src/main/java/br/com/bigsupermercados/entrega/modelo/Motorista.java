@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "motorista")
@@ -15,11 +16,21 @@ public class Motorista {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	@NotBlank(message = "Nome não pode ser em branco")
 	private String nome;
+	
+	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
+	
+	@NotBlank(message = "RG não pode ser em branco")
 	private String rg;
+	
+	@NotBlank(message = "CNH não pode ser em branco")
 	private String cnh;
 	
+	@NotBlank(message = "Telefone não pode ser em branco")
+	private String telefone;
+
 	@ManyToOne
 	private Loja loja;
 
@@ -61,6 +72,22 @@ public class Motorista {
 
 	public void setCnh(String cnh) {
 		this.cnh = cnh;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Loja getLoja() {
+		return loja;
+	}
+
+	public void setLoja(Loja loja) {
+		this.loja = loja;
 	}
 
 	@Override
