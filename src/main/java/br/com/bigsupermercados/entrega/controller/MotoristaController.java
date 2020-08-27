@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.bigsupermercados.entrega.modelo.Motorista;
-import br.com.bigsupermercados.entrega.repository.Motoristas;
+import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
+import br.com.bigsupermercados.entrega.repository.entrega.Motoristas;
 import br.com.bigsupermercados.entrega.service.CadastroMotoristaService;
 
 @Controller

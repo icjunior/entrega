@@ -67,8 +67,8 @@
 				
 				<div class="row">
 					<div class="col-sm-3 form-group bw-required" brewer:classforerror="cep">
-						<label for="cep" class="control-label ">CEP</label>
-						<input id="cep" type="text" class="form-control js-cep" th:field="*{cep}"/>
+						<label for="cep" class="control-label">CEP</label>
+						<input id="cep" type="text" class="form-control js-cep" th:field="*{cep}" onblur="pesquisaCEP()"/>
 					</div>
 				</div>
 				
@@ -87,7 +87,7 @@
 				<div class="row">
 					<div class="col-sm-4 form-group bw-required" brewer:classforerror="bairro">
 						<label for="bairro" class="control-label">Bairro</label>
-						<input id="numero" type="text" class="form-control" th:field="*{bairro}"/>
+						<input id="bairro" type="text" class="form-control" th:field="*{bairro}"/>
 					</div> 
 					
 					<div class="col-sm-4 form-group bw-required" brewer:classforerror="cidade">

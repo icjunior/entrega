@@ -1,4 +1,4 @@
-package br.com.bigsupermercados.entrega.modelo;
+package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,28 +21,44 @@ public class Cliente {
 
 	@NotBlank(message = "Nome não pode ser em branco")
 	private String nome;
-	
+
 	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
-	
-	
+
 	private LocalDate dataNascimento;
 
 	@ManyToOne
 	private Endereco endereco;
-	
+
 	@NotBlank(message = "Número não pode ser em branco")
 	private String numero;
-	
+
 	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
-	
+
 	@NotBlank(message = "Telefone não pode ser em branco")
 	private String telefone;
 
 	@ManyToOne
 	private Usuario usuario;
-	
+
 	private boolean ativo = true;
+
+	private String complemento;
+
+	public Cliente() {
+
+	}
+
+	public Cliente(String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String numero,
+			String complemento) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.telefone = telefone;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.complemento = complemento;
+	}
 
 	public Long getCodigo() {
 		return codigo;
@@ -122,6 +138,14 @@ public class Cliente {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	@Override

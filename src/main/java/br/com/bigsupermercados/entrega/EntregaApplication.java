@@ -11,8 +11,4 @@ public class EntregaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EntregaApplication.class, args);
 	}
-	
-//	public static <T> T getBean(Class<T> requiredType) {
-//		return APPLICATION_CONTEXT.getBean(requiredType);
-//	}
 }

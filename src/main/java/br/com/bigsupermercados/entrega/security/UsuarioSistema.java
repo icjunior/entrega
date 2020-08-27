@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import br.com.bigsupermercados.entrega.modelo.Usuario;
+import br.com.bigsupermercados.entrega.modelo.entrega.Usuario;
 
 public class UsuarioSistema extends User {
 

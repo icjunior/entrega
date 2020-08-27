@@ -1,4 +1,4 @@
-package br.com.bigsupermercados.entrega.modelo;
+package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.time.LocalDateTime;
 

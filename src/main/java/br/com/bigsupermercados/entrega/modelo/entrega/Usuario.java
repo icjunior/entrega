@@ -1,4 +1,6 @@
-package br.com.bigsupermercados.entrega.modelo;
+package br.com.bigsupermercados.entrega.modelo.entrega;
+
+import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,19 +10,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cidade")
-public class Cidade {
+@Table(name = "usuario")
+public class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
 	private String nome;
-
-	private String cep;
+	private String login;
+	private String senha;
+	private boolean ativo;
 
 	@ManyToOne
-	private Estado estado;
+	private Loja loja;
 
 	public Long getCodigo() {
 		return codigo;
@@ -38,27 +43,43 @@ public class Cidade {
 		this.nome = nome;
 	}
 
-	public String getCep() {
-		return cep;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setCep(String cep) {
-		this.cep = cep;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public String getSenha() {
+		return senha;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Loja getLoja() {
+		return loja;
+	}
+
+	public void setLoja(Loja loja) {
+		this.loja = loja;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + (ativo ? 1231 : 1237);
 		return result;
 	}
 
@@ -70,11 +91,8 @@ public class Cidade {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
+		Usuario other = (Usuario) obj;
+		if (ativo != other.ativo)
 			return false;
 		return true;
 	}

@@ -1,24 +1,25 @@
-package br.com.bigsupermercados.entrega.modelo;
+package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bairro")
-public class Bairro {
+@Table(name = "estado")
+public class Estado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
+	private String idUf;
 	private String nome;
-
-	@ManyToOne
-	private Cidade cidade;
+	private String faixaCep1Ini;
+	private String faixaCep1Fim;
+	private String faixaCep2Ini;
+	private String faixaCep2Fim;
 
 	public Long getCodigo() {
 		return codigo;
@@ -36,12 +37,44 @@ public class Bairro {
 		this.nome = nome;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public String getFaixaCep1Ini() {
+		return faixaCep1Ini;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setFaixaCep1Ini(String faixaCep1Ini) {
+		this.faixaCep1Ini = faixaCep1Ini;
+	}
+
+	public String getFaixaCep1Fim() {
+		return faixaCep1Fim;
+	}
+
+	public void setFaixaCep1Fim(String faixaCep1Fim) {
+		this.faixaCep1Fim = faixaCep1Fim;
+	}
+
+	public String getFaixaCep2Ini() {
+		return faixaCep2Ini;
+	}
+
+	public void setFaixaCep2Ini(String faixaCep2Ini) {
+		this.faixaCep2Ini = faixaCep2Ini;
+	}
+
+	public String getFaixaCep2Fim() {
+		return faixaCep2Fim;
+	}
+
+	public void setFaixaCep2Fim(String faixaCep2Fim) {
+		this.faixaCep2Fim = faixaCep2Fim;
+	}
+
+	public String getIdUf() {
+		return idUf;
+	}
+
+	public void setIdUf(String idUf) {
+		this.idUf = idUf;
 	}
 
 	@Override
@@ -60,7 +93,7 @@ public class Bairro {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bairro other = (Bairro) obj;
+		Estado other = (Estado) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -68,4 +101,5 @@ public class Bairro {
 			return false;
 		return true;
 	}
+
 }

@@ -6,7 +6,7 @@
 	xmlns:brewer="http://brewer.algaworks.com"
 	xmlns:data="http://www.thymeleaf.org/extras/data">
 <head>
-<title>Pesquisa de clientes</title>
+<title>Pesquisa de guias de entrega</title>
 </head>
 
 <body>
@@ -15,14 +15,14 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-10">
-						<h1>Pesquisa de clientes</h1>
+						<h1>Pesquisa de guias</h1>
 					</div>
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-default" th:href="@{/cliente/nova}"> <i
+							<a class="btn btn-default" th:href="@{/guia/nova}"> <i
 								class="glyphicon glyphicon-plus-sign"></i> <span
-								class="hidden-xs hidden-sm">Novo cliente</span>
+								class="hidden-xs hidden-sm">Nova guia</span>
 							</a>
 						</div>
 					</div>
@@ -36,21 +36,26 @@
 					<thead>
 						<tr>
 							<th class="table-cervejas-col-sku">Código</th>
-							<th class="table-cervejas-col-nome">Nome</th>
-							<th class="table-cervejas-col-origem">CPF</th>
-							<th class="table-cervejas-col-origem">Nascimento</th>
-							<th class="table-cervejas-col-origem">Status</th>
-							<th class="table-cervejas-col-origem">Ações</th>
+							<th class="table-cervejas-col-nome">Data</th>
+							<th class="table-cervejas-col-origem">Loja</th>
+							<th class="table-cervejas-col-origem">PDV</th>
+							<th class="table-cervejas-col-origem">Cupom</th>
+							<th class="table-cervejas-col-origem">Cliente</th>
+							<th class="table-cervejas-col-origem">Entregue por</th>
+							<th class="table-cervejas-col-origem">Borderô</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr th:each="cliente : ${clientes}">
-							<td class="text-center" th:text="${cliente.codigo}">AA1111</td>
-							<td th:text="${cliente.nome}">Teste</td>
-							<td th:text="${cliente.cpf}"></td>
-							<td th:text="${cliente.dataNascimento}"></td>
-							<td th:text="${cliente.ativo}"></td>
+						<tr th:each="guia : ${guias}">
+							<td class="text-center" th:text="${guia.codigo}">AA1111</td>
+							<td th:text="${guia.data}">Teste</td>
+							<td th:text="${guia.loja.apelido}"></td>
+							<td th:text="${guia.pdv}"></td>
+							<td th:text="${guia.cupom}"></td>
+							<td th:text="${guia.cliente.nome}"></td>
+							<td th:text="${guia.motorista.nome}"></td>
+							<td th:text="${guia.bordero.codigo}"></td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
 									th:href="@{/cliente/{codigo}(codigo=${cliente.codigo})}"> 
@@ -64,7 +69,7 @@
 							</td>
 						</tr>
 						<tr th:if="${clientes == null}">
-							<td colspan="7">Nenhum cliente encontrado</td>
+							<td colspan="7">Nenhuma guia encontrada</td>
 						</tr>
 					</tbody>
 				</table>
