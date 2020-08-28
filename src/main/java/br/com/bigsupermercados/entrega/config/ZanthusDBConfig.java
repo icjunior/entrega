@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import br.com.bigsupermercados.entrega.modelo.zanthus.TabNotaHeader;
-import br.com.bigsupermercados.entrega.repository.zanthus.TabNotaHeaderRepository;
+import br.com.bigsupermercados.entrega.modelo.zanthus.ZanM45;
+import br.com.bigsupermercados.entrega.repository.zanthus.ZanM45Repository;
 
 @Configuration
-@EnableJpaRepositories(basePackageClasses = TabNotaHeaderRepository.class, entityManagerFactoryRef = "zanthusEntityManager")
+@EnableJpaRepositories(basePackageClasses = ZanM45Repository.class, entityManagerFactoryRef = "zanthusEntityManager")
 public class ZanthusDBConfig {
 
 	@Bean

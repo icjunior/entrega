@@ -36,14 +36,13 @@ public class GuiaController {
 	@GetMapping("/nova")
 	public ModelAndView nova(GuiaForm guiaForm) {
 		ModelAndView mv = new ModelAndView("guia/EmitirGuia");
-		mv.addObject("guias", repository.findAll());
 		return mv;
 	}
 
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
-
+		mv.addObject("guias", repository.findAll());
 		return mv;
 	}
 
