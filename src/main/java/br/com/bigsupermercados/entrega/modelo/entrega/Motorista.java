@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,21 +19,24 @@ public class Motorista {
 
 	@NotBlank(message = "Nome não pode ser em branco")
 	private String nome;
-	
+
 	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
-	
+
 	@NotBlank(message = "RG não pode ser em branco")
 	private String rg;
-	
+
 	@NotBlank(message = "CNH não pode ser em branco")
 	private String cnh;
-	
+
 	@NotBlank(message = "Telefone não pode ser em branco")
 	private String telefone;
 
 	@ManyToOne
 	private Loja loja;
+
+	@Column(name = "ativo", columnDefinition = "boolean default true")
+	private boolean ativo;
 
 	public Long getCodigo() {
 		return codigo;
@@ -88,6 +92,14 @@ public class Motorista {
 
 	public void setLoja(Loja loja) {
 		this.loja = loja;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Bordero {
 	@ManyToOne
 	private Motorista motorista;
 
+	@Column(name = "data_hora_lancamento")
 	private LocalDateTime dataHoraLancamento;
 
 	public Long getCodigo() {

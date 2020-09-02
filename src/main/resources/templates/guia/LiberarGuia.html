@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:brewer="http://brewer.algaworks.com"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+<head>
+<title>Liberação de guias de entrega</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Liberação de guias</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/guia/nova}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Nova guia</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<form method="POST" th:object="${guiaLiberarForm}" class="form-vertical  js-form-loading" th:action="@{/guia/liberar}">
+	
+				<brewer:message />
+			
+			
+				<div class="row">
+					<div class="col-sm-3 form-group bw-required" brewer:classforerror="motorista">
+						<label for="motorista" class="control-label">Motorista</label>
+						<div class="bw-field-action">
+							<select id="motorista" class="form-control" th:field="*{motorista}">
+								<option value="">Selecione o motorista</option>
+								<option th:each="motorista : ${motoristas}" th:value="${motorista.codigo}" th:text="${motorista.nome}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			
+				<div class="table-responsive bw-tabela-simples">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="table-usuarios-col-status">
+									<div class="checkbox aw-checkbox-no-margin">
+										<input type="checkbox" class="js-selecao-todos"/>
+										<label></label>
+									</div>
+								</th>
+								<th class="table-cervejas-col-sku">Código</th>
+								<th class="table-cervejas-col-origem">Data</th>
+								<th class="table-cervejas-col-origem">Loja</th>
+								<th class="table-cervejas-col-origem">PDV</th>
+								<th class="table-cervejas-col-origem">Cupom</th>
+								<th class="table-cervejas-col-origem">Valor</th>
+								<th class="table-cervejas-col-nome">Cliente</th>
+							</tr>
+						</thead>
+	
+						<tbody>
+							<tr th:each="guia : ${guiasALiberar}">
+								<td>
+									<div class="checkbox aw-checkbox-no-margin">
+										<input type="checkbox" class="js-selecao" th:field="*{guias}" th:value="${guia.codigo}"/>
+										<label></label>
+									</div>
+								</td>
+								<td class="text-center" th:text="${guia.codigo}">AA1111</td>
+								<td th:text="${guia.data}">Teste</td>
+								<td th:text="${guia.loja.apelido}"></td>
+								<td th:text="${guia.pdv}"></td>
+								<td th:text="${guia.cupom}"></td>
+								<td th:text="${guia.valor}"></td>
+								<td th:text="${guia.cliente.nome}"></td>
+							</tr>
+							<tr th:if="${guiasALiberar == null}">
+								<td colspan="7">Nenhuma guia disponível para liberação</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="row">
+					<button type="submit" class="btn btn-primary">Liberar guias</button>
+				</div>
+			</form>
+		</div>
+	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/multiselecao.js}"></script>
+	</th:block>
+</body>
+
+</html>

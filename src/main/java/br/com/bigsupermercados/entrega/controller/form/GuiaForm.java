@@ -142,7 +142,7 @@ public class GuiaForm {
 		Cliente cliente = clienteRepository.findByCpf(cpf).get();
 		Loja loja = lojaRepository.findById(codigoLoja).get();
 
-		return new Guia(codigo, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento, null,
-				null, false, valor);
+		return new Guia(codigo, data, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento,
+				null, null, false, valor);
 	}
 }

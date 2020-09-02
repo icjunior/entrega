@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,9 +48,11 @@ public class Loja {
 
 	private boolean ativo = true;
 
+	@Column(name = "email_gerente")
 	@NotBlank(message = "Email do gerente não pode ser em branco")
 	private String emailGerente;
 
+	@Column(name = "email_supervisor")
 	@NotBlank(message = "Email do supervisor não pode ser em branco")
 	private String emailSupervisor;
 

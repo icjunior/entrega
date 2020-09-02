@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +14,22 @@ public class Estado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
+	
+	@Column(name = "id_uf")
 	private String idUf;
+	
 	private String nome;
+	
+	@Column(name = "faixa_cep1ini")
 	private String faixaCep1Ini;
+	
+	@Column(name = "faixa_cep1fim")
 	private String faixaCep1Fim;
+	
+	@Column(name = "faixa_cep2ini")
 	private String faixaCep2Ini;
+	
+	@Column(name = "faixa_cep2fim")
 	private String faixaCep2Fim;
 
 	public Long getCodigo() {

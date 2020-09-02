@@ -3,6 +3,7 @@ package br.com.bigsupermercados.entrega.modelo.entrega;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Cliente {
 	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
 
+	@Column(name = "data_nascimento")
 	private LocalDate dataNascimento;
 
 	@ManyToOne
@@ -33,6 +35,7 @@ public class Cliente {
 	@NotBlank(message = "Número não pode ser em branco")
 	private String numero;
 
+	@Column(name = "data_hora_inclusao")
 	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	@NotBlank(message = "Telefone não pode ser em branco")

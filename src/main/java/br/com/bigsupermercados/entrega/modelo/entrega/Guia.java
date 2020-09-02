@@ -1,7 +1,9 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,12 +22,16 @@ public class Guia {
 	@ManyToOne
 	private Loja loja;
 
+	@Column(name = "data")
+	private LocalDate data;
+
 	private Integer pdv;
 	private String cupom;
 	private BigDecimal valor;
 
 	@ManyToOne
 	private Cliente cliente;
+	
 	private String cep;
 	private String endereco;
 	private String numero;
@@ -44,11 +50,12 @@ public class Guia {
 	public Guia() {
 	}
 
-	public Guia(Long codigo, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep, String endereco,
-			String numero, String bairro, String cidade, String complemento, Motorista motorista, Bordero bordero,
-			boolean reentrega, BigDecimal valor) {
+	public Guia(Long codigo, LocalDate data, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep,
+			String endereco, String numero, String bairro, String cidade, String complemento, Motorista motorista,
+			Bordero bordero, boolean reentrega, BigDecimal valor) {
 		super();
 		this.codigo = codigo;
+		this.data = data;
 		this.loja = loja;
 		this.pdv = pdv;
 		this.cupom = cupom;
@@ -181,6 +188,14 @@ public class Guia {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
 	@Override
