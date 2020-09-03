@@ -82,14 +82,14 @@ public class GuiaController {
 	@PostMapping("/liberar")
 	public ModelAndView liberarGuias(GuiaLiberarForm guiaLiberarForm, BindingResult result, Model model,
 			RedirectAttributes attributes) {
-		
-		if(result.hasErrors()) {
+
+		if (result.hasErrors()) {
 			return listaGuiasALiberar(guiaLiberarForm);
 		}
-		
+
 		service.liberarGuia(guiaLiberarForm);
 		attributes.addFlashAttribute("mensagem", "Guias vinculadas com sucesso");
-		
+
 		return new ModelAndView("redirect:/guia/liberar");
 	}
 }

@@ -31,7 +31,7 @@ public class Guia {
 
 	@ManyToOne
 	private Cliente cliente;
-	
+
 	private String cep;
 	private String endereco;
 	private String numero;
@@ -47,12 +47,15 @@ public class Guia {
 
 	private boolean reentrega = false;
 
+	@Column(name = "porcentagem")
+	private BigDecimal porcentagem;
+
 	public Guia() {
 	}
 
 	public Guia(Long codigo, LocalDate data, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep,
 			String endereco, String numero, String bairro, String cidade, String complemento, Motorista motorista,
-			Bordero bordero, boolean reentrega, BigDecimal valor) {
+			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem) {
 		super();
 		this.codigo = codigo;
 		this.data = data;
@@ -68,6 +71,7 @@ public class Guia {
 		this.complemento = complemento;
 		this.reentrega = reentrega;
 		this.valor = valor;
+		this.porcentagem = porcentagem;
 	}
 
 	public Long getCodigo() {
@@ -196,6 +200,14 @@ public class Guia {
 
 	public void setData(LocalDate data) {
 		this.data = data;
+	}
+
+	public BigDecimal getPorcentagem() {
+		return porcentagem;
+	}
+
+	public void setPorcentagem(BigDecimal porcentagem) {
+		this.porcentagem = porcentagem;
 	}
 
 	@Override

@@ -24,6 +24,20 @@ public class Bordero {
 	@Column(name = "data_hora_lancamento")
 	private LocalDateTime dataHoraLancamento;
 
+	@Column(name = "aberto", columnDefinition = "boolean default true")
+	private boolean aberto;
+
+	public Bordero() {
+
+	}
+
+	public Bordero(Motorista motorista, LocalDateTime dataHoraLancamento, boolean aberto) {
+		super();
+		this.motorista = motorista;
+		this.dataHoraLancamento = dataHoraLancamento;
+		this.aberto = aberto;
+	}
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -46,6 +60,14 @@ public class Bordero {
 
 	public void setDataHoraLancamento(LocalDateTime dataHoraLancamento) {
 		this.dataHoraLancamento = dataHoraLancamento;
+	}
+
+	public boolean isAberto() {
+		return aberto;
+	}
+
+	public void setAberto(boolean aberto) {
+		this.aberto = aberto;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.entrega.controller.dto;
 
+import java.math.BigDecimal;
+
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 
 public class ClienteDTO {
@@ -12,6 +14,7 @@ public class ClienteDTO {
 	private String numero;
 	private String bairro;
 	private String cidade;
+	private BigDecimal porcentagem;
 
 	public ClienteDTO(Cliente cliente) {
 		super();
@@ -23,6 +26,7 @@ public class ClienteDTO {
 		this.numero = cliente.getNumero();
 		this.bairro = cliente.getEndereco().getBairro().getNome();
 		this.cidade = cliente.getEndereco().getBairro().getCidade().getNome();
+		this.porcentagem = cliente.getEndereco().getBairro().getPorcentagem();
 	}
 
 	public String getNome() {
@@ -55,6 +59,10 @@ public class ClienteDTO {
 
 	public String getCidade() {
 		return cidade;
+	}
+
+	public BigDecimal getPorcentagem() {
+		return porcentagem;
 	}
 
 	public static ClienteDTO converter(Cliente cliente) {

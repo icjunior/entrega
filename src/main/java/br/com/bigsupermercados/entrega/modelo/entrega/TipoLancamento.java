@@ -1,30 +1,44 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bairro")
-public class Bairro {
+@Table(name = "tipo_lancamento")
+public class TipoLancamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo")
 	private Long codigo;
 
+	@Column(name = "nome")
 	private String nome;
 
-	@ManyToOne
-	private Cidade cidade;
+	@Column(name = "ativo")
+	private boolean ativo = true;
 
-	@Column(name = "porcentagem")
-	private BigDecimal porcentagem;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "modo_lancamento")
+	private ModoLancamento modoLancamento;
+
+	public TipoLancamento() {
+
+	}
+
+	public TipoLancamento(Long codigo, String nome, boolean ativo, ModoLancamento modoLancamento) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.ativo = ativo;
+		this.modoLancamento = modoLancamento;
+	}
 
 	public Long getCodigo() {
 		return codigo;
@@ -42,20 +56,20 @@ public class Bairro {
 		this.nome = nome;
 	}
 
-	public Cidade getCidade() {
-		return cidade;
+	public boolean isAtivo() {
+		return ativo;
 	}
 
-	public void setCidade(Cidade cidade) {
-		this.cidade = cidade;
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
-	public BigDecimal getPorcentagem() {
-		return porcentagem;
+	public ModoLancamento getModoLancamento() {
+		return modoLancamento;
 	}
 
-	public void setPorcentagem(BigDecimal porcentagem) {
-		this.porcentagem = porcentagem;
+	public void setModoLancamento(ModoLancamento modoLancamento) {
+		this.modoLancamento = modoLancamento;
 	}
 
 	@Override
@@ -74,7 +88,7 @@ public class Bairro {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Bairro other = (Bairro) obj;
+		TipoLancamento other = (TipoLancamento) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;
@@ -82,4 +96,5 @@ public class Bairro {
 			return false;
 		return true;
 	}
+
 }

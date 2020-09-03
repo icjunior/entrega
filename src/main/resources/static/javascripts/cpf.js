@@ -8,6 +8,7 @@ function pesquisaCPF() {
 	numeroInput = document.getElementById('numero');
 	bairroInput = document.getElementById('bairro');
 	cidadeInput = document.getElementById('cidade');
+	porcentagemHidden = document.getElementById('hiddenPorcentagem');
 	
 	getCPF(cpfInput.value).then((resposta) => {
 		nomeInput.value = resposta.nome;
@@ -17,6 +18,7 @@ function pesquisaCPF() {
 		numeroInput.value = resposta.numero;
 		bairroInput.value = resposta.bairro;
 		cidadeInput.value = resposta.cidade;
+		porcentagemHidden.value = resposta.porcentagem;
 	})
 	.catch((erro) => {
 		console.warn('deu erro');

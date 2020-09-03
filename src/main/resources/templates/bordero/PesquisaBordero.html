@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaft.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaft/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:brewer="http://brewer.algaworks.com"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+<head>
+<title>Pesquisa de borderôs</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>Pesquisa de borderôs</h1>
+					</div>
+
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn btn-default" th:href="@{/cliente/nova}"> <i
+								class="glyphicon glyphicon-plus-sign"></i> <span
+								class="hidden-xs hidden-sm">Novo borderô</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			<div class="table-responsive bw-tabela-simples">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="table-cervejas-col-sku">Código</th>
+							<th class="table-cervejas-col-nome">Motorista</th>
+							<th class="table-cervejas-col-origem">Incluído em</th>
+							<th class="table-cervejas-col-origem">Valor</th>
+							<th class="table-cervejas-col-origem">Status</th>
+							<th class="table-cervejas-col-origem">Ações</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="bordero : ${borderos}">
+							<td class="text-center" th:text="${bordero.codigo}">AA1111</td>
+							<td th:text="${bordero.motorista}">Teste</td>
+							<td th:text="${bordero.dataHoraLancamento}"></td>
+							<td th:text="${bordero.valor}"></td>
+							<td th:text="${bordero.aberto ? 'Aberto' : 'Fechado'}"></td>
+							<td class="text-center">
+								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
+									th:href="@{/bordero/edita/{codigo}(codigo=${bordero.codigo})}"> 
+									<i class="glyphicon glyphicon-pencil"></i>
+								</a> 
+								<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn"
+									title="Excluir" data:objeto="${bordero.codigo}" href="#"
+									data:url="@{/bordero/exclui/{codigo}(codigo=${bordero.codigo})}"> 
+									<i class="glyphicon glyphicon-remove"></i>
+								</a>
+							</td>
+						</tr>
+						<tr th:if="${borderos == null}">
+							<td colspan="7">Nenhum borderô encontrado</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>
