@@ -16,7 +16,7 @@ public class BorderoService {
 
 	@Autowired
 	private Borderos repository;
-
+	
 	public Optional<Bordero> borderoAbertoPorMotorista(Motorista motorista) {
 		return repository.findByMotorista_CodigoAndAbertoTrue(motorista.getCodigo());
 	}
@@ -28,5 +28,9 @@ public class BorderoService {
 
 	public List<Bordero> listar() {
 		return repository.findAll();
+	}
+
+	public Optional<Bordero> buscarBordero(Long codigoBordero) {
+		return repository.findById(codigoBordero);
 	}
 }

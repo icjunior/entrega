@@ -43,4 +43,8 @@ public class GuiaService {
 
 		repository.saveAll(guias);
 	}
+
+	public List<Bordero> buscarPorBordero(Bordero bordero) {
+		return repository.findByBordero_Codigo(bordero.getCodigo());
+	}
 }
