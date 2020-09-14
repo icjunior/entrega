@@ -48,8 +48,8 @@
 						<tr th:each="bordero : ${borderos}">
 							<td class="text-center" th:text="${bordero.codigo}">AA1111</td>
 							<td th:text="${bordero.motorista}">Teste</td>
-							<td th:text="${bordero.dataHoraLancamento}"></td>
-							<td th:text="${bordero.valor}"></td>
+							<td th:text="${#temporals.format(bordero.dataHoraLancamento, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#numbers.formatCurrency(bordero.valor)}"></td>
 							<td th:text="${bordero.aberto ? 'Aberto' : 'Fechado'}"></td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar"

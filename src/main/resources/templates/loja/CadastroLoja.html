@@ -37,12 +37,17 @@
 				<input type="hidden" th:field="*{codigo}" />
 
 				<div class="row">
-					<div class="col-sm-6 form-group bw-required" brewer:classforerror="razao">
+					<div class="col-sm-2 form-group bw-required" brewer:classforerror="lojaZanthus">
+						<label for="loja_zanthus" class="control-label">Código Zanthus</label> 
+						<input id="loja_zanthus" type="text" class="form-control" th:field="*{lojaZanthus}"/>
+					</div>
+					
+					<div class="col-sm-5 form-group bw-required" brewer:classforerror="razao">
 						<label for="razao" class="control-label">Razão social</label> 
 						<input id="razao" type="text" class="form-control" th:field="*{razao}"/>
 					</div>
 					
-					<div class="col-sm-6 form-group bw-required" brewer:classforerror="apelido">
+					<div class="col-sm-5 form-group bw-required" brewer:classforerror="apelido">
 						<label for="apelido" class="control-label">Apelido</label> 
 						<input id="apelido" type="text" class="form-control" th:field="*{apelido}"/>
 					</div>

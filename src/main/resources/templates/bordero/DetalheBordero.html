@@ -49,21 +49,24 @@
 
 					<tbody>
 						<tr th:each="guia : ${bordero.guias}">
-							<td class="text-center" th:text="${guia.data}">AA1111</td>
+							<td class="text-center" th:text="${#temporals.format(guia.data, 'dd/MM/yyyy')}">AA1111</td>
 							<td th:text="${guia.loja}">Teste</td>
 							<td th:text="${guia.pdv}"></td>
 							<td th:text="${guia.cupom}"></td>
-							<td th:text="${guia.valor}"></td>
+							<td th:text="${#numbers.formatCurrency(guia.valor)}"></td>
 							<td th:text="${guia.cliente}"></td>
 							<td th:text="${guia.bairro}"></td>
 							<td th:text="${guia.porcentagem}"></td>
-							<td th:text="${guia.valorAReceber}"></td>
+							<td th:text="${#numbers.formatCurrency(guia.valorAReceber)}"></td>
 						</tr>
 						<tr th:if="${bordero.guias == null}">
 							<td colspan="7">Nenhuma guia encontrada</td>
 						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="row">
+				<button class="btn  btn-primary" type="submit">Lançamentos</button>
 			</div>
 		</div>
 	</section>

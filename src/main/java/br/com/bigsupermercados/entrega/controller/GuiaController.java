@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.bigsupermercados.entrega.controller.form.GuiaForm;
 import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
+import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
 import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
@@ -44,6 +45,9 @@ public class GuiaController {
 	@GetMapping("/nova")
 	public ModelAndView nova(GuiaForm guiaForm) {
 		ModelAndView mv = new ModelAndView("guia/EmitirGuia");
+		List<Loja> lojas = lojaRepository.findAll();
+		
+		mv.addObject("lojas", lojas);
 		return mv;
 	}
 

@@ -23,7 +23,7 @@ public class CupomController {
 	private ZanM45Service zanM45Service;
 
 	@GetMapping("/busca/{data}/{loja}/{pdv}/{cupom}")
-	public ResponseEntity<ZanM45DTO> buscarCupom(@PathVariable String data, @PathVariable Integer loja,
+	public ResponseEntity<ZanM45DTO> buscarCupom(@PathVariable String data, @PathVariable Long loja,
 			@PathVariable Integer pdv, @PathVariable Integer cupom) {
 
 		LocalDate dataConvertida = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd-MM-yyyy"));

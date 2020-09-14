@@ -54,8 +54,15 @@
 							</div> 
 							
 							<div class="col-sm-4 form-group bw-required">
-								<label for="lojaCupom" class="control-label">Loja</label>
-								<input id="lojaCupom" type="text" class="form-control" th:field="*{codigoLoja}" />
+								<label for="lojaCupom" class="control-label">Loja</label>							
+								<div class="bw-field-action">
+									<select id="lojaCupom" class="form-control" th:field="*{codigoLoja}">
+										<option value="">Selecione a loja</option>
+										<option th:each="loja : ${lojas}"
+											th:value="${loja.codigo}" th:text="${loja.apelido}">
+										</option>
+									</select>
+								</div>
 							</div>
 						</div>
 						<div class="row">
@@ -75,7 +82,7 @@
 							</div> 
 						</div>
 						<div class="form-group">
-							<button class="btn  btn-primary" type="button" onclick="pesquisaCEP()">Buscar</button>
+							<button class="btn  btn-primary" type="button" onclick="pesquisaCupom()">Buscar</button>
 						</div>
 					</div>
 

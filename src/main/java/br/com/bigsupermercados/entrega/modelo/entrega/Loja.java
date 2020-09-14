@@ -56,6 +56,9 @@ public class Loja {
 	@NotBlank(message = "Email do supervisor não pode ser em branco")
 	private String emailSupervisor;
 
+	@Column(name = "loja_zanthus")
+	private Integer lojaZanthus;
+
 	public String getTelefone() {
 		return telefone;
 	}
@@ -166,6 +169,14 @@ public class Loja {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Integer getLojaZanthus() {
+		return lojaZanthus;
+	}
+
+	public void setLojaZanthus(Integer lojaZanthus) {
+		this.lojaZanthus = lojaZanthus;
 	}
 
 	@Override

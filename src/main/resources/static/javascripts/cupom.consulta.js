@@ -1,4 +1,4 @@
-function pesquisaCEP() {
+function pesquisaCupom() {
 
 	data = document.getElementById('dataCupom').value;
 	loja = document.getElementById('lojaCupom').value;
@@ -12,7 +12,7 @@ function pesquisaCEP() {
 		cupom = resposta.m00ad;
 	})
 	.catch((erro) => {
-		console.warn(erro);
+		swal(':-(', 'Cupom fiscal não encontrado!', 'warning');
 	})
 }
 

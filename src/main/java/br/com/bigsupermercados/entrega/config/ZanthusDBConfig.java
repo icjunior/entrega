@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
-import br.com.bigsupermercados.entrega.modelo.zanthus.ZanM45;
 import br.com.bigsupermercados.entrega.repository.zanthus.ZanM45Repository;
 
 @Configuration
