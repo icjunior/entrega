@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.service;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -53,31 +52,36 @@ public class BorderoService {
 		Bordero bordero = repository.findById(codigo).get();
 		// calcular o arredondamento
 
-		// total dos lançamentos (descontos)
-		BigDecimal totalDescontos = bordero
-				.getLancamentos()
-				.stream()
+		// total dos descontos
+		BigDecimal totalDescontos = bordero.getLancamentos().stream()
 				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
-				.map(lancamento -> lancamento.getValor())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		BigDecimal totalAcrescimos = bordero
-				.getLancamentos()
-				.stream()
+		// total dos acréscimos
+		BigDecimal totalAcrescimos = bordero.getLancamentos().stream()
 				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
-				.map(lancamento -> lancamento.getValor())
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-		
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+
 		// total dos cupons
 		BigDecimal totalCupons = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
 				BigDecimal::add);
-		
+
+		// valor total do borderô
 		BigDecimal total = totalCupons.add(totalAcrescimos).subtract(totalDescontos);
 		
-		System.out.println(total.setScale(2,RoundingMode.UP));
+		// valor a ser creditado
+		BigDecimal valorArredondamento = calculaArredondamento(total).subtract(total);
+
+		System.out.println(valorArredondamento);
 
 		// fazer a inserção do registro do arredondamento na tela de lançamentos
 //		bordero.setAberto(false);
 //		repository.flush();
+	}
+
+	public BigDecimal calculaArredondamento(BigDecimal valor) {
+		BigDecimal fatorArredondamento = new BigDecimal("5");
+
+		return valor.divide(fatorArredondamento).setScale(0, RoundingMode.UP).multiply(fatorArredondamento);
 	}
 }

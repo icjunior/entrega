@@ -11,12 +11,13 @@ public class GeracaoDeSenha {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		System.out.println(encoder.encode("admin"));
 
-		BigDecimal valor = new BigDecimal("563.14");
+		BigDecimal valor = new BigDecimal("565.14");
 
 		System.out.println(
 				valor
-					.multiply(new BigDecimal("5"))
+					.divide(new BigDecimal("5"))
 					.setScale(0, RoundingMode.UP)
+					.multiply(new BigDecimal("5"))
 				);
 	}
 }
