@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "guia")
+@DynamicUpdate
 public class Guia {
 
 	@Id
@@ -50,12 +53,15 @@ public class Guia {
 	@Column(name = "porcentagem")
 	private BigDecimal porcentagem;
 
+	@Column(name = "chave_acesso")
+	private String chaveAcesso;
+
 	public Guia() {
 	}
 
 	public Guia(Long codigo, LocalDate data, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep,
 			String endereco, String numero, String bairro, String cidade, String complemento, Motorista motorista,
-			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem) {
+			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem, String chaveAcesso) {
 		super();
 		this.codigo = codigo;
 		this.data = data;
@@ -72,6 +78,7 @@ public class Guia {
 		this.reentrega = reentrega;
 		this.valor = valor;
 		this.porcentagem = porcentagem;
+		this.chaveAcesso = chaveAcesso;
 	}
 
 	public Long getCodigo() {
@@ -208,6 +215,14 @@ public class Guia {
 
 	public void setPorcentagem(BigDecimal porcentagem) {
 		this.porcentagem = porcentagem;
+	}
+
+	public String getChaveAcesso() {
+		return chaveAcesso;
+	}
+
+	public void setChaveAcesso(String chaveAcesso) {
+		this.chaveAcesso = chaveAcesso;
 	}
 
 	@Override

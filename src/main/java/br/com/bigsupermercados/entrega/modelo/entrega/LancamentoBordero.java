@@ -8,11 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lancamento_bordero")
+@Table(name = "bordero_lancamento")
 public class LancamentoBordero {
 
 	@Id
@@ -20,11 +21,11 @@ public class LancamentoBordero {
 	private Long codigo;
 
 	@ManyToOne
-	@Column(name = "bordero_codigo")
+	@JoinColumn(name = "bordero_codigo")
 	private Bordero bordero;
 
 	@ManyToOne
-	@Column(name = "tipo_lancamento_codigo")
+	@JoinColumn(name = "tipo_lancamento_codigo")
 	private TipoLancamento tipoLancamento;
 
 	@Column(name = "valor")

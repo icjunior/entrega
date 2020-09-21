@@ -47,4 +47,10 @@ public class GuiaService {
 	public List<Bordero> buscarPorBordero(Bordero bordero) {
 		return repository.findByBordero_Codigo(bordero.getCodigo());
 	}
+
+	public void eliminarCupomBordero(Long codigo) {
+		Guia guia = repository.getOne(codigo);
+		guia.setBordero(null);
+		repository.flush();
+	}
 }

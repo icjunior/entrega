@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<div class="modal fade" id="modalLancamento" tabindex="-1" role="dialog"
+	aria-labelledby="modalLancamento" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Lançamentos para borderô [[${bordero.codigo}]]</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Fechar">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="cont">
+					<div class="row">
+						<div class="col-sm-6 form-group bw-required">
+							<label for="motorista" class="control-label">Lançamento</label>
+							<div class="bw-field-action">
+								<select id="tipoLancamentoSelect" class="form-control">
+									<option value="">Selecione um lançamento</option>
+									<option th:each="tipoLancamento : ${tiposLancamento}" 
+										th:value="${tipoLancamento.codigo}" 
+										th:text="${tipoLancamento.nome}">
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-3 form-group bw-required">
+							<label for="valor" class="control-label">Valor</label>
+							<input id="valor" type="text" class="form-control" />
+						</div>
+					</div>
+					<button type="button" class="btn  btn-primary" onclick="processaLancamento()">Adicionar</button>
+				</div>
+				
+				<div class="table-responsive bw-tabela-simples">
+					<table class="table table-hover tabela-lancamento" id="tblLancamento">
+						<thead>
+							<tr>
+								<th class="table-cervejas-col-sku">Código</th>
+								<th class="table-cervejas-col-origem">Lançamento</th>
+								<th class="table-cervejas-col-origem">Valor</th>
+								<th class="table-cervejas-col-origem">Ações</th>
+							</tr>
+						</thead>
+
+						<tbody id="itensLancamento">
+							<tr th:each="lancamento : ${bordero.lancamentos}" id="linhas">
+								<td class="text-center" th:text="${lancamento.codigo}">AA1111</td>
+								<td th:text="${lancamento.tipoLancamento}">Teste</td>
+								<td th:text="${lancamento.valor}"></td>
+								<td class="text-center">
+									<a
+										class="btn btn-link btn-xs js-tooltip js-exclusao-bordero-lancamento"
+										title="Excluir" 
+										data:objeto="${lancamento.tipoLancamento}" 
+										href="#"
+										data:url="@{/lancamentoBordero/eliminaLancamento/{codigo}(codigo=${lancamento.codigo})}">
+										<i class="glyphicon glyphicon-remove"></i>
+									</a>
+								</td>
+							</tr>
+							<tr th:if="${bordero.lancamentos == null}">
+								<td colspan="7">Nenhum lançamento efetuado</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+					<button type="button" class="btn btn-primary" onclick="gravaLancamentoBordero()" data-dismiss="modal">Salvar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

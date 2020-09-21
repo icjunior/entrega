@@ -12,7 +12,6 @@ import br.com.bigsupermercados.entrega.repository.entrega.TipoLancamentoReposito
 public class LancamentoBorderoForm {
 
 	public Long tipoLancamento;
-	public Long bordero;
 	public BigDecimal valor;
 
 	public Long getTipoLancamento() {
@@ -23,14 +22,6 @@ public class LancamentoBorderoForm {
 		this.tipoLancamento = tipoLancamento;
 	}
 
-	public Long getBordero() {
-		return bordero;
-	}
-
-	public void setBordero(Long bordero) {
-		this.bordero = bordero;
-	}
-
 	public BigDecimal getValor() {
 		return valor;
 	}
@@ -39,8 +30,8 @@ public class LancamentoBorderoForm {
 		this.valor = valor;
 	}
 
-	public LancamentoBordero converter(Borderos borderoRepository, TipoLancamentoRepository tipoLancamentoRepository) {
-		Bordero bordero = borderoRepository.getOne(this.bordero);
+	public LancamentoBordero converter(Long codigoBordero, Borderos borderoRepository, TipoLancamentoRepository tipoLancamentoRepository) {
+		Bordero bordero = borderoRepository.getOne(codigoBordero);
 		TipoLancamento tipoLancamento = tipoLancamentoRepository.getOne(this.tipoLancamento);
 		return new LancamentoBordero(bordero, tipoLancamento, valor, LocalDateTime.now());
 	}

@@ -20,6 +20,9 @@ public class ZanM45 {
 	@Column(name = "m45ak")
 	private BigDecimal m45ak;
 
+	@Column(name = "m45xb")
+	private String m45xb;
+
 	public ZanM45PK getZanM45PK() {
 		return zanM45PK;
 	}
@@ -42,6 +45,14 @@ public class ZanM45 {
 
 	public void setM45ak(BigDecimal m45ak) {
 		this.m45ak = m45ak;
+	}
+
+	public String getM45xb() {
+		return m45xb;
+	}
+
+	public void setM45xb(String m45xb) {
+		this.m45xb = m45xb;
 	}
 
 	@Override

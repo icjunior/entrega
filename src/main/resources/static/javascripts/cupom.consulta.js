@@ -4,12 +4,10 @@ function pesquisaCupom() {
 	loja = document.getElementById('lojaCupom').value;
 	pdv = document.getElementById('pdvCupom').value;
 	cupom = document.getElementById('numeroCupom').value;
-	
+	chaveAcesso = document.getElementById('hiddenChaveAcesso');
+		
 	getCupom(data, loja, pdv, cupom).then((resposta) => {
-		data = resposta.m00af;
-		loja = resposta.m00za;
-		pdv = resposta.m00ac;
-		cupom = resposta.m00ad;
+		chaveAcesso.value = resposta.m45xb;		
 	})
 	.catch((erro) => {
 		swal(':-(', 'Cupom fiscal não encontrado!', 'warning');

@@ -13,8 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
 @Table(name = "bordero")
+@DynamicUpdate
 public class Bordero {
 
 	@Id
@@ -32,6 +35,9 @@ public class Bordero {
 
 	@OneToMany(mappedBy = "bordero", fetch = FetchType.EAGER)
 	private List<Guia> guias;
+
+	@OneToMany(mappedBy = "bordero")
+	private List<LancamentoBordero> lancamentos;
 
 	public Bordero() {
 
@@ -82,6 +88,14 @@ public class Bordero {
 
 	public void setGuias(List<Guia> guias) {
 		this.guias = guias;
+	}
+
+	public List<LancamentoBordero> getLancamentos() {
+		return lancamentos;
+	}
+
+	public void setLancamentos(List<LancamentoBordero> lancamentos) {
+		this.lancamentos = lancamentos;
 	}
 
 	@Override

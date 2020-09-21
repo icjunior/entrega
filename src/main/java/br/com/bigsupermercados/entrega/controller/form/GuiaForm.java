@@ -26,6 +26,7 @@ public class GuiaForm {
 	private String cidade;
 	private String complemento;
 	private BigDecimal porcentagem;
+	private String chaveAcesso;
 
 	public Long getCodigo() {
 		return codigo;
@@ -147,11 +148,19 @@ public class GuiaForm {
 		this.porcentagem = porcentagem;
 	}
 
+	public String getChaveAcesso() {
+		return chaveAcesso;
+	}
+
+	public void setChaveAcesso(String chaveAcesso) {
+		this.chaveAcesso = chaveAcesso;
+	}
+
 	public Guia converter(Clientes clienteRepository, Lojas lojaRepository) {
 		Cliente cliente = clienteRepository.findByCpf(cpf).get();
 		Loja loja = lojaRepository.findById(codigoLoja).get();
 
 		return new Guia(codigo, data, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento,
-				null, null, false, valor, porcentagem);
+				null, null, false, valor, porcentagem, chaveAcesso);
 	}
 }

@@ -9,6 +9,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 
 public class GuiaBorderoDTO {
 
+	private Long codigo;
 	private LocalDate data;
 	private String loja;
 	private Integer pdv;
@@ -21,6 +22,7 @@ public class GuiaBorderoDTO {
 
 	public GuiaBorderoDTO(Guia guia) {
 		super();
+		this.codigo = guia.getCodigo();
 		this.data = guia.getData();
 		this.loja = guia.getLoja().getApelido();
 		this.pdv = guia.getPdv();
@@ -30,6 +32,10 @@ public class GuiaBorderoDTO {
 		this.bairro = guia.getBairro();
 		this.porcentagem = guia.getPorcentagem();
 		this.valorAReceber = calculaValorAReceber(guia.getValor(), guia.getPorcentagem());
+	}
+
+	public Long getCodigo() {
+		return codigo;
 	}
 
 	public LocalDate getData() {
