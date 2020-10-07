@@ -15,7 +15,7 @@ function pesquisaCupom() {
 }
 
 const getCupom = async (data, loja, pdv, cupom) =>  {
-	const uri = `/entrega/cupom/busca/${data}/${loja}/${pdv}/${cupom}`;
+	const uri = `/entrega/cupom/busca?data=${data}&loja=${loja}&pdv=${pdv}&cupom=${cupom}`;
 
 	const requestInfo = {
 		method : 'GET',

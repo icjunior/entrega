@@ -8,4 +8,6 @@ import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 @Repository
 public interface TipoLancamentoRepository extends JpaRepository<TipoLancamento, Long> {
 
+	TipoLancamento findByNome(String nome);
+
 }

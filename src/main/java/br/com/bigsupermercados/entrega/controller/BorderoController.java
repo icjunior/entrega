@@ -67,10 +67,9 @@ public class BorderoController {
 	}
 
 	@PutMapping("/fechar/{codigo}")
-	public ResponseEntity<String> fechar(@PathVariable Long codigo) {
-		service.fechar(codigo);
+	public ResponseEntity<BorderoDTO> fechar(@PathVariable Long codigo) {
+		Bordero bordero = service.fechar(codigo);
 
-		return ResponseEntity.ok("Finalizado");
-
+		return ResponseEntity.ok(new BorderoDTO(bordero));
 	}
 }

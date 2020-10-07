@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
+import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
+import br.com.bigsupermercados.entrega.modelo.entrega.LancamentoBordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.ModoLancamento;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
 import br.com.bigsupermercados.entrega.repository.entrega.Borderos;
@@ -19,6 +21,9 @@ public class BorderoService {
 
 	@Autowired
 	private Borderos repository;
+
+	@Autowired
+	private LancamentoBorderoService lancamentoBorderoService;
 
 	public Optional<Bordero> borderoAbertoPorMotorista(Motorista motorista) {
 		return repository.findByMotorista_CodigoAndAbertoTrue(motorista.getCodigo());
@@ -48,40 +53,57 @@ public class BorderoService {
 		return repository.findByAbertoFalse();
 	}
 
-	public void fechar(Long codigo) {
+	public Bordero fechar(Long codigo) {
 		Bordero bordero = repository.findById(codigo).get();
-		// calcular o arredondamento
 
 		// total dos descontos
-		BigDecimal totalDescontos = bordero.getLancamentos().stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal totalDescontos = calculaDescontos(bordero.getLancamentos());
 
 		// total dos acréscimos
-		BigDecimal totalAcrescimos = bordero.getLancamentos().stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		BigDecimal totalAcrescimos = calculaAcrescimos(bordero.getLancamentos());
 
 		// total dos cupons
-		BigDecimal totalCupons = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
-				BigDecimal::add);
+		BigDecimal totalGuias = calculaTotalGuias(bordero.getGuias());
+
+		// valor a ser creditado
+		BigDecimal valorArredondamento = calculaArredondamento(totalDescontos, totalAcrescimos, totalGuias);
+
+		// gravando o registro de arredondamento
+		lancamentoBorderoService.gravarArredondamento(bordero, valorArredondamento);
 
 		// valor total do borderô
-		BigDecimal total = totalCupons.add(totalAcrescimos).subtract(totalDescontos);
-		
-		// valor a ser creditado
-		BigDecimal valorArredondamento = calculaArredondamento(total).subtract(total);
-
-		System.out.println(valorArredondamento);
+		// BigDecimal total =
+		// totalGuias.add(totalAcrescimos).add(valorArredondamento).subtract(totalDescontos);
 
 		// fazer a inserção do registro do arredondamento na tela de lançamentos
-//		bordero.setAberto(false);
-//		repository.flush();
+		bordero.setAberto(false);
+		repository.flush();
+		
+		return bordero;
 	}
 
-	public BigDecimal calculaArredondamento(BigDecimal valor) {
-		BigDecimal fatorArredondamento = new BigDecimal("5");
+	public BigDecimal calculaDescontos(List<LancamentoBordero> lancamentos) {
+		return lancamentos.stream()
+				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
 
-		return valor.divide(fatorArredondamento).setScale(0, RoundingMode.UP).multiply(fatorArredondamento);
+	public BigDecimal calculaAcrescimos(List<LancamentoBordero> lancamentos) {
+		return lancamentos.stream()
+				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal calculaTotalGuias(List<Guia> guias) {
+		return guias.stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal calculaArredondamento(BigDecimal descontos, BigDecimal acrescimos, BigDecimal guias) {
+		BigDecimal fatorArredondamento = new BigDecimal("5");
+		BigDecimal valorBorderoSemArredondamento = guias.add(acrescimos).subtract(descontos);
+		BigDecimal valorBorderoArredondado = valorBorderoSemArredondamento.divide(fatorArredondamento)
+				.setScale(0, RoundingMode.UP).multiply(fatorArredondamento);
+
+		return valorBorderoArredondado.subtract(valorBorderoSemArredondamento);
 	}
 }

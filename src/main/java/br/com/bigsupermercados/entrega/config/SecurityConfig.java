@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/cidades/novo").hasRole("CADASTRAR_CIDADE")
 				.antMatchers("/usuarios/novo").hasRole("CADASTRAR_USUARIO")
+				.antMatchers("/endereco/consulta").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

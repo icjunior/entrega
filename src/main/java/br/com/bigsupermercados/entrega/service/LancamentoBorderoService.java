@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +23,7 @@ public class LancamentoBorderoService {
 
 	@Autowired
 	private LancamentoBorderoRepository repository;
-	
+
 	@Autowired
 	private Borderos borderoRepository;
 
@@ -38,15 +39,22 @@ public class LancamentoBorderoService {
 		Bordero bordero = borderoRepository.findById(codigoBordero).get();
 		List<LancamentoBordero> lancamentos = form.stream().map((lancamento) -> {
 			TipoLancamento tipoLancamento = tipoLancamentoRepository.findById(lancamento.getTipoLancamento()).get();
-			
-			return new LancamentoBordero(bordero, tipoLancamento, lancamento.getValor(), LocalDateTime.now()); 	
+
+			return new LancamentoBordero(bordero, tipoLancamento, lancamento.getValor(), LocalDateTime.now());
 		}).collect(Collectors.toList());
 		return repository.saveAll(lancamentos);
 	}
 
+	@Transactional
+	public void gravarArredondamento(Bordero bordero, BigDecimal valor) {
+		TipoLancamento tipoLancamento = tipoLancamentoRepository.findByNome("Arredondamento");
+		LancamentoBordero lancamento = new LancamentoBordero(bordero, tipoLancamento, valor, LocalDateTime.now());
+		repository.save(lancamento);
+	}
+
 	public void eliminaLancamento(Long codigo) {
 		LancamentoBordero lancamentoBordero = repository.findById(codigo).get();
-		
+
 		repository.delete(lancamentoBordero);
 	}
 }

@@ -30,7 +30,7 @@ public class Bordero {
 	@Column(name = "data_hora_lancamento")
 	private LocalDateTime dataHoraLancamento;
 
-	@Column(name = "aberto", columnDefinition = "boolean default true")
+	@Column(name = "aberto")
 	private boolean aberto;
 
 	@OneToMany(mappedBy = "bordero", fetch = FetchType.EAGER)

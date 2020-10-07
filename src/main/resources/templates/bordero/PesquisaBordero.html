@@ -52,15 +52,10 @@
 							<td th:text="${#numbers.formatCurrency(bordero.valor)}"></td>
 							<td th:text="${bordero.aberto ? 'Aberto' : 'Fechado'}"></td>
 							<td class="text-center">
-								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
+								<a th:if="${bordero.aberto == true}" class="btn btn-link btn-xs js-tooltip" title="Editar"
 									th:href="@{/bordero/edita/{codigo}(codigo=${bordero.codigo})}"> 
 									<i class="glyphicon glyphicon-pencil"></i>
 								</a> 
-								<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn"
-									title="Excluir" data:objeto="${bordero.codigo}" href="#"
-									data:url="@{/bordero/exclui/{codigo}(codigo=${bordero.codigo})}"> 
-									<i class="glyphicon glyphicon-remove"></i>
-								</a>
 							</td>
 						</tr>
 						<tr th:if="${borderos == null}">

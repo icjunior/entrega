@@ -1,12 +1,13 @@
 package br.com.bigsupermercados.entrega.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bigsupermercados.entrega.controller.dto.EnderecoDTO;
@@ -20,8 +21,8 @@ public class EnderecoController {
 	@Autowired
 	private EnderecoService service;
 
-	@GetMapping("/{cep}")
-	public ResponseEntity<EnderecoDTO> findByCEP(@PathVariable String cep) {
+	@GetMapping
+	public ResponseEntity<EnderecoDTO> findByCEP(@RequestParam String cep) {
 		Optional<Endereco> enderecoOpt = service.findByCEP(cep);
 
 		if (enderecoOpt.isPresent()) {
@@ -31,4 +32,14 @@ public class EnderecoController {
 		return ResponseEntity.notFound().build();
 	}
 
+	@GetMapping("/pesquisaEnderecoPorLogradouro")
+	public ResponseEntity<List<EnderecoDTO>> findByLogradouro(@RequestParam String logradouro) {
+		List<Endereco> enderecos = service.findByLogradouro(logradouro);
+
+		if (enderecos.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(EnderecoDTO.converter(enderecos));
+	}
 }

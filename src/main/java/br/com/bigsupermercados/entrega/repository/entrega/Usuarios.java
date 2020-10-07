@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Usuario;
+import br.com.bigsupermercados.entrega.repository.entrega.helper.UsuariosQueries;
 
 @Repository
-public interface Usuarios extends JpaRepository<Usuario, Long>{
+public interface Usuarios extends JpaRepository<Usuario, Long>, UsuariosQueries {
 
 	Optional<Usuario> findByLogin(String login);
+
+	Optional<Usuario> findByLoginIgnoreCase(String login);
 
 }

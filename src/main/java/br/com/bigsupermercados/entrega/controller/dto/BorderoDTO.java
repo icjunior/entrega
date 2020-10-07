@@ -20,7 +20,8 @@ public class BorderoDTO {
 		this.motorista = bordero.getMotorista().getNome();
 		this.dataHoraLancamento = bordero.getDataHoraLancamento();
 		this.aberto = bordero.isAberto();
-		this.valor = BigDecimal.ZERO;
+		this.valor = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
+				BigDecimal::add);
 	}
 
 	public Long getCodigo() {

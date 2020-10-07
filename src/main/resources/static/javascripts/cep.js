@@ -16,7 +16,7 @@ function pesquisaCEP() {
 }
 
 const getCEP = async (cep) =>  {
-	const uri = `/entrega/endereco/${cep}`;
+	const uri = `/entrega/endereco?cep=${cep}`;
 
 	const requestInfo = {
 		method : 'GET',

@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.bigsupermercados.entrega.controller.dto.ZanM45DTO;
@@ -22,9 +22,9 @@ public class CupomController {
 	@Autowired
 	private ZanM45Service zanM45Service;
 
-	@GetMapping("/busca/{data}/{loja}/{pdv}/{cupom}")
-	public ResponseEntity<ZanM45DTO> buscarCupom(@PathVariable String data, @PathVariable Long loja,
-			@PathVariable Integer pdv, @PathVariable Integer cupom) {
+	@GetMapping("/busca")
+	public ResponseEntity<ZanM45DTO> buscarCupom(@RequestParam String data, @RequestParam Long loja,
+			@RequestParam Integer pdv, @RequestParam Integer cupom) {
 
 		LocalDate dataConvertida = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 

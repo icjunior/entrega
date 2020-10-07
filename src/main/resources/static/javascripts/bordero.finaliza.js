@@ -13,13 +13,14 @@ function finalizaBordero() {
 	}, (isConfirm) => {
 			if(isConfirm) {
 				putFinalizarBordero(bordero, token)
-				.then((resposta) => {
-					swal(`Pronto!`, `Borderô finalizado com sucesso!`, 'success');
-				})
-				.catch((erro) => {
-				console.log(erro);
-					swal('Erro!', `O borderô não foi finalizado. Tente novamente mais tarde.`, 'error');
-				})
+					.then((resposta) => {
+						window.location.href = `/entrega/bordero`;
+						swal(`Pronto!`, `Borderô finalizado com sucesso!`, 'success');
+					})
+					.catch((erro) => {
+					console.log(erro);
+						swal('Erro!', `O borderô não foi finalizado. Tente novamente mais tarde.`, 'error');
+					})
 			}
 	})
 }

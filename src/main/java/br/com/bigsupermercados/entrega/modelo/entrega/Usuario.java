@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "usuario")
@@ -26,6 +27,13 @@ public class Usuario implements Serializable {
 
 	@ManyToOne
 	private Loja loja;
+
+	@Transient
+	private String confirmacaoSenha;
+
+	public boolean isNovo() {
+		return codigo == null;
+	}
 
 	public Long getCodigo() {
 		return codigo;
@@ -73,6 +81,14 @@ public class Usuario implements Serializable {
 
 	public void setLoja(Loja loja) {
 		this.loja = loja;
+	}
+
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = confirmacaoSenha;
 	}
 
 	@Override
