@@ -26,7 +26,7 @@ public class CupomController {
 	public ResponseEntity<ZanM45DTO> buscarCupom(@RequestParam String data, @RequestParam Long loja,
 			@RequestParam Integer pdv, @RequestParam Integer cupom) {
 
-		LocalDate dataConvertida = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		LocalDate dataConvertida = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
 		Optional<ZanM45> cupomRetornado = zanM45Service.buscarCupom(dataConvertida, loja, pdv, cupom);
 

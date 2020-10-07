@@ -39,6 +39,8 @@
 							<th class="table-cervejas-col-nome">Motorista</th>
 							<th class="table-cervejas-col-origem">Incluído em</th>
 							<th class="table-cervejas-col-origem">Valor</th>
+							<th class="table-cervejas-col-origem">Valor à receber</th>
+							<th class="table-cervejas-col-origem">Qtd. guias</th>
 							<th class="table-cervejas-col-origem">Status</th>
 							<th class="table-cervejas-col-origem">Ações</th>
 						</tr>
@@ -50,6 +52,8 @@
 							<td th:text="${bordero.motorista}">Teste</td>
 							<td th:text="${#temporals.format(bordero.dataHoraLancamento, 'dd/MM/yyyy')}"></td>
 							<td th:text="${#numbers.formatCurrency(bordero.valor)}"></td>
+							<td th:text="${#numbers.formatCurrency(bordero.valorAReceber)}"></td>
+							<td th:text="${bordero.quantidadeLancadas}"></td>
 							<td th:text="${bordero.aberto ? 'Aberto' : 'Fechado'}"></td>
 							<td class="text-center">
 								<a th:if="${bordero.aberto == true}" class="btn btn-link btn-xs js-tooltip" title="Editar"

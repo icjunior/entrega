@@ -36,7 +36,7 @@ public class Motorista {
 	private Loja loja;
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
-	private boolean ativo;
+	private boolean ativo = true;
 
 	public Long getCodigo() {
 		return codigo;

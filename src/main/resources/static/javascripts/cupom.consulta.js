@@ -1,13 +1,14 @@
 function pesquisaCupom() {
 
-	data = document.getElementById('dataCupom').value;
-	loja = document.getElementById('lojaCupom').value;
-	pdv = document.getElementById('pdvCupom').value;
-	cupom = document.getElementById('numeroCupom').value;
-	chaveAcesso = document.getElementById('hiddenChaveAcesso');
+	const data = document.getElementById('dataCupom').value;
+	const loja = document.getElementById('lojaCupom').value;
+	const pdv = document.getElementById('pdvCupom').value;
+	const cupom = document.getElementById('numeroCupom').value;
+	let chaveAcesso = document.getElementById('hiddenChaveAcesso');
 		
 	getCupom(data, loja, pdv, cupom).then((resposta) => {
 		chaveAcesso.value = resposta.m45xb;		
+		console.log(resposta.m45xb);
 	})
 	.catch((erro) => {
 		swal(':-(', 'Cupom fiscal não encontrado!', 'warning');
