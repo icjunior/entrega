@@ -2,9 +2,10 @@ package br.com.bigsupermercados.entrega.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import br.com.bigsupermercados.entrega.controller.dto.TipoLancamentoDTO;
 import br.com.bigsupermercados.entrega.controller.form.TipoLancamentoForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 import br.com.bigsupermercados.entrega.service.TipoLancamentoService;
+import groovyjarjarpicocli.CommandLine.Model;
 
 @Controller
 @RequestMapping("/tipoLancamento")
@@ -31,7 +33,7 @@ public class TipoLancamentoController {
 		mv.addObject("tiposLancamento", TipoLancamentoDTO.converter(tiposLancamento));
 		return mv;
 	}
-	
+
 	@GetMapping("/novo")
 	public ModelAndView novo(TipoLancamentoForm tipoLancamentoForm) {
 		ModelAndView mv = new ModelAndView("tipoLancamento/CadastroTipoLancamento");
@@ -39,14 +41,14 @@ public class TipoLancamentoController {
 	}
 
 	@PostMapping("/novo")
-	public ModelAndView salvar(TipoLancamentoForm tipoLancamentoForm, BindingResult result, Model model,
+	public ModelAndView salvar(@Valid TipoLancamentoForm tipoLancamentoForm, BindingResult result, Model model,
 			RedirectAttributes attributes) {
-		
-		TipoLancamento tipoLancamento = tipoLancamentoForm.converter();
 
 		if (result.hasErrors()) {
 			return novo(tipoLancamentoForm);
 		}
+
+		TipoLancamento tipoLancamento = tipoLancamentoForm.converter();
 
 		service.salvar(tipoLancamento);
 		attributes.addFlashAttribute("mensagem", "Tipo de lançamento salvo com sucesso");

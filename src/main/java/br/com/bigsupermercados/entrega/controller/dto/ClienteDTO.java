@@ -15,6 +15,7 @@ public class ClienteDTO {
 	private String bairro;
 	private String cidade;
 	private BigDecimal porcentagem;
+	private String complemento;
 
 	public ClienteDTO(Cliente cliente) {
 		super();
@@ -27,6 +28,7 @@ public class ClienteDTO {
 		this.bairro = cliente.getEndereco().getBairro().getNome();
 		this.cidade = cliente.getEndereco().getBairro().getCidade().getNome();
 		this.porcentagem = cliente.getEndereco().getBairro().getPorcentagem();
+		this.complemento = cliente.getComplemento();
 	}
 
 	public String getNome() {
@@ -63,6 +65,10 @@ public class ClienteDTO {
 
 	public BigDecimal getPorcentagem() {
 		return porcentagem;
+	}
+
+	public String getComplemento() {
+		return complemento;
 	}
 
 	public static ClienteDTO converter(Cliente cliente) {

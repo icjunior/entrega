@@ -46,6 +46,7 @@ public class Cliente {
 
 	private boolean ativo = true;
 
+	@Column(name = "complemento")
 	private String complemento;
 
 	public Cliente() {

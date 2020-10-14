@@ -2,12 +2,21 @@ package br.com.bigsupermercados.entrega.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.bigsupermercados.entrega.controller.dto.GuiaDTO;
+import br.com.bigsupermercados.entrega.controller.filter.GuiaFilter;
 import br.com.bigsupermercados.entrega.controller.form.GuiaForm;
 import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
@@ -49,26 +60,26 @@ public class GuiaController {
 	public ModelAndView nova(GuiaForm guiaForm) {
 		ModelAndView mv = new ModelAndView("guia/EmitirGuia");
 		List<Loja> lojas = lojaRepository.findAll();
-		
+
 		mv.addObject("lojas", lojas);
 		return mv;
 	}
 
-	@GetMapping
-	public ModelAndView listar() {
-		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
-		mv.addObject("guias", repository.findAll());
-		return mv;
-	}
+//	@GetMapping
+//	public ModelAndView listar() {
+//		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
+//		mv.addObject("guias", repository.findAll());
+//		return mv;
+//	}
 
 	@PostMapping("/nova")
-	public ModelAndView salvar(GuiaForm form, BindingResult result, Model model, RedirectAttributes attributes) {
-
-		Guia guia = form.converter(clienteRepository, lojaRepository);
+	public ModelAndView salvar(@Valid GuiaForm form, BindingResult result, Model model, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
 			return nova(form);
 		}
+
+		Guia guia = form.converter(clienteRepository, lojaRepository);
 
 		service.salvar(guia);
 		attributes.addFlashAttribute("mensagem", "Guia lançada com sucesso");
@@ -87,7 +98,7 @@ public class GuiaController {
 	}
 
 	@PostMapping("/liberar")
-	public ModelAndView liberarGuias(GuiaLiberarForm guiaLiberarForm, BindingResult result, Model model,
+	public ModelAndView liberarGuias(@Valid GuiaLiberarForm guiaLiberarForm, BindingResult result, Model model,
 			RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {
@@ -99,11 +110,35 @@ public class GuiaController {
 
 		return new ModelAndView("redirect:/guia/liberar");
 	}
-	
+
 	@PutMapping("/tiraCupomBordero/{codigo}")
-	public ResponseEntity<?> eliminarCupomBordero(@PathVariable Long codigo){
+	public ResponseEntity<?> eliminarCupomBordero(@PathVariable Long codigo) {
 		service.eliminarCupomBordero(codigo);
-		
+
 		return ResponseEntity.ok("Excluido");
+	}
+
+	@GetMapping
+	public ModelAndView pesquisaExclusao(GuiaFilter guiaFilter, BindingResult result,
+			HttpServletRequest httpServletRequest,
+			@PageableDefault(sort = "codigo", direction = Direction.DESC) Pageable paginacao) {
+		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
+		List<Loja> lojas = lojaRepository.findAll();
+		Page<Guia> guias = Page.empty();
+
+		if (guiaFilter != null) {
+			guias = service.buscar(guiaFilter, paginacao);
+		}
+
+		mv.addObject("guias", GuiaDTO.converter(guias));
+		mv.addObject("lojas", lojas);
+		return mv;
+	}
+	
+	@PatchMapping("/excluir/{codigo}")
+	@Transactional
+	public ResponseEntity<GuiaDTO> excluir(@PathVariable("codigo") Guia guia){
+		guia.setExcluido(true);
+		return ResponseEntity.ok(GuiaDTO.converter(guia));
 	}
 }

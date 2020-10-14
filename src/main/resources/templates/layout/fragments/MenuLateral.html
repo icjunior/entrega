@@ -20,10 +20,13 @@
 							<i class="aw-menu__navigation-icon  fa"></i>
 						</a>
 						<ul class="aw-menu__list  aw-menu__list--sublist">
-							<li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/guia.+}">
+							<li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/guia}">
+								<a th:href="@{/guia}">Gerenciar</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/guia/nova}">
 								<a th:href="@{/guia/nova}">Emitir</a>
 							</li>
-							<li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/guia}">
+							<li class="aw-menu__item  aw-menu__item--link" brewer:menu="@{/guia/liberar}">
 								<a th:href="@{/guia/liberar}">Liberar</a>
 							</li>
 						</ul>

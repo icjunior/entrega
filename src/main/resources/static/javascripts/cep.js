@@ -5,13 +5,19 @@ function pesquisaCEP() {
 	cidadeInput = document.getElementById('cidade');
 	cepInput = document.getElementById('cep');
 	
+	console.log(cepInput.value)
+	
+	if(cepInput.value == '') {
+		return;
+	}
+	
 	getCEP(cepInput.value).then((resposta) => {
 		enderecoInput.value = resposta.endereco;
 		bairroInput.value = resposta.bairro;
 		cidadeInput.value = resposta.cidade;
 	})
 	.catch((erro) => {
-		console.warn('deu erro');
+		swal(':-(', 'CEP não encontrado!', 'warning');
 	})
 }
 

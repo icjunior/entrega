@@ -2,6 +2,8 @@ package br.com.bigsupermercados.entrega.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -59,14 +61,15 @@ public class ClienteController {
 	}
 
 	@PostMapping("/nova")
-	public ModelAndView salvar(ClienteForm clienteForm, BindingResult result, Model model,
+	public ModelAndView salvar(@Valid ClienteForm clienteForm, BindingResult result, Model model,
 			RedirectAttributes attributes) {
-		Cliente cliente = clienteForm.converter(enderecoRepository);
 		
 		if (result.hasErrors()) {
 			return nova(clienteForm);
 		}
 
+		Cliente cliente = clienteForm.converter(enderecoRepository);
+		
 		cadastroClienteService.salvar(cliente);
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso");
 

@@ -1,12 +1,17 @@
 package br.com.bigsupermercados.entrega.controller.form;
 
+import javax.validation.constraints.NotBlank;
+
 import br.com.bigsupermercados.entrega.modelo.entrega.ModoLancamento;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 
 public class TipoLancamentoForm {
 
 	private Long codigo;
+	
+	@NotBlank(message = "O nome do tipo de lançamento não pode ser em branco")
 	private String nome;
+	
 	private boolean ativo;
 	private boolean modoLancamento;
 

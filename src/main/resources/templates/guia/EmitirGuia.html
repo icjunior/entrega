@@ -83,7 +83,7 @@
 							</div> 
 						</div>
 						<div class="form-group">
-							<button class="btn  btn-primary" type="button" onclick="pesquisaCupom()">Buscar</button>
+							<button class="btn  btn-primary" type="button" onclick="pesquisaCupom()">Validar cupom</button>
 						</div>
 					</div>
 
@@ -96,7 +96,7 @@
 							
 							<div class="col-sm-6 form-group bw-required">
 								<label for="nome" class="control-label">Nome</label> 
-								<input id="nome" type="text" class="form-control" />
+								<input id="nome" type="text" class="form-control" readonly="readonly" />
 							</div>
 		
 							
@@ -109,31 +109,31 @@
 						<div class="row">
 							<div class="col-sm-3 form-group bw-required">
 								<label for="cep" class="control-label">CEP</label>
-								<input id="cep" type="text" class="form-control js-cep" th:field="*{cep}"/>
+								<input id="cep" type="text" class="form-control js-cep" th:field="*{cep}" readonly="readonly"/>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-sm-6 form-group bw-required">
 								<label for="endereco" class="control-label">Endereço</label>
-								<input id="endereco" type="text" class="form-control" th:field="*{endereco}"/>
+								<input id="endereco" type="text" class="form-control" th:field="*{endereco}" readonly="readonly"/>
 							</div>
 							
 							<div class="col-sm-3 form-group bw-required">
 								<label for="numero" class="control-label">Número</label>
-								<input id="numero" type="text" class="form-control" th:field="*{numero}" />
+								<input id="numero" type="text" class="form-control" th:field="*{numero}" readonly="readonly" />
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-sm-4 form-group bw-required">
 								<label for="bairro" class="control-label">Bairro</label>
-								<input id="bairro" type="text" class="form-control" th:field="*{bairro}"/>
+								<input id="bairro" type="text" class="form-control" th:field="*{bairro}" readonly="readonly"/>
 							</div> 
 							
 							<div class="col-sm-4 form-group bw-required">
 								<label for="cidade" class="control-label">Cidade</label>
-								<input id="cidade" type="text" class="form-control" th:field="*{cidade}"/>
+								<input id="cidade" type="text" class="form-control" th:field="*{cidade}" readonly="readonly"/>
 							</div>
 						</div>
 						<div class="row">

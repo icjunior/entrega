@@ -19,7 +19,7 @@ public class EnderecoService {
 		return repository.findByCep(cep.replace("-", ""));
 	}
 
-	public List<Endereco> findByLogradouro(String logradouro) {
-		return repository.findByLogradouroContaining(logradouro);
+	public List<Endereco> findByLogradouro(String logradouro, String cidade) {
+		return repository.findByLogradouroContainingAndBairro_Cidade_Nome(logradouro, cidade);
 	}
 }

@@ -5,8 +5,14 @@ function pesquisaCupom() {
 	const pdv = document.getElementById('pdvCupom').value;
 	const cupom = document.getElementById('numeroCupom').value;
 	let chaveAcesso = document.getElementById('hiddenChaveAcesso');
+	
+	if(!data || !loja || !pdv || !cupom){
+		swal(':-(', 'Dados obrigatórios não preenchidos', 'warning');
+		return;
+	}
 		
 	getCupom(data, loja, pdv, cupom).then((resposta) => {
+		swal(':-)', 'Cupom fiscal validado!', 'success');
 		chaveAcesso.value = resposta.m45xb;		
 		console.log(resposta.m45xb);
 	})

@@ -31,18 +31,59 @@
 		</div>
 
 		<div class="container-fluid">
+		
+			<form method="get" th:object="${guiaFilter}">
+				<div class="row">
+					<div class="col-sm-4 form-group bw-required">
+						<label for="dataCupom" class="control-label">Data</label>
+						<input id="dataCupom" type="text" class="form-control" th:field=*{data} autocomplete="off"/>
+					</div> 
+					
+					<div class="col-sm-4 form-group bw-required">
+						<label for="lojaCupom" class="control-label">Loja</label>							
+						<div class="bw-field-action">
+							<select id="lojaCupom" class="form-control" th:field="*{loja}">
+								<option value="">Selecione a loja</option>
+								<option th:each="loja : ${lojas}"
+									th:value="${loja.codigo}" th:text="${loja.apelido}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2 form-group bw-required">
+						<label for="pdvCupom" class="control-label">PDV</label>
+						<input id="pdvCupom" type="text" class="form-control" th:field="*{pdv}" />
+					</div>
+					
+					<div class="col-sm-2 form-group bw-required">
+						<label for="numeroCupom" class="control-label">Cupom</label>
+						<input id="numeroCupom" type="text" class="form-control" th:field="*{cupom}" />
+					</div> 
+					
+					<div class="col-sm-2 form-group bw-required">
+						<label for="valorCupom" class="control-label">Valor</label>
+						<input id="valorCupom" type="text" class="form-control" th:field="*{valor}" />
+					</div> 
+				</div>
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Buscar cupom</button>
+				</div>
+			</form>
+		
 			<div class="table-responsive bw-tabela-simples">
 				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th class="table-cervejas-col-sku">Código</th>
-							<th class="table-cervejas-col-nome">Data</th>
+							<th class="table-cervejas-col-origem">Data</th>
 							<th class="table-cervejas-col-origem">Loja</th>
 							<th class="table-cervejas-col-origem">PDV</th>
 							<th class="table-cervejas-col-origem">Cupom</th>
 							<th class="table-cervejas-col-origem">Cliente</th>
-							<th class="table-cervejas-col-origem">Entregue por</th>
-							<th class="table-cervejas-col-origem">Borderô</th>
+							<th class="table-cervejas-col-origem">Liberado para</th>
+							<th class="table-cervejas-col-origem">Ações</th>
 						</tr>
 					</thead>
 
@@ -50,32 +91,42 @@
 						<tr th:each="guia : ${guias}">
 							<td class="text-center" th:text="${guia.codigo}">AA1111</td>
 							<td th:text="${guia.data}">Teste</td>
-							<td th:text="${guia.loja.apelido}"></td>
+							<td th:text="${guia.loja}"></td>
 							<td th:text="${guia.pdv}"></td>
 							<td th:text="${guia.cupom}"></td>
-							<td th:text="${guia.cliente.nome}"></td>
-							<td th:text="${guia.motorista.nome}"></td>
-							<td th:text="${guia.bordero.codigo}"></td>
-							<td class="text-center">
-								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
-									th:href="@{/cliente/{codigo}(codigo=${cliente.codigo})}"> 
-									<i class="glyphicon glyphicon-pencil"></i>
-								</a> 
-								<a class="btn btn-link btn-xs js-tooltip js-exclusao-btn"
-									title="Excluir" data:objeto="${cliente.nome}" href="#"
-									data:url="@{/cliente/{codigo}(codigo=${cliente.codigo})}"> 
+							<td th:text="${guia.cliente}"></td>
+							<td th:text="${guia.motorista}"></td>
+							<td class="text-center"> 
+								<a class="btn btn-link btn-xs js-tooltip js-exclusao-guia"
+									title="Excluir" data:objeto="${guia.cupom}" href="#"
+									data:url="@{/guia/excluir/{codigo}(codigo=${guia.codigo})}"> 
 									<i class="glyphicon glyphicon-remove"></i>
 								</a>
 							</td>
-						</tr>
-						<tr th:if="${clientes == null}">
-							<td colspan="7">Nenhuma guia encontrada</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/guia.exclusao.js}"></script>
+		<script>
+			$(function() {
+			    $( "#dataCupom" ).datepicker({
+							language : "pt-BR",
+							maxViewMode : 2,
+							minViewMode : 0,
+							clearBtn : true,
+							todayHighlight : true,
+							todayBtn : true,
+							format : "dd/mm/yyyy",
+							autoclose : true,
+							forceParse : true
+				});
+			});
+		</script>
+	</th:block>
 </body>
 
 </html>

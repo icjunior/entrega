@@ -16,7 +16,7 @@ function buscaPorLogradouro() {
   		
 	})
 	.catch((erro) => {
-		console.warn('deu erro');
+		swal(':-(', 'Endereço não encontrado!', 'warning');
 	})
 }
 

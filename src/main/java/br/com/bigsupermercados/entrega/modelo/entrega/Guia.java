@@ -56,6 +56,9 @@ public class Guia {
 	@Column(name = "chave_acesso")
 	private String chaveAcesso;
 
+	@Column(name = "excluido")
+	private boolean excluido = false;
+
 	public Guia() {
 	}
 
@@ -223,6 +226,14 @@ public class Guia {
 
 	public void setChaveAcesso(String chaveAcesso) {
 		this.chaveAcesso = chaveAcesso;
+	}
+
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
 	}
 
 	@Override

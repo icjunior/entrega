@@ -33,8 +33,9 @@ public class EnderecoController {
 	}
 
 	@GetMapping("/pesquisaEnderecoPorLogradouro")
-	public ResponseEntity<List<EnderecoDTO>> findByLogradouro(@RequestParam String logradouro) {
-		List<Endereco> enderecos = service.findByLogradouro(logradouro);
+	public ResponseEntity<List<EnderecoDTO>> findByLogradouro(@RequestParam String logradouro,
+			@RequestParam(required = false, defaultValue = "Atibaia") String cidade) {
+		List<Endereco> enderecos = service.findByLogradouro(logradouro, cidade);
 
 		if (enderecos.isEmpty()) {
 			return ResponseEntity.notFound().build();

@@ -3,6 +3,11 @@ package br.com.bigsupermercados.entrega.controller.form;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
@@ -12,12 +17,26 @@ import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 public class GuiaForm {
 
 	private Long codigo;
+
+	@NotNull(message = "O campo data do cupom não pode ser em branco")
+	@PastOrPresent(message = "A data do cupom não pode ser no futuro")
 	private LocalDate data;
+
+	@Min(value = 1, message = "A loja não pode ser em branco")
 	private Long codigoLoja;
+
+	@NotNull(message = "O número do PDV não pode ser em branco")
 	private Integer pdv;
+
+	@NotBlank(message = "O número do cupom não pode ser em branco")
 	private String cupom;
+
+	@NotNull(message = "O valor do cupom não pode ser em branco")
 	private BigDecimal valor;
+
+	@NotBlank(message = "O CPF do cliente não pode ser em branco")
 	private String cpf;
+
 	private String telefone;
 	private String cep;
 	private String endereco;
