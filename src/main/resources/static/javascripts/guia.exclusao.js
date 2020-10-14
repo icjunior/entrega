@@ -26,7 +26,8 @@ Brewer.DialogoExcluir = (function() {
 			showCancelButton : true,
 			confirmButtonCollor : '#DD6B55',
 			confirmButtonText : 'Sim, exclua agora!',
-			closeOnConfirm: false
+			closeOnConfirm: false,
+			cancelButtonText: 'Não'
 		}, onExcluirConfirmado.bind(this, url));
 	}
 
