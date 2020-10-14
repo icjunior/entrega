@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.entrega.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -65,17 +66,19 @@ public class GuiaController {
 		return mv;
 	}
 
-//	@GetMapping
-//	public ModelAndView listar() {
-//		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
-//		mv.addObject("guias", repository.findAll());
-//		return mv;
-//	}
-
 	@PostMapping("/nova")
 	public ModelAndView salvar(@Valid GuiaForm form, BindingResult result, Model model, RedirectAttributes attributes) {
 
+		Optional<Guia> guiaOpt = repository.buscarCupom(form.getData(), form.getCodigoLoja(), form.getPdv(),
+				form.getCupom(), form.getValor());
+
 		if (result.hasErrors()) {
+			return nova(form);
+		}
+
+		if (guiaOpt.isPresent()) {
+			model.addAttribute("erro",
+					"Guia de entregas não lançada, pois já existe esse cupom fiscal já foi lançado anteriormente");
 			return nova(form);
 		}
 
@@ -91,7 +94,7 @@ public class GuiaController {
 	public ModelAndView listaGuiasALiberar(GuiaLiberarForm guiaLiberarForm) {
 		ModelAndView mv = new ModelAndView("guia/LiberarGuia");
 		List<Motorista> motoristas = motoristaRepository.findByAtivoTrue();
-		List<Guia> guiasALiberar = repository.findByMotoristaIsNull();
+		List<Guia> guiasALiberar = repository.findByMotoristaIsNullAndExcluidoFalse();
 		mv.addObject("guiasALiberar", guiasALiberar);
 		mv.addObject("motoristas", motoristas);
 		return mv;
@@ -119,8 +122,7 @@ public class GuiaController {
 	}
 
 	@GetMapping
-	public ModelAndView pesquisaExclusao(GuiaFilter guiaFilter, BindingResult result,
-			HttpServletRequest httpServletRequest,
+	public ModelAndView pesquisa(GuiaFilter guiaFilter, BindingResult result, HttpServletRequest httpServletRequest,
 			@PageableDefault(sort = "codigo", direction = Direction.DESC) Pageable paginacao) {
 		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
 		List<Loja> lojas = lojaRepository.findAll();
@@ -134,10 +136,17 @@ public class GuiaController {
 		mv.addObject("lojas", lojas);
 		return mv;
 	}
-	
+
 	@PatchMapping("/excluir/{codigo}")
 	@Transactional
-	public ResponseEntity<GuiaDTO> excluir(@PathVariable("codigo") Guia guia){
+	public ResponseEntity<?> excluir(@PathVariable("codigo") Guia guia) {
+		if (guia.getBordero() != null) {
+			return ResponseEntity.badRequest()
+					.body("Impossível excluir cupom fiscal. Ele já faz parte do borderô "
+							+ guia.getBordero().getCodigo()
+							+ ". Caso queira eliminar, desvincule do borderô e refaça o processo.");
+		}
+
 		guia.setExcluido(true);
 		return ResponseEntity.ok(GuiaDTO.converter(guia));
 	}

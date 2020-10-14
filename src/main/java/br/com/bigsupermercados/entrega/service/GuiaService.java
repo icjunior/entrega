@@ -58,7 +58,7 @@ public class GuiaService {
 	}
 
 	public Page<Guia> buscar(GuiaFilter guiaFilter, Pageable paginacao) {
-		return repository.findByDataAndLoja_CodigoAndPdvAndCupomAndValor(guiaFilter.getData(), guiaFilter.getLoja(),
-				guiaFilter.getPdv(), guiaFilter.getCupom(), guiaFilter.getValor(), paginacao);
+		return repository.buscarCupomComPaginacao(guiaFilter.getData(), guiaFilter.getLoja(), guiaFilter.getPdv(),
+				guiaFilter.getCupom(), guiaFilter.getValor(), paginacao);
 	}
 }

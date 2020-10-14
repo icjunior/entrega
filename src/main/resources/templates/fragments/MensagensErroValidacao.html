@@ -3,10 +3,11 @@
 	xmlns:th="http://www.thymeleaft.org">
 
 <div class="alert  alert-danger  alert-dismissible" role="alert"
-	th:if="${#fields.hasAnyErrors()}">
+	th:if="${#fields.hasAnyErrors() || not #strings.isEmpty(erro)}">
 	<button type="button" class="close" data-dismiss="alert">
 		<span aria-hidden="true">&times;</span>
 	</button>
+	<span th:text="${erro}"></span>
 	<th:block th:each="detailedError : ${#fields.detailedErrors()}">
 		<div>
 			<i class="fa  fa-exclamation-circle"></i>
