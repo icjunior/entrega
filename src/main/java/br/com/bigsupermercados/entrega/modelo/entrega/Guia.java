@@ -59,6 +59,9 @@ public class Guia {
 	@Column(name = "excluido")
 	private boolean excluido = false;
 
+	@Column(name = "validado")
+	private boolean validado = false;
+
 	public Guia() {
 	}
 
@@ -234,6 +237,14 @@ public class Guia {
 
 	public void setExcluido(boolean excluido) {
 		this.excluido = excluido;
+	}
+
+	public boolean isValidado() {
+		return validado;
+	}
+
+	public void setValidado(boolean validado) {
+		this.validado = validado;
 	}
 
 	@Override

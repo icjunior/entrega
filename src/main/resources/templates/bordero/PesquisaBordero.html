@@ -38,8 +38,10 @@
 							<th class="table-cervejas-col-sku">Código</th>
 							<th class="table-cervejas-col-nome">Motorista</th>
 							<th class="table-cervejas-col-origem">Incluído em</th>
-							<th class="table-cervejas-col-origem">Valor</th>
-							<th class="table-cervejas-col-origem">Valor à receber</th>
+							<th class="table-cervejas-col-origem">Valor total</th>
+							<th class="table-cervejas-col-origem">Valor à conferir</th>
+							<th class="table-cervejas-col-origem">Valor conferido</th>
+							<th class="table-cervejas-col-origem">Valor à receber (conferido)</th>
 							<th class="table-cervejas-col-origem">Qtd. guias</th>
 							<th class="table-cervejas-col-origem">Status</th>
 							<th class="table-cervejas-col-origem">Ações</th>
@@ -52,6 +54,8 @@
 							<td th:text="${bordero.motorista}">Teste</td>
 							<td th:text="${#temporals.format(bordero.dataHoraLancamento, 'dd/MM/yyyy')}"></td>
 							<td th:text="${#numbers.formatCurrency(bordero.valor)}"></td>
+							<td th:text="${#numbers.formatCurrency(bordero.valorAConferir)}"></td>
+							<td th:text="${#numbers.formatCurrency(bordero.valorConferido)}"></td>
 							<td th:text="${#numbers.formatCurrency(bordero.valorAReceber)}"></td>
 							<td th:text="${bordero.quantidadeLancadas}"></td>
 							<td th:text="${bordero.aberto ? 'Aberto' : 'Fechado'}"></td>

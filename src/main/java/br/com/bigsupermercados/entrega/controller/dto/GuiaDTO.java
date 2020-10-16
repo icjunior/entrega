@@ -17,6 +17,7 @@ public class GuiaDTO {
 	private BigDecimal valor;
 	private String cliente;
 	private String motorista;
+	private boolean validado;
 
 	public GuiaDTO(Guia guia) {
 		super();
@@ -28,6 +29,7 @@ public class GuiaDTO {
 		this.valor = guia.getValor();
 		this.cliente = guia.getCliente().getNome();
 		this.motorista = guia.getMotorista() == null ? String.valueOf("Não liberada") : guia.getMotorista().getNome();
+		this.validado = guia.isValidado();
 	}
 
 	public Long getCodigo() {
@@ -60,6 +62,10 @@ public class GuiaDTO {
 
 	public String getMotorista() {
 		return motorista;
+	}
+
+	public boolean isValidado() {
+		return validado;
 	}
 
 	public static Page<GuiaDTO> converter(Page<Guia> guias) {

@@ -51,10 +51,10 @@ public class GuiaService {
 		return repository.findByBordero_Codigo(bordero.getCodigo());
 	}
 
-	public void eliminarCupomBordero(Long codigo) {
-		Guia guia = repository.getOne(codigo);
+	public void eliminarCupomBordero(Guia guia) {
 		guia.setBordero(null);
-		repository.flush();
+		guia.setMotorista(null);
+		guia.setValidado(false);
 	}
 
 	public Page<Guia> buscar(GuiaFilter guiaFilter, Pageable paginacao) {

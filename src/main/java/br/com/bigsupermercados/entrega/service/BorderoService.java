@@ -35,7 +35,7 @@ public class BorderoService {
 	}
 
 	public List<Bordero> listar() {
-		return repository.findAll();
+		return repository.findByAbertoTrue();
 	}
 
 	public Optional<Bordero> buscarBordero(Long codigoBordero) {

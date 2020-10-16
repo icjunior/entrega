@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -114,9 +113,10 @@ public class GuiaController {
 		return new ModelAndView("redirect:/guia/liberar");
 	}
 
-	@PutMapping("/tiraCupomBordero/{codigo}")
-	public ResponseEntity<?> eliminarCupomBordero(@PathVariable Long codigo) {
-		service.eliminarCupomBordero(codigo);
+	@PatchMapping("/tiraCupomBordero/{codigo}")
+	@Transactional
+	public ResponseEntity<?> eliminarCupomBordero(@PathVariable(value = "codigo") Guia guia) {
+		service.eliminarCupomBordero(guia);
 
 		return ResponseEntity.ok("Excluido");
 	}

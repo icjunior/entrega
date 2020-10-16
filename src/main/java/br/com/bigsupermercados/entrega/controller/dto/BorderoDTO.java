@@ -16,6 +16,8 @@ public class BorderoDTO {
 	private BigDecimal valor;
 	private Integer quantidadeLancadas;
 	private BigDecimal valorAReceber;
+	private BigDecimal valorAConferir;
+	private BigDecimal valorConferido;
 
 	public BorderoDTO(Bordero bordero) {
 		this.codigo = bordero.getCodigo();
@@ -23,11 +25,19 @@ public class BorderoDTO {
 		this.dataHoraLancamento = bordero.getDataHoraLancamento();
 		this.aberto = bordero.isAberto();
 		this.valor = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		
 		this.valorAReceber = bordero
-				.getGuias().stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem())
-						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
+				.getGuias().stream().filter(guia -> guia.isValidado()).map(guia -> guia.getValor()
+						.multiply(guia.getPorcentagem()).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
 		this.quantidadeLancadas = bordero.getGuias().size();
+		
+		this.valorAConferir = bordero.getGuias().stream().filter(guia -> !guia.isValidado())
+				.map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		this.valorConferido = bordero.getGuias().stream().filter(guia -> guia.isValidado()).map(guia -> guia.getValor())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public Long getCodigo() {
@@ -56,6 +66,14 @@ public class BorderoDTO {
 
 	public BigDecimal getValorAReceber() {
 		return valorAReceber;
+	}
+
+	public BigDecimal getValorAConferir() {
+		return valorAConferir;
+	}
+
+	public BigDecimal getValorConferido() {
+		return valorConferido;
 	}
 
 	public static List<BorderoDTO> converter(List<Bordero> borderos) {

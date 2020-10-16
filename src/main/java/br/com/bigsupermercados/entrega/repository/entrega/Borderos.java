@@ -14,5 +14,7 @@ public interface Borderos extends JpaRepository<Bordero, Long> {
 	Optional<Bordero> findByMotorista_CodigoAndAbertoTrue(Long codigo);
 
 	List<Bordero> findByAbertoFalse();
+	
+	List<Bordero> findByAbertoTrue();
 
 }

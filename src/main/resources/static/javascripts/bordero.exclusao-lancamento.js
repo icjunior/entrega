@@ -3,7 +3,7 @@ Brewer = Brewer || {};
 Brewer.DialogoExcluir = (function() {
 
 	function DialogoExcluir() {
-		this.exclusaoBtn = $('.js-exclusao-bordero-lancamento');
+		this.exclusaoBtn = $('.js-exclusao-cupom-bordero');
 	}
 
 	DialogoExcluir.prototype.iniciar = function() {
@@ -34,7 +34,7 @@ Brewer.DialogoExcluir = (function() {
 	console.log(url);
 		$.ajax({
 			url : url,
-			method : 'DELETE',
+			method : 'PATCH',
 			success : onExcluidoSucesso.bind(this),
 			error: onErroExcluir.bind(this)
 		});
