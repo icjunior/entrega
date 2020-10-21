@@ -27,4 +27,7 @@ public interface GuiaRepository extends JpaRepository<Guia, Long> {
 
 	@Query("SELECT g FROM Guia g WHERE data = ?1 AND loja.codigo = ?2 AND pdv = ?3 AND cupom = ?4 AND valor = ?5 AND excluido = false")
 	Optional<Guia> buscarCupom(LocalDate data, Long loja, Integer pdv, String cupom, BigDecimal valor);
+
+	@Query("SELECT g FROM Guia g WHERE bordero.codigo = ?1 AND chaveAcesso = ?2 AND excluido = false AND validado = false")
+	Optional<Guia> buscarCupomNoBordero(Long bordero, String chaveAcesso);
 }

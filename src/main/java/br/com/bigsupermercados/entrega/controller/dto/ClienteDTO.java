@@ -1,6 +1,8 @@
 package br.com.bigsupermercados.entrega.controller.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 
@@ -73,5 +75,9 @@ public class ClienteDTO {
 
 	public static ClienteDTO converter(Cliente cliente) {
 		return new ClienteDTO(cliente);
+	}
+
+	public static List<ClienteDTO> converter(List<Cliente> clientes) {
+		return clientes.stream().map(ClienteDTO::new).collect(Collectors.toList());
 	}
 }

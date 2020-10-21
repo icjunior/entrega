@@ -37,9 +37,7 @@ const getLogradouro = async (logradouro) => {
 }
 
 
-function populaCampos(element){
-	const linha = element;
-	
+function populaCampos(element){	
 	let cepInput = document.getElementById('cep');
 	let enderecoInput = document.getElementById('endereco');
 	let bairroInput = document.getElementById('bairro');

@@ -33,7 +33,7 @@ Brewer.DialogoExcluir = (function() {
 	function onExcluirConfirmado(url) {
 		$.ajax({
 			url : url,
-			method : 'PUT',
+			method : 'PATCH',
 			success : onExcluidoSucesso.bind(this),
 			error: onErroExcluir.bind(this)
 		});

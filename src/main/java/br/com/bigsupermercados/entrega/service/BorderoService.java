@@ -15,6 +15,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.LancamentoBordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.ModoLancamento;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
 import br.com.bigsupermercados.entrega.repository.entrega.Borderos;
+import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 
 @Service
 public class BorderoService {
@@ -24,6 +25,9 @@ public class BorderoService {
 
 	@Autowired
 	private LancamentoBorderoService lancamentoBorderoService;
+
+	@Autowired
+	private GuiaRepository guiaRepository;
 
 	public Optional<Bordero> borderoAbertoPorMotorista(Motorista motorista) {
 		return repository.findByMotorista_CodigoAndAbertoTrue(motorista.getCodigo());
@@ -46,7 +50,6 @@ public class BorderoService {
 		Bordero bordero = repository.getOne(codigo);
 		// apagar os registros de arredondamento na parte das listas
 		bordero.setAberto(true);
-		repository.flush();
 	}
 
 	public List<Bordero> listaFechados() {
@@ -71,14 +74,9 @@ public class BorderoService {
 		// gravando o registro de arredondamento
 		lancamentoBorderoService.gravarArredondamento(bordero, valorArredondamento);
 
-		// valor total do borderô
-		// BigDecimal total =
-		// totalGuias.add(totalAcrescimos).add(valorArredondamento).subtract(totalDescontos);
-
 		// fazer a inserção do registro do arredondamento na tela de lançamentos
 		bordero.setAberto(false);
-		repository.flush();
-		
+
 		return bordero;
 	}
 
@@ -105,5 +103,12 @@ public class BorderoService {
 				.setScale(0, RoundingMode.UP).multiply(fatorArredondamento);
 
 		return valorBorderoArredondado.subtract(valorBorderoSemArredondamento);
+	}
+
+	public Optional<Guia> validarCupomBordero(Long bordero, String chaveAcesso) {
+
+		Optional<Guia> guiaOpt = guiaRepository.buscarCupomNoBordero(bordero, chaveAcesso);
+
+		return guiaOpt;
 	}
 }

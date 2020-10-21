@@ -29,7 +29,7 @@ function pesquisaCPF() {
 }
 
 const getCPF = async (cpf) => {
-	const uri = `/entrega/cliente/busca/${cpf}`;
+	const uri = `/entrega/cliente/buscaPorCPF?filtro=${cpf}`;
 
 	const requestInfo = {
 		method : 'GET',

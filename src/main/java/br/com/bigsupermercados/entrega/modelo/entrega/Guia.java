@@ -86,6 +86,29 @@ public class Guia {
 		this.porcentagem = porcentagem;
 		this.chaveAcesso = chaveAcesso;
 	}
+	
+	public Guia(Guia guia) {
+		super();
+		this.loja = guia.getLoja();
+		this.data = guia.getData();
+		this.pdv = guia.getPdv();
+		this.cupom = guia.getCupom();
+		this.valor = guia.getValor();
+		this.cliente = guia.getCliente();
+		this.cep = guia.getCep();
+		this.endereco = guia.getEndereco();
+		this.numero = guia.getNumero();
+		this.bairro = guia.getBairro();
+		this.cidade = guia.getCidade();
+		this.complemento = guia.getComplemento();
+		this.motorista = guia.getMotorista();
+		this.bordero = guia.getBordero();
+		this.reentrega = guia.isReentrega();
+		this.porcentagem = guia.getPorcentagem();
+		this.chaveAcesso = guia.getChaveAcesso();
+		this.excluido = guia.isExcluido();
+		this.validado = guia.isValidado();
+	}
 
 	public Long getCodigo() {
 		return codigo;

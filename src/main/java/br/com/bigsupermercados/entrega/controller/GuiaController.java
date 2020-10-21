@@ -127,6 +127,7 @@ public class GuiaController {
 		ModelAndView mv = new ModelAndView("guia/PesquisaGuia");
 		List<Loja> lojas = lojaRepository.findAll();
 		Page<Guia> guias = Page.empty();
+		List<Motorista> motoristas = motoristaRepository.findAll();
 
 		if (guiaFilter != null) {
 			guias = service.buscar(guiaFilter, paginacao);
@@ -134,6 +135,7 @@ public class GuiaController {
 
 		mv.addObject("guias", GuiaDTO.converter(guias));
 		mv.addObject("lojas", lojas);
+		mv.addObject("motoristas", motoristas);
 		return mv;
 	}
 
@@ -149,5 +151,13 @@ public class GuiaController {
 
 		guia.setExcluido(true);
 		return ResponseEntity.ok(GuiaDTO.converter(guia));
+	}
+
+	@PostMapping("/reentrega/{guia}/{motorista}")
+	@Transactional
+	public ResponseEntity<?> reentrega(@PathVariable("guia") Guia guia, @PathVariable("motorista") Motorista motorista) {
+		Guia guiaNova = service.reentrega(guia);
+
+		return ResponseEntity.ok(new GuiaDTO(guiaNova));
 	}
 }

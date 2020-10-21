@@ -61,4 +61,10 @@ public class GuiaService {
 		return repository.buscarCupomComPaginacao(guiaFilter.getData(), guiaFilter.getLoja(), guiaFilter.getPdv(),
 				guiaFilter.getCupom(), guiaFilter.getValor(), paginacao);
 	}
+
+	public Guia reentrega(Guia guia) {
+		Guia guiaNova = new Guia(guia);
+		guiaNova.setReentrega(true);
+		return guiaNova; 
+	}
 }

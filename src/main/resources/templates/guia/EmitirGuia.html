@@ -96,9 +96,16 @@
 							
 							<div class="col-sm-6 form-group bw-required">
 								<label for="nome" class="control-label">Nome</label> 
-								<input id="nome" type="text" class="form-control" readonly="readonly" />
+								<div class="input-group">
+									<input id="nome" type="text" class="form-control" readonly="readonly" />
+									<span class="input-group-btn">
+								        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa de clientes"
+								        		data-toggle="modal" data-target="#modalPesquisaClientes">
+								        	<i class="glyphicon  glyphicon-search"></i>
+								        </button>
+					      			</span>
+				      			</div>
 							</div>
-		
 							
 							<div class="col-sm-3 form-group bw-required">
 								<label for="telefone" class="control-label">Telefone</label> 
@@ -152,10 +159,12 @@
 				</div>
 			</form>
 		</div>
+		<th:block th:replace="cliente/PesquisaRapidaCliente"></th:block>
 	</section>
 	<th:block layout:fragment="javascript-extra">
 		<script th:src="@{/javascripts/cpf.js}"></script>
 		<script th:src="@{/javascripts/cupom.consulta.js}"></script>
+		<script th:src="@{/javascripts/cliente.busca-por-nome.js}"></script>
 		<script>
 			$(function() {
 				$('.js-abas-venda a').click(function (e) {

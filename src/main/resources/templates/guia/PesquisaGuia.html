@@ -102,15 +102,22 @@
 									data:url="@{/guia/excluir/{codigo}(codigo=${guia.codigo})}"> 
 									<i class="glyphicon glyphicon-remove"></i>
 								</a>
+								<a class="btn btn-link btn-xs js-tooltip"
+									title="Reentrega" data:guia="${guia.codigo}" href="#"
+									onclick="abrirModal(event)"> 
+									<i class="glyphicon glyphicon-refresh"></i>
+								</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<th:block th:replace="guia/Reentrega"></th:block>
 	</section>
 	<th:block layout:fragment="javascript-extra">
 		<script th:src="@{/javascripts/guia.exclusao.js}"></script>
+		<script th:src="@{/javascripts/guia.reentrega.js}"></script>
 		<script>
 			$(function() {
 			    $( "#dataCupom" ).datepicker({

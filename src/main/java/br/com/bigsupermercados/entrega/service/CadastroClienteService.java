@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.PersistenceException;
@@ -34,7 +35,11 @@ public class CadastroClienteService {
 		}
 	}
 
-	public Optional<Cliente> buscarPorCPF(String cpf) {
+	public Optional<Cliente> buscaPorCPF(String cpf) {
 		return clientes.findByCpf(cpf);
+	}
+
+	public List<Cliente> buscaPorNome(String nome) {
+		return clientes.findByNomeContaining(nome);
 	}
 }

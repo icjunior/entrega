@@ -68,6 +68,14 @@
 									<i th:if="${not guia.validado}" class="fa  fa-fw  fa-ban"></i>
 								</td>
 								<td class="text-center">
+									<a class="btn btn-link btn-xs js-tooltip"
+										title="Validar cupom" href="#" 
+										onclick="validarCupomBordero(event)"
+										data:chaveacesso="${guia.chaveAcesso}"
+										data:bordero=${bordero.codigo}
+										data:validado=${guia.validado}> 
+										<i class="glyphicon glyphicon-floppy-disk"></i>
+									</a>
 									<a class="btn btn-link btn-xs js-tooltip js-exclusao-cupom-bordero"
 										title="Excluir" data:objeto="${guia.cupom}" href="#"
 										data:url="@{/guia/tiraCupomBordero/{codigo}(codigo=${guia.codigo})}"> 
@@ -89,10 +97,12 @@
 		</div>
 		
 		<th:block th:replace="bordero/Lancamento"></th:block>
+		<th:block th:replace="bordero/ValidarCupom"></th:block>
 	</section>
 	<th:block layout:fragment="javascript-extra">
 		<script th:src="@{/javascripts/bordero.js}"></script>
 		<script th:src="@{/javascripts/bordero.lancamento.js}"></script>
+		<script th:src="@{/javascripts/bordero.validarCupom.js}"></script>
 		<script th:src="@{/javascripts/bordero.finaliza.js}"></script>
 		<script th:src="@{/javascripts/bordero.exclusao-lancamento.js}"></script>
 		<script th:src="@{/javascripts/bordero.gravarLancamento.js}"></script>
