@@ -82,9 +82,9 @@
 								<input id="valorCupom" type="text" class="form-control" th:field="*{valor}" />
 							</div> 
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<button class="btn  btn-primary" type="button" onclick="pesquisaCupom()">Validar cupom</button>
-						</div>
+						</div> -->
 					</div>
 
 					<div class="tab-pane" id="dadosCliente">
@@ -102,6 +102,10 @@
 								        <button class="btn  btn-default  js-tooltip" type="button" title="Pesquisa de clientes"
 								        		data-toggle="modal" data-target="#modalPesquisaClientes">
 								        	<i class="glyphicon  glyphicon-search"></i>
+								        </button>
+								         <button class="btn  btn-default  js-tooltip" type="button" title="Cadastrar cliente"
+								        		onclick="cadastroCliente()">
+								        	<i class="glyphicon  glyphicon-plus"></i>
 								        </button>
 					      			</span>
 				      			</div>
@@ -149,9 +153,9 @@
 								<textarea id="complemento" rows="10" cols="20" class="form-control" th:field="*{complemento}" ></textarea>
 							</div>
 						</div>
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<button class="btn  btn-primary" type="button" id="btnCadastroCliente" onclick="cadastroCliente()">Cadastrar cliente</button>
-						</div>
+						</div> -->
 					</div>
 					<div class="form-group">
 						<button class="btn btn-primary" type="submit" id="btnEmitirGuia">Emitir guia</button>

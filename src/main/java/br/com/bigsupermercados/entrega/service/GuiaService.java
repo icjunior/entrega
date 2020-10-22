@@ -30,19 +30,19 @@ public class GuiaService {
 	private BorderoService borderoService;
 
 	public void salvar(Guia guia) {
-		Optional<Guia> guiaOpt = repository.buscarCupom(guia.getData(), guia.getLoja().getCodigo(), guia.getPdv(),
-				guia.getCupom(), guia.getValor());
-
-		if (guiaOpt.isPresent()) {
-			throw new RegistroJaCadastradoException("Guia já lançada no sistema.");
-		}
-
 		Optional<ZanM45> cupomZanthusOpt = zanM45Service.buscarCupom(guia.getData(), guia.getLoja().getCodigo(),
 				guia.getPdv(), Integer.parseInt(guia.getCupom()));
 
 		if (!cupomZanthusOpt.isPresent()) {
 			throw new RegistroNaoEncontradoException(
 					"Cupom fiscal não encontrado. Revise as informações e tente novamente.");
+		}
+
+		Optional<Guia> guiaOpt = repository.buscarCupom(guia.getData(), guia.getLoja().getCodigo(), guia.getPdv(),
+				guia.getCupom(), guia.getValor());
+
+		if (guiaOpt.isPresent()) {
+			throw new RegistroJaCadastradoException("Guia já lançada no sistema.");
 		}
 
 		repository.save(guia);
