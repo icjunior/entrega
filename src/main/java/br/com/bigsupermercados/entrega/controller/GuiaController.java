@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -36,6 +35,8 @@ import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.repository.entrega.Motoristas;
 import br.com.bigsupermercados.entrega.service.GuiaService;
+import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
+import br.com.bigsupermercados.entrega.service.exception.RegistroNaoEncontradoException;
 
 @Controller
 @RequestMapping("/guia")
@@ -68,24 +69,20 @@ public class GuiaController {
 	@PostMapping("/nova")
 	public ModelAndView salvar(@Valid GuiaForm form, BindingResult result, Model model, RedirectAttributes attributes) {
 
-		Optional<Guia> guiaOpt = repository.buscarCupom(form.getData(), form.getCodigoLoja(), form.getPdv(),
-				form.getCupom(), form.getValor());
-
 		if (result.hasErrors()) {
 			return nova(form);
 		}
 
-		if (guiaOpt.isPresent()) {
-			model.addAttribute("erro",
-					"Guia de entregas não lançada, pois já existe esse cupom fiscal já foi lançado anteriormente");
+		Guia guia = form.converter(clienteRepository, lojaRepository);
+		
+		try {
+			service.salvar(guia);
+		} catch (RegistroJaCadastradoException | RegistroNaoEncontradoException e) {
+			result.rejectValue("cupom", e.getMessage(), e.getMessage());
 			return nova(form);
 		}
 
-		Guia guia = form.converter(clienteRepository, lojaRepository);
-
-		service.salvar(guia);
 		attributes.addFlashAttribute("mensagem", "Guia lançada com sucesso");
-
 		return new ModelAndView("redirect:/guia/nova");
 	}
 
@@ -155,7 +152,8 @@ public class GuiaController {
 
 	@PostMapping("/reentrega/{guia}/{motorista}")
 	@Transactional
-	public ResponseEntity<?> reentrega(@PathVariable("guia") Guia guia, @PathVariable("motorista") Motorista motorista) {
+	public ResponseEntity<?> reentrega(@PathVariable("guia") Guia guia,
+			@PathVariable("motorista") Motorista motorista) {
 		Guia guiaNova = service.reentrega(guia);
 
 		return ResponseEntity.ok(new GuiaDTO(guiaNova));
