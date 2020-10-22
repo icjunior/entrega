@@ -20,6 +20,7 @@ public class EnderecoService {
 	}
 
 	public List<Endereco> findByLogradouro(String logradouro, String cidade) {
-		return repository.findByLogradouroContainingAndBairro_Cidade_Nome(logradouro, cidade);
+//		return repository.findByLogradouroContainingAndBairro_Cidade_Nome(logradouro, cidade);
+		return repository.buscar(logradouro);
 	}
 }
