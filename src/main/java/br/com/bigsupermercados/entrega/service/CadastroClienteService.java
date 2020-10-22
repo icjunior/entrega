@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.service.exception.ImpossivelExcluirEntidadeException;
+import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 
 @Service
 public class CadastroClienteService {
@@ -21,6 +22,12 @@ public class CadastroClienteService {
 
 	@Transactional
 	public void salvar(Cliente cliente) {
+		Optional<Cliente> clienteOpt = clientes.findByCpf(cliente.getCpf());
+		
+		if(clienteOpt.isPresent()) {
+			throw new RegistroJaCadastradoException("CPF já cadastrado no sistema");
+		}
+		
 		clientes.save(cliente);
 	}
 
