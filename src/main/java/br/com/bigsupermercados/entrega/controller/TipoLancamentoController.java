@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,16 @@ public class TipoLancamentoController {
 		ModelAndView mv = new ModelAndView("tipoLancamento/PesquisaTipoLancamento");
 		List<TipoLancamento> tiposLancamento = service.listar();
 		mv.addObject("tiposLancamento", TipoLancamentoDTO.converter(tiposLancamento));
+		return mv;
+	}
+	
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") TipoLancamento tipoLancamento) {
+		TipoLancamentoForm tipoLancamentoForm = tipoLancamento.converter();
+
+		ModelAndView mv = novo(tipoLancamentoForm);
+		mv.addObject("tipoLancamentoForm", tipoLancamentoForm);
+		
 		return mv;
 	}
 

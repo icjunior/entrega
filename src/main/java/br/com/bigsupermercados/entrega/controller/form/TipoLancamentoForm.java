@@ -14,6 +14,16 @@ public class TipoLancamentoForm {
 	
 	private boolean ativo;
 	private boolean modoLancamento;
+	
+	public TipoLancamentoForm() {
+		
+	}
+	
+	public TipoLancamentoForm(String nome, boolean ativo, boolean modoLancamento) {
+		this.nome = nome;
+		this.ativo = ativo;
+		this.modoLancamento = modoLancamento;
+	}
 
 	public Long getCodigo() {
 		return codigo;

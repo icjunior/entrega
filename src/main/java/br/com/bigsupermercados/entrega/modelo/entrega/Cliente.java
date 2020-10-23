@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import br.com.bigsupermercados.entrega.controller.form.ClienteForm;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -53,8 +55,9 @@ public class Cliente {
 
 	}
 
-	public Cliente(String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String numero,
+	public Cliente(Long codigo, String nome, String cpf, LocalDate dataNascimento, String telefone, Endereco endereco, String numero,
 			String complemento) {
+		this.codigo = codigo;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.dataNascimento = dataNascimento;
@@ -175,5 +178,9 @@ public class Cliente {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public ClienteForm converter() {
+		return new ClienteForm(codigo, nome, cpf, dataNascimento, telefone, endereco.getCep(), numero, complemento);
 	}
 }

@@ -34,7 +34,7 @@ public class EnderecoController {
 
 	@GetMapping("/pesquisaEnderecoPorLogradouro")
 	public ResponseEntity<List<EnderecoDTO>> findByLogradouro(@RequestParam String logradouro,
-			@RequestParam(required = false, defaultValue = "Atibaia") String cidade) {
+			@RequestParam(defaultValue = "8928") Long cidade) {
 		List<Endereco> enderecos = service.findByLogradouro(logradouro, cidade);
 
 		if (enderecos.isEmpty()) {

@@ -24,7 +24,7 @@ public class CadastroClienteService {
 	public void salvar(Cliente cliente) {
 		Optional<Cliente> clienteOpt = clientes.findByCpf(cliente.getCpf());
 		
-		if(clienteOpt.isPresent()) {
+		if(cliente.getCodigo() == null && clienteOpt.isPresent()) {
 			throw new RegistroJaCadastradoException("CPF já cadastrado no sistema");
 		}
 		

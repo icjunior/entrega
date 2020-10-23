@@ -1,9 +1,12 @@
 function buscaPorLogradouro() {
 	const logradouroInput = document.getElementById('enderecoInput').value;
+	const cidadeSelect = document.getElementById('cidadeSelect');
+	const codigoCidade = cidadeSelect.options[cidadeSelect.selectedIndex].value;
+	
 	let pegaBody = document.getElementById('enderecos');
 	let elemento;
 	
-	getLogradouro(logradouroInput).then((resposta) => {  
+	getLogradouro(logradouroInput, codigoCidade).then((resposta) => {  
 	  resposta.forEach((endereco) => {
 		elemento = "<tr onclick=\"populaCampos(this)\">" +
 		  				"<td>" + endereco.cep + "</td>" +
@@ -20,9 +23,9 @@ function buscaPorLogradouro() {
 	})
 }
 
-const getLogradouro = async (logradouro) => {
+const getLogradouro = async (logradouro, cidade) => {
 	console.log(logradouro);
-	const uri = `/entrega/endereco/pesquisaEnderecoPorLogradouro?logradouro=${logradouro}`;
+	const uri = `/entrega/endereco/pesquisaEnderecoPorLogradouro?logradouro=${logradouro}&cidade=${cidade}`;
 
 	const requestInfo = {
 		method : 'GET',

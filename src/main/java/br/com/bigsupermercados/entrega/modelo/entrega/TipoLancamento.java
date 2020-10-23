@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.bigsupermercados.entrega.controller.form.TipoLancamentoForm;
+
 @Entity
 @Table(name = "tipo_lancamento")
 public class TipoLancamento {
@@ -95,6 +97,11 @@ public class TipoLancamento {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public TipoLancamentoForm converter() {
+		return new TipoLancamentoForm(nome, ativo,
+				modoLancamento.getDescricao() == ModoLancamento.ACRESCIMO.getDescricao() ? true : false);
 	}
 
 }

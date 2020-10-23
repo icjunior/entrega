@@ -12,26 +12,51 @@ import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 
 public class ClienteForm {
 
+	private Long codigo;
+
 	@NotBlank(message = "O nome não pode ser em branco")
 	private String nome;
-	
+
 	@NotBlank(message = "O CPF não pode ser em branco")
 	private String cpf;
-	
+
 	@NotNull(message = "A data de nascimento precisa ser preenchida")
 	@Past(message = "A data de nascimento não pode ser no futuro")
 	private LocalDate dataNascimento;
-	
+
 	@NotBlank(message = "O número de telefone não pode ser em branco")
 	private String telefone;
-	
+
 	@NotBlank(message = "O CEP não pode ser em branco")
 	private String cep;
-	
+
 	@NotBlank(message = "O número do endereço não pode ser em branco")
 	private String numero;
-	
+
 	private String complemento;
+
+	public ClienteForm() {
+	}
+
+	public ClienteForm(Long codigo, String nome, String cpf, LocalDate dataNascimento, String telefone, String cep,
+			String numero, String complemento) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.dataNascimento = dataNascimento;
+		this.telefone = telefone;
+		this.cep = cep;
+		this.numero = numero;
+		this.complemento = complemento;
+	}
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
 	public String getNome() {
 		return nome;
@@ -91,6 +116,6 @@ public class ClienteForm {
 
 	public Cliente converter(EnderecoRepository enderecoRepository) {
 		Endereco endereco = enderecoRepository.findByCep(cep.replace("-", "")).get();
-		return new Cliente(nome, cpf, dataNascimento, telefone, endereco, numero, complemento);
+		return new Cliente(codigo, nome, cpf, dataNascimento, telefone, endereco, numero, complemento);
 	}
 }

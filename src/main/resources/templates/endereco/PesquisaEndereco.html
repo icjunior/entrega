@@ -17,9 +17,21 @@
 			<div class="modal-body">
 				<div class="cont">
 					<div class="row">
-						<div class="col-sm-12 form-group bw-required">
+						<div class="col-sm-8 form-group bw-required">
 							<label for="motorista" class="control-label">Endereço</label>
 							<input id="enderecoInput" type="text" class="form-control" placeholder="Digite um endereço..." />
+						</div>
+						
+						<div class="col-sm-4 form-group bw-required">
+							<label for="lojaCupom" class="control-label">Cidade</label>							
+							<div class="bw-field-action">
+								<select id="cidadeSelect" class="form-control">
+									<option value="">Selecione a cidade</option>
+									<option th:each="cidade : ${cidades}"
+										th:value="${cidade.codigo}" th:text="${cidade.nome}">
+									</option>
+								</select>
+							</div>
 						</div>
 					</div>
 					<button type="button" class="btn  btn-primary" onclick="buscaPorLogradouro()">Buscar</button>

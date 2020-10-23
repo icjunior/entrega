@@ -21,7 +21,7 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 			value = "select * "
 					+ "from endereco inner join bairro on endereco.bairro_codigo = bairro.codigo "
 					+ "inner join cidade on bairro.cidade_codigo = cidade.codigo "
-					+ "where cidade_codigo = 8928 and logradouro like %:logradouro% COLLATE SQL_Latin1_General_CP1_CI_AI",
+					+ "where cidade_codigo = :cidade and logradouro like %:logradouro% COLLATE SQL_Latin1_General_CP1_CI_AI",
 			nativeQuery = true)
-	List<Endereco> buscar(@Param("logradouro") String logradouro);
+	List<Endereco> buscar(@Param("logradouro") String logradouro, @Param("cidade") Long cidade);
 }

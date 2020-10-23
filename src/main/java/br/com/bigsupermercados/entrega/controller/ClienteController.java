@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.controller.dto.ClienteDTO;
 import br.com.bigsupermercados.entrega.controller.form.ClienteForm;
+import br.com.bigsupermercados.entrega.modelo.entrega.Cidade;
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
+import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
 import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 import br.com.bigsupermercados.entrega.service.CadastroClienteService;
@@ -37,11 +40,24 @@ public class ClienteController {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("cliente/PesquisaCliente");
 		mv.addObject("clientes", clientes.findAll());
+		return mv;
+	}
+
+	@GetMapping("/{codigo}")
+	public ModelAndView editar(@PathVariable("codigo") Cliente cliente) {
+		ClienteForm clienteForm = cliente.converter();
+
+		ModelAndView mv = nova(clienteForm);
+		mv.addObject("clienteForm", clienteForm);
+
 		return mv;
 	}
 
@@ -70,10 +86,14 @@ public class ClienteController {
 	@GetMapping("/nova")
 	public ModelAndView nova(ClienteForm clienteForm) {
 		ModelAndView mv = new ModelAndView("cliente/CadastroCliente");
+		
+		List<Cidade> cidades = cidadeRepository.cidadesAtendidas();
+		
+		mv.addObject("cidades", cidades);
 		return mv;
 	}
 
-	@PostMapping("/nova")
+	@PostMapping({ "/nova", "{\\+d}" })
 	public ModelAndView salvar(@Valid ClienteForm clienteForm, BindingResult result, Model model,
 			RedirectAttributes attributes) {
 
