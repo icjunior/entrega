@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,9 @@ public class Cidade {
 
 	@ManyToOne
 	private Estado estado;
+
+	@Column(name = "habilita_consulta")
+	private boolean habilitaConsulta;
 
 	public Long getCodigo() {
 		return codigo;
@@ -52,6 +56,14 @@ public class Cidade {
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public boolean isHabilitaConsulta() {
+		return habilitaConsulta;
+	}
+
+	public void setHabilitaConsulta(boolean habilitaConsulta) {
+		this.habilitaConsulta = habilitaConsulta;
 	}
 
 	@Override

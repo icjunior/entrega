@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.bigsupermercados.entrega.controller.dto.EnderecoDTO;
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
@@ -42,5 +43,13 @@ public class EnderecoController {
 		}
 
 		return ResponseEntity.ok(EnderecoDTO.converter(enderecos));
+	}
+	
+	@GetMapping("/cadastro")
+	public ModelAndView findAll() {
+		ModelAndView mv = new ModelAndView();
+		List<Endereco> enderecos = service.findAll();
+		mv.addObject("enderecos", EnderecoDTO.converter(enderecos));
+		return mv;
 	}
 }
