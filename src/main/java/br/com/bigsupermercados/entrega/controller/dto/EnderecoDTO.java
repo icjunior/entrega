@@ -9,12 +9,12 @@ public class EnderecoDTO {
 
 	private Long codigo;
 	private String cep;
-	private String endereco;
+	private String logradouro;
 	private String bairro;
 	private String cidade;
 
 	public EnderecoDTO(Endereco endereco) {
-		this.endereco = endereco.getLogradouro();
+		this.logradouro = endereco.getLogradouro();
 		this.bairro = endereco.getBairro().getNome();
 		this.cidade = endereco.getBairro().getCidade().getNome();
 		this.codigo = endereco.getCodigo();
@@ -22,8 +22,8 @@ public class EnderecoDTO {
 		this.cep = endereco.getCep();
 	}
 
-	public String getEndereco() {
-		return endereco;
+	public String getLogradouro() {
+		return logradouro;
 	}
 
 	public String getBairro() {

@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.bigsupermercados.entrega.controller.form.CidadeForm;
+
 @Entity
 @Table(name = "cidade")
 public class Cidade {
@@ -89,5 +91,9 @@ public class Cidade {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public CidadeForm converter() {
+		return new CidadeForm(this);
 	}
 }

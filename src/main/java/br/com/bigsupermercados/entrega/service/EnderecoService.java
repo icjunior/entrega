@@ -3,6 +3,8 @@ package br.com.bigsupermercados.entrega.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,13 @@ public class EnderecoService {
 	public List<Endereco> findByLogradouro(String logradouro, Long cidade) {
 		return repository.buscar(logradouro, cidade);
 	}
-	
+
 	public List<Endereco> findAll() {
-		return repository.findAll();
+		return repository.buscarPorCidadesAtivas();
+	}
+
+	@Transactional
+	public void salvar(Endereco endereco) {
+		repository.save(endereco);
 	}
 }
