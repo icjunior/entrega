@@ -74,7 +74,7 @@ public class GuiaController {
 		}
 
 		Guia guia = form.converter(clienteRepository, lojaRepository);
-		
+
 		try {
 			service.salvar(guia);
 		} catch (RegistroJaCadastradoException | RegistroNaoEncontradoException e) {

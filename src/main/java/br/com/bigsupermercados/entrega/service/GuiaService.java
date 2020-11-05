@@ -45,6 +45,8 @@ public class GuiaService {
 			throw new RegistroJaCadastradoException("Guia já lançada no sistema.");
 		}
 
+		guia.setChaveAcesso(cupomZanthusOpt.get().getM45xb());
+
 		repository.save(guia);
 	}
 

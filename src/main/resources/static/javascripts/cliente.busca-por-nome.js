@@ -14,6 +14,7 @@ function buscarCliente() {
 		  				"<td>" + cliente.numero + "</td>" +
 		  				"<td>" + cliente.bairro + "</td>" +
 		  				"<td>" + cliente.cidade + "</td>" +
+		  				"<td>" + cliente.porcentagem + "</td>" + 
 	  				"</tr>";
 		pegaBody.innerHTML += elemento;
 	  })
@@ -49,6 +50,7 @@ function populaCampos(element){
 	let numeroInput = document.getElementById('numero');
 	let bairroInput = document.getElementById('bairro');
 	let cidadeInput = document.getElementById('cidade');
+	let hiddenPorcentagem = document.getElementById('hiddenPorcentagem');
 	
 	nomeInput.value = element.cells[0].textContent;
 	cpfInput.value = element.cells[1].textContent;
@@ -58,6 +60,7 @@ function populaCampos(element){
 	numeroInput.value = element.cells[5].textContent;
 	bairroInput.value = element.cells[6].textContent;
 	cidadeInput.value = element.cells[7].textContent;
+	hiddenPorcentagem.value = element.cells[8].textContent;
 	
 	$('.modal').modal('hide');
 }
