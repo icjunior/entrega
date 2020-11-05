@@ -10,7 +10,7 @@ function buscaPorLogradouro() {
 	  resposta.forEach((endereco) => {
 		elemento = "<tr onclick=\"populaCampos(this)\">" +
 		  				"<td>" + endereco.cep + "</td>" +
-		  				"<td>" + endereco.endereco + "</td>" +
+		  				"<td>" + endereco.logradouro + "</td>" +
 		  				"<td>" + endereco.bairro + "</td>" +
 		  				"<td>" + endereco.cidade + "</td>" +
 	  				"</tr>";
