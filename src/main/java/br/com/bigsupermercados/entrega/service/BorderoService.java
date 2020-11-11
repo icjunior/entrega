@@ -93,7 +93,12 @@ public class BorderoService {
 	}
 
 	public BigDecimal calculaTotalGuias(List<Guia> guias) {
-		return guias.stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		// return guias.stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
+		// BigDecimal::add);
+		return guias
+				.stream().filter(guia -> guia.isValidado()).map(guia -> guia.getValor().multiply(guia.getPorcentagem())
+						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public BigDecimal calculaArredondamento(BigDecimal descontos, BigDecimal acrescimos, BigDecimal guias) {

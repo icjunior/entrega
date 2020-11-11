@@ -26,7 +26,7 @@ function finalizaBordero() {
 }
 
 const putFinalizarBordero = async (bordero, token) => {
-	const uri = `/entrega/bordero/fechar/bordero=${bordero}`;
+	const uri = `/entrega/bordero/fechar?bordero=${bordero}`;
 
 	const requestInfo = {
 		method : 'PATCH',

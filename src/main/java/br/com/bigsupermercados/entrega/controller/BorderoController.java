@@ -74,7 +74,7 @@ public class BorderoController {
 
 	@PatchMapping("/fechar")
 	@Transactional
-	public ResponseEntity<BorderoDTO> fechar(@RequestParam Long codigo) {
+	public ResponseEntity<BorderoDTO> fechar(@RequestParam(value = "bordero") Long codigo) {
 		Bordero bordero = service.fechar(codigo);
 
 		return ResponseEntity.ok(new BorderoDTO(bordero));
