@@ -26,9 +26,6 @@ public class GuiaService {
 	@Autowired
 	private ZanM45Service zanM45Service;
 
-	@Autowired
-	private BorderoService borderoService;
-
 	public void salvar(Guia guia) {
 		Optional<ZanM45> cupomZanthusOpt = zanM45Service.buscarCupom(guia.getData(), guia.getLoja().getCodigo(),
 				guia.getPdv(), Integer.parseInt(guia.getCupom()));
@@ -51,20 +48,10 @@ public class GuiaService {
 	}
 
 	public void liberarGuia(GuiaLiberarForm guiaLiberarForm) {
-		Bordero bordero;
-		Optional<Bordero> borderoAberto = borderoService.borderoAbertoPorMotorista(guiaLiberarForm.getMotorista());
-
-		if (!borderoAberto.isPresent()) {
-			bordero = borderoService.criarBordero(guiaLiberarForm.getMotorista());
-		} else {
-			bordero = borderoAberto.get();
-		}
-
 		List<Guia> guias = guiaLiberarForm.getGuias();
 
 		guias.forEach(guia -> {
 			guia.setMotorista(guiaLiberarForm.getMotorista());
-			guia.setBordero(bordero);
 		});
 
 		repository.saveAll(guias);
