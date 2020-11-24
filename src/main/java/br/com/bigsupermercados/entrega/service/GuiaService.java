@@ -88,13 +88,13 @@ public class GuiaService {
 	public Guia validarCupom(Motorista motorista, LocalDate data, Loja loja, Integer pdv, String cupom,
 			BigDecimal valor, Bordero bordero) {
 
-		Optional<Guia> guia = repository.buscarGuiaLiberada(motorista.getCodigo(), data, loja.getCodigo(), pdv, cupom, valor);
-		
-		if(guia.isPresent()) {
+		Optional<Guia> guia = repository.buscarGuiaLiberada(motorista.getCodigo(), cupom, valor);
+
+		if (guia.isPresent()) {
 			guia.get().setBordero(bordero);
-			return guia.get();			
+			return guia.get();
 		}
-		
+
 		return guia.orElseThrow(RegistroNaoEncontradoException::new);
 	}
 }
