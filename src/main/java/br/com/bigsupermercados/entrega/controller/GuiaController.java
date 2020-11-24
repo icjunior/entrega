@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.entrega.controller;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,6 +31,7 @@ import br.com.bigsupermercados.entrega.controller.dto.GuiaDTO;
 import br.com.bigsupermercados.entrega.controller.filter.GuiaFilter;
 import br.com.bigsupermercados.entrega.controller.form.GuiaForm;
 import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
+import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
@@ -157,5 +162,18 @@ public class GuiaController {
 		Guia guiaNova = service.reentrega(guia);
 
 		return ResponseEntity.ok(new GuiaDTO(guiaNova));
+	}
+
+	@PutMapping("/vincularBordero")
+	public ResponseEntity<GuiaDTO> vincularGuiaComBordero(@RequestParam("motorista") Motorista motorista,
+			@RequestParam LocalDate data, @RequestParam("loja") Loja loja, @RequestParam Integer pdv,
+			@RequestParam String cupom, @RequestParam BigDecimal valor, @RequestParam("bordero") Bordero bordero) {
+
+		try {
+			Guia guia = service.validarCupom(motorista, data, loja, pdv, cupom, valor, bordero);
+			return ResponseEntity.ok(GuiaDTO.converter(guia));
+		} catch (RegistroNaoEncontradoException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

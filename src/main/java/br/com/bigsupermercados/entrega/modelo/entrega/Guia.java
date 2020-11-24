@@ -61,6 +61,9 @@ public class Guia {
 
 	@Column(name = "validado")
 	private boolean validado = false;
+	
+//	@Column(name = "data_hora_inclusao")
+//	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	public Guia() {
 	}

@@ -8,13 +8,13 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 public class BorderoDetalheDTO {
 
 	private Long codigo;
-	private String motorista;
+	private MotoristaDTO motorista;
 	private List<GuiaBorderoDTO> guias;
 	private List<LancamentoBorderoDTO> lancamentos;
 
 	public BorderoDetalheDTO(Bordero bordero) {
 		this.codigo = bordero.getCodigo();
-		this.motorista = bordero.getMotorista().getNome();
+		this.motorista = MotoristaDTO.converter(bordero.getMotorista());
 		this.guias = GuiaBorderoDTO.converter(bordero.getGuias());
 		this.lancamentos = LancamentoBorderoDTO.converter(bordero.getLancamentos());
 	}
@@ -23,7 +23,7 @@ public class BorderoDetalheDTO {
 		return codigo;
 	}
 
-	public String getMotorista() {
+	public MotoristaDTO getMotorista() {
 		return motorista;
 	}
 

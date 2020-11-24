@@ -21,13 +21,20 @@ public interface GuiaRepository extends JpaRepository<Guia, Long> {
 
 	List<Bordero> findByBordero_Codigo(Long codigo);
 
-	@Query("SELECT g FROM Guia g WHERE data = ?1 AND loja.codigo = ?2 AND pdv = ?3 AND cupom = ?4 AND valor = ?5 AND excluido = false")
+	@Query("SELECT g FROM Guia g WHERE data = ?1 AND loja.codigo = ?2 AND pdv = ?3 AND cupom = ?4 AND valor = ?5 "
+			+ "AND excluido = false")
 	Page<Guia> buscarCupomComPaginacao(LocalDate data, Long loja, Integer pdv, String cupom, BigDecimal valor,
 			Pageable paginacao);
 
-	@Query("SELECT g FROM Guia g WHERE data = ?1 AND loja.codigo = ?2 AND pdv = ?3 AND cupom = ?4 AND valor = ?5 AND excluido = false")
+	@Query("SELECT g FROM Guia g WHERE data = ?1 AND loja.codigo = ?2 AND pdv = ?3 AND cupom = ?4 AND valor = ?5 "
+			+ "AND excluido = false")
 	Optional<Guia> buscarCupom(LocalDate data, Long loja, Integer pdv, String cupom, BigDecimal valor);
 
 	@Query("SELECT g FROM Guia g WHERE bordero.codigo = ?1 AND chaveAcesso = ?2 AND excluido = false AND validado = false")
 	Optional<Guia> buscarCupomNoBordero(Long bordero, String chaveAcesso);
+
+	@Query("SELECT g FROM Guia g WHERE motorista.codigo = ?1 AND data = ?2 AND loja.codigo = ?3 AND pdv = ?4 AND cupom = ?5 "
+			+ "AND valor = ?6 AND bordero IS NULL AND excluido = false")
+	Optional<Guia> buscarGuiaLiberada(Long motorista, LocalDate data, Long loja, Integer pdv, String cupom,
+			BigDecimal valor);
 }

@@ -5,7 +5,7 @@
 
 <div class="modal fade" id="modalValidacaoCupons" tabindex="-1" role="dialog"
 	aria-labelledby="modalValidacaoCupons" aria-hidden="true">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">Validação de cupons para borderô [[${bordero.codigo}]]</h5>
@@ -18,13 +18,42 @@
 				<div class="cont">
 					<div class="row">
 						<div class="col-sm-12 form-group bw-required">
-							<label for="chaveCupom" class="control-label">Chave do cupom</label>
-							<input id="chaveCupom" type="text" class="form-control" />
+							<label for="chaveCupom" class="control-label">Chave do cupom (***Em breve)</label>
+							<input id="chaveCupom" type="text" class="form-control" readonly="readonly" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 form-group bw-required">
+							<label for="dataCupom" class="control-label">Data</label>
+							<input id="dataCupom" type="text" class="form-control" autocomplete="off"/>
+						</div>
+						<div class="col-sm-6 form-group bw-required">
+							<label for="lojaCupom" class="control-label">Loja</label>
+							<select id="lojaCupom" class="form-control">
+								<option value="">Selecione a loja</option>
+								<option th:each="loja : ${lojas}"
+									th:value="${loja.codigo}" th:text="${loja.apelido}">
+								</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4 form-group bw-required">
+							<label for="pdvCupom" class="control-label">PDV</label>
+							<input id="pdvCupom" type="text" class="form-control" />
+						</div>
+						<div class="col-sm-4 form-group bw-required">
+							<label for="numeroCupom" class="control-label">Cupom</label>
+							<input id="numeroCupom" type="text" class="form-control" />
+						</div>
+						<div class="col-sm-4 form-group bw-required">
+							<label for="valorCupom" class="control-label">Valor</label>
+							<input id="valorCupom" type="text" class="form-control" />
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12 form-group">
-							<button type="submit" class="btn  btn-primary" onclick="validarCupom()">Validar cupom</button>
+							<button type="submit" class="btn  btn-primary" onclick="incluirCupom()">Validar cupom</button>
 						</div>
 					</div>
 				</div>
