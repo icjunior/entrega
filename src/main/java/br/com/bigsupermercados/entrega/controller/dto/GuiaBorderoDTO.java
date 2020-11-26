@@ -19,7 +19,6 @@ public class GuiaBorderoDTO {
 	private String bairro;
 	private BigDecimal porcentagem;
 	private BigDecimal valorAReceber;
-	private boolean validado;
 	private String chaveAcesso;
 
 	public GuiaBorderoDTO(Guia guia) {
@@ -34,7 +33,6 @@ public class GuiaBorderoDTO {
 		this.bairro = guia.getBairro();
 		this.porcentagem = guia.getPorcentagem();
 		this.valorAReceber = calculaValorAReceber(guia.getValor(), guia.getPorcentagem());
-		this.validado = guia.isValidado();
 		this.chaveAcesso = guia.getChaveAcesso();
 	}
 
@@ -76,10 +74,6 @@ public class GuiaBorderoDTO {
 
 	public BigDecimal getValorAReceber() {
 		return valorAReceber;
-	}
-
-	public boolean isValidado() {
-		return validado;
 	}
 
 	public String getChaveAcesso() {

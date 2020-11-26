@@ -17,7 +17,8 @@ public class GuiaDTO {
 	private BigDecimal valor;
 	private String cliente;
 	private String motorista;
-	private boolean validado;
+	private String bairro;
+	private BigDecimal porcentagem;
 
 	public GuiaDTO(Guia guia) {
 		super();
@@ -29,7 +30,8 @@ public class GuiaDTO {
 		this.valor = guia.getValor();
 		this.cliente = guia.getCliente().getNome();
 		this.motorista = guia.getMotorista() == null ? String.valueOf("Não liberada") : guia.getMotorista().getNome();
-		this.validado = guia.isValidado();
+		this.bairro = guia.getBairro();
+		this.porcentagem = guia.getPorcentagem();
 	}
 
 	public Long getCodigo() {
@@ -64,8 +66,12 @@ public class GuiaDTO {
 		return motorista;
 	}
 
-	public boolean isValidado() {
-		return validado;
+	public String getBairro() {
+		return bairro;
+	}
+
+	public BigDecimal getPorcentagem() {
+		return porcentagem;
 	}
 
 	public static Page<GuiaDTO> converter(Page<Guia> guias) {

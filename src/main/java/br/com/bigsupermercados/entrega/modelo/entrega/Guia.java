@@ -2,6 +2,7 @@ package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,11 +60,8 @@ public class Guia {
 	@Column(name = "excluido")
 	private boolean excluido = false;
 
-	@Column(name = "validado")
-	private boolean validado = false;
-	
-//	@Column(name = "data_hora_inclusao")
-//	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
+	@Column(name = "data_hora_inclusao")
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	public Guia() {
 	}
@@ -89,7 +87,7 @@ public class Guia {
 		this.porcentagem = porcentagem;
 		this.chaveAcesso = chaveAcesso;
 	}
-	
+
 	public Guia(Guia guia) {
 		super();
 		this.loja = guia.getLoja();
@@ -110,7 +108,6 @@ public class Guia {
 		this.porcentagem = guia.getPorcentagem();
 		this.chaveAcesso = guia.getChaveAcesso();
 		this.excluido = guia.isExcluido();
-		this.validado = guia.isValidado();
 	}
 
 	public Long getCodigo() {
@@ -263,14 +260,6 @@ public class Guia {
 
 	public void setExcluido(boolean excluido) {
 		this.excluido = excluido;
-	}
-
-	public boolean isValidado() {
-		return validado;
-	}
-
-	public void setValidado(boolean validado) {
-		this.validado = validado;
 	}
 
 	@Override

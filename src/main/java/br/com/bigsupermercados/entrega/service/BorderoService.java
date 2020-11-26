@@ -96,7 +96,7 @@ public class BorderoService {
 		// return guias.stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
 		// BigDecimal::add);
 		return guias
-				.stream().filter(guia -> guia.isValidado()).map(guia -> guia.getValor().multiply(guia.getPorcentagem())
+				.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem())
 						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}

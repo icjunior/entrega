@@ -23,25 +23,6 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-6 form-group bw-required">
-							<label for="dataCupom" class="control-label">Data</label>
-							<input id="dataCupom" type="text" class="form-control" autocomplete="off"/>
-						</div>
-						<div class="col-sm-6 form-group bw-required">
-							<label for="lojaCupom" class="control-label">Loja</label>
-							<select id="lojaCupom" class="form-control">
-								<option value="">Selecione a loja</option>
-								<option th:each="loja : ${lojas}"
-									th:value="${loja.codigo}" th:text="${loja.apelido}">
-								</option>
-							</select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-4 form-group bw-required">
-							<label for="pdvCupom" class="control-label">PDV</label>
-							<input id="pdvCupom" type="text" class="form-control" />
-						</div>
 						<div class="col-sm-4 form-group bw-required">
 							<label for="numeroCupom" class="control-label">Cupom</label>
 							<input id="numeroCupom" type="text" class="form-control" />
@@ -53,10 +34,31 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 form-group">
-							<button type="submit" class="btn  btn-primary" onclick="incluirCupom()">Validar cupom</button>
+							<button type="submit" class="btn  btn-primary" onclick="buscarCupom()">Buscar</button>
 						</div>
 					</div>
 				</div>
+				
+				<div class="table-responsive bw-tabela-simples">
+					<table class="table table-hover tabela-lancamento" id="tblCupom">
+						<thead>
+							<tr>
+								<th class="table-cervejas-col-origem">Código</th>
+								<th class="table-cervejas-col-origem">Data</th>
+								<th class="table-cervejas-col-origem">Loja</th>
+								<th class="table-cervejas-col-origem">PDV</th>
+								<th class="table-cervejas-col-origem">Cupom</th>
+								<th class="table-cervejas-col-origem">Valor</th>
+								<th class="table-cervejas-col-origem">Bairro</th>
+								<th class="table-cervejas-col-origem">Porcentagem</th>
+							</tr>
+						</thead>
+
+						<tbody id="bodyCupom">
+							
+						</tbody>
+					</table>
+				</div>				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Fechar</button>

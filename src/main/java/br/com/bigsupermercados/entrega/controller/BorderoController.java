@@ -93,7 +93,6 @@ public class BorderoController {
 
 		if (guiaOpt.isPresent()) {
 			Guia guia = guiaOpt.get();
-			guia.setValidado(true);
 			return ResponseEntity.ok(new GuiaDTO(guia));
 		}
 

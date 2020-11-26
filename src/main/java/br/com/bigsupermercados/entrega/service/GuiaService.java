@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import br.com.bigsupermercados.entrega.controller.filter.GuiaFilter;
 import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
-import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
 import br.com.bigsupermercados.entrega.modelo.zanthus.ZanM45;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
@@ -70,7 +68,6 @@ public class GuiaService {
 	public void eliminarCupomBordero(Guia guia) {
 		guia.setBordero(null);
 		guia.setMotorista(null);
-		guia.setValidado(false);
 	}
 
 	public Page<Guia> buscar(GuiaFilter guiaFilter, Pageable paginacao) {
@@ -84,17 +81,19 @@ public class GuiaService {
 		return guiaNova;
 	}
 
-	@Transactional
-	public Guia validarCupom(Motorista motorista, LocalDate data, Loja loja, Integer pdv, String cupom,
-			BigDecimal valor, Bordero bordero) {
-
+	public Guia buscarCupom(Motorista motorista, String cupom, BigDecimal valor) {
 		Optional<Guia> guia = repository.buscarGuiaLiberada(motorista.getCodigo(), cupom, valor);
 
-		if (guia.isPresent()) {
-			guia.get().setBordero(bordero);
-			return guia.get();
+		if (!guia.isPresent()) {
+			return guia.orElseThrow(RegistroNaoEncontradoException::new);
 		}
 
-		return guia.orElseThrow(RegistroNaoEncontradoException::new);
+		return guia.get();
+	}
+
+	@Transactional
+	public Guia validarCupom(Guia guia, Bordero bordero) {
+		guia.setBordero(bordero);
+		return guia;
 	}
 }

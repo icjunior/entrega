@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.controller;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -164,16 +163,28 @@ public class GuiaController {
 		return ResponseEntity.ok(new GuiaDTO(guiaNova));
 	}
 
-	@PutMapping("/vincularBordero")
-	public ResponseEntity<GuiaDTO> vincularGuiaComBordero(@RequestParam("motorista") Motorista motorista,
-			@RequestParam LocalDate data, @RequestParam("loja") Loja loja, @RequestParam Integer pdv,
-			@RequestParam String cupom, @RequestParam BigDecimal valor, @RequestParam("bordero") Bordero bordero) {
+	@GetMapping("/vincularBordero")
+	public ResponseEntity<GuiaDTO> buscarCupom(@RequestParam("motorista") Motorista motorista,
+			@RequestParam String cupom, @RequestParam BigDecimal valor) {
 
 		try {
-			Guia guia = service.validarCupom(motorista, data, loja, pdv, cupom, valor, bordero);
+			Guia guia = service.buscarCupom(motorista, cupom, valor);
 			return ResponseEntity.ok(GuiaDTO.converter(guia));
 		} catch (RegistroNaoEncontradoException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	@PutMapping("/vincularBordero")
+	public ResponseEntity<GuiaDTO> vincularGuiaComBordero(@RequestParam("cupom") Guia guia,
+			@RequestParam("bordero") Bordero bordero) {
+
+		try {
+			service.validarCupom(guia, bordero);
+			return ResponseEntity.ok(GuiaDTO.converter(guia));
+		} catch (RegistroNaoEncontradoException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }
