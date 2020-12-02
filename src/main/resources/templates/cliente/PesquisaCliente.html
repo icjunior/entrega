@@ -50,7 +50,7 @@
 							<td th:text="${cliente.nome}">Teste</td>
 							<td th:text="${cliente.cpf}"></td>
 							<td th:text="${cliente.dataNascimento}"></td>
-							<td th:text="${cliente.ativo}"></td>
+							<td th:text="${cliente.ativo == true ? 'Ativo' : 'Inativo'}"></td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
 									th:href="@{/cliente/{codigo}(codigo=${cliente.codigo})}"> 
@@ -68,6 +68,19 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" th:if="${clientes.totalPages > 0}">
+					<nav>
+						<!-- <ul class="pagination pagination-sm" th:each="pageNumber : ${pageNumbers}"> -->
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${clientes.number}">
+							
+							<th:block th:each="p : ${#numbers.sequence(1, clientes.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/cliente(size=${clientes.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
 			</div>
 		</div>
 	</section>

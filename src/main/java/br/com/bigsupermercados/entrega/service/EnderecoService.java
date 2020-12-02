@@ -1,11 +1,17 @@
 package br.com.bigsupermercados.entrega.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
@@ -32,5 +38,27 @@ public class EnderecoService {
 	@Transactional
 	public void salvar(Endereco endereco) {
 		repository.save(endereco);
+	}
+
+	public Page<Endereco> buscarPaginado(Pageable pageable) {
+		List<Endereco> enderecos = repository.findAll();
+
+		int pageSize = pageable.getPageSize();
+		int currentPage = pageable.getPageNumber();
+		int startItem = currentPage * pageSize;
+
+		List<Endereco> enderecosList = new ArrayList<>();
+
+		if (enderecos.size() < startItem) {
+			enderecos = Collections.emptyList();
+		} else {
+			int toIndex = Math.min(startItem + pageSize, enderecos.size());
+			enderecosList = enderecos.subList(startItem, toIndex);
+		}
+
+		Page<Endereco> page = new PageImpl<Endereco>(enderecosList, PageRequest.of(currentPage, pageSize),
+				enderecos.size());
+
+		return page;
 	}
 }

@@ -41,7 +41,7 @@
 					<tbody>
 						<tr th:each="cidade : ${cidades}">
 							<td th:text="${cidade.nome}">Teste</td>
-							<td th:text="${cidade.estado}"></td>
+							<td th:text="${cidade.estado.nome}"></td>
 							<td th:text="${cidade.habilitaConsulta ? 'Sim' : 'Não'}"></td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
@@ -55,6 +55,17 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" th:if="${cidades.totalPages > 0}">
+					<nav>
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${cidades.number}">
+							<th:block th:each="p : ${#numbers.sequence(1, cidades.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/cidade(size=${cidades.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
 			</div>
 		</div>
 	</section>

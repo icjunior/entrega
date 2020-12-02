@@ -59,6 +59,17 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" th:if="${bairros.totalPages > 0}">
+					<nav>
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${bairros.number}">
+							<th:block th:each="p : ${#numbers.sequence(1, tiposLancamento.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/bairro(size=${bairros.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
 			</div>
 		</div>
 	</section>

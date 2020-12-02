@@ -93,7 +93,7 @@
 					<tbody>
 						<tr th:each="usuario : ${usuarios}">
 							<td>
-								<div class="checkbox aw-checkbox-no-margin" th:if="${#authentication.principal.usuario.codigo != usuario.codigo}">
+								<div class="checkbox aw-checkbox-no-margin">
 									<input type="checkbox" class="js-selecao" data:codigo="${usuario.codigo}"/>
 									<label></label>
 								</div>
@@ -113,11 +113,22 @@
 							</td>
 						</tr>
 						
-						<tr th:if="${pagina.vazia}">
+						<tr th:if="${usuarios == null}">
 							<td colspan="6">Nenhum usuário encontrado</td>
 						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" th:if="${usuarios.totalPages > 0}">
+					<nav>
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${usuarios.number}">
+							<th:block th:each="p : ${#numbers.sequence(1, usuarios.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/usuario(size=${usuarios.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
 			</div>
 			
 			<brewer:pagination page="${pagina}"/>

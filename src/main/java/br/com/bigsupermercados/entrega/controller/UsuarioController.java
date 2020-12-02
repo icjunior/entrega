@@ -1,14 +1,16 @@
 package br.com.bigsupermercados.entrega.controller;
 
-
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,10 +39,10 @@ import br.com.bigsupermercados.entrega.service.exception.SenhaObrigatoriaUsuario
 public class UsuarioController {
 
 	@Autowired
-	private Usuarios usuarioRepository;
+	private Usuarios repository;
 
 	@Autowired
-	private UsuarioService cadastroUsuarioService;
+	private UsuarioService service;
 
 	@Autowired
 	private Lojas lojas;
@@ -60,7 +63,7 @@ public class UsuarioController {
 		}
 
 		try {
-			cadastroUsuarioService.salvar(usuario);
+			service.salvar(usuario);
 		} catch (RegistroJaCadastradoException e) {
 			result.rejectValue("login", e.getMessage(), e.getMessage());
 			return novo(usuario);
@@ -75,18 +78,30 @@ public class UsuarioController {
 
 	@GetMapping
 	public ModelAndView pesquisar(UsuarioFilter usuarioFilter, BindingResult result,
-			@PageableDefault(size = 10) Pageable pageable, HttpServletRequest httpServletRequest) {
+			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size,
+			HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("usuario/PesquisaUsuarios");
-		List<Usuario> usuarios = usuarioRepository.findAll();
-		mv.addObject("usuarios", usuarios);
+
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(20);
+
+		Page<Usuario> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		mv.addObject("usuarios", clientePage);
+
+		int totalPages = clientePage.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			mv.addObject("pageNumbers", pageNumbers);
+		}
+
 		return mv;
 	}
 
 	@DeleteMapping("/{codigo}")
 	public @ResponseBody ResponseEntity<?> excluir(@PathVariable("codigo") Long codigo) {
-		Usuario usuario = usuarioRepository.getOne(codigo);
+		Usuario usuario = repository.getOne(codigo);
 		try {
-			cadastroUsuarioService.excluir(usuario);
+			service.excluir(usuario);
 		} catch (ImpossivelExcluirEntidadeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -95,7 +110,7 @@ public class UsuarioController {
 
 	@GetMapping("/{codigo}")
 	public ModelAndView editar(@PathVariable Long codigo) {
-		Usuario usuario = usuarioRepository.getOne(codigo);
+		Usuario usuario = repository.getOne(codigo);
 		ModelAndView mv = novo(usuario);
 		mv.addObject(usuario);
 		return mv;

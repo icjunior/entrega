@@ -2,10 +2,14 @@ package br.com.bigsupermercados.entrega.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +27,6 @@ import br.com.bigsupermercados.entrega.controller.form.ClienteForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Cidade;
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
-import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 import br.com.bigsupermercados.entrega.service.CadastroClienteService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
@@ -33,21 +36,31 @@ import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoExc
 public class ClienteController {
 
 	@Autowired
-	private Clientes clientes;
-
-	@Autowired
 	private CadastroClienteService cadastroClienteService;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
 	@GetMapping
-	public ModelAndView listar() {
+	public ModelAndView listar(@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
 		ModelAndView mv = new ModelAndView("cliente/PesquisaCliente");
-		mv.addObject("clientes", clientes.findAll());
+
+		int currentPage = page.orElse(1);
+		int pageSize = size.orElse(20);
+
+		Page<Cliente> clientePage = cadastroClienteService.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		mv.addObject("clientes", clientePage);
+
+		int totalPages = clientePage.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			mv.addObject("pageNumbers", pageNumbers);
+		}
+
 		return mv;
 	}
 
@@ -86,9 +99,9 @@ public class ClienteController {
 	@GetMapping("/nova")
 	public ModelAndView nova(ClienteForm clienteForm) {
 		ModelAndView mv = new ModelAndView("cliente/CadastroCliente");
-		
+
 		List<Cidade> cidades = cidadeRepository.cidadesAtendidas();
-		
+
 		mv.addObject("cidades", cidades);
 		return mv;
 	}

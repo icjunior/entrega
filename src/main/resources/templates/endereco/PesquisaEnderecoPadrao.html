@@ -20,7 +20,7 @@
 
 					<div class="col-xs-2">
 						<div class="aw-page-header-controls">
-							<a class="btn btn-default" th:href="@{/cliente/nova}"> <i
+							<a class="btn btn-default" th:href="@{/endereco/novo}"> <i
 								class="glyphicon glyphicon-plus-sign"></i> <span
 								class="hidden-xs hidden-sm">Novo endereço</span>
 							</a>
@@ -61,6 +61,17 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="col-sm-12 text-center" th:if="${enderecos.totalPages > 0}">
+					<nav>
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${enderecos.number}">
+							<th:block th:each="p : ${#numbers.sequence(1, enderecos.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/endereco/cadastro(size=${motoristas.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
 			</div>
 		</div>
 	</section>
