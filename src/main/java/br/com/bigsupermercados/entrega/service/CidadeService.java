@@ -32,7 +32,7 @@ public class CidadeService {
 	}
 
 	public Page<Cidade> buscarPaginado(Pageable pageable) {
-		List<Cidade> cidades = repository.findAll();
+		List<Cidade> cidades = repository.findTop100ByHabilitaConsultaIsTrue();
 
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();

@@ -40,8 +40,6 @@
 				<brewer:message />
 				
 				<input type="hidden" th:field="*{codigo}" />
-				<input type="hidden" th:field="*{cidade.codigo}" />
-				
 
 				<div class="row">
 					<div class="col-sm-6 form-group bw-required" brewer:classforerror="nome">
@@ -49,11 +47,21 @@
 						<input id="bairro" type="text" class="form-control" th:field="*{nome}" />
 					</div>
 
-					<div class="col-sm-6 form-group bw-required" brewer:classforerror="cidade">
-						<label for="cidade" class="control-label">Cidade</label> 
-						<input id="cidade" type="text" class="form-control" th:field="*{cidade.nome}" readonly="readonly" />
+					<div class="col-sm-6 form-group">
+						<label for="lojaCupom" class="control-label">Cidade</label>							
+						<div class="bw-field-action">
+							<select id="cidadeSelect" class="form-control" th:field="*{cidade}">
+								<option value="">Selecione a cidade</option>
+								<option th:each="cidade : ${cidades}"
+									th:value="${cidade.codigo}" th:text="${cidade.nome}">
+								</option>
+							</select>
+						</div>
 					</div>
 					
+				</div>
+				
+				<div class="row">					
 					<div class="col-sm-6 form-group bw-required" brewer:classforerror="porcentagem">
 						<label for="porcentagem" class="control-label">Porcentagem</label> 
 						<input id="porcentagem" type="text" class="form-control" th:field="*{porcentagem}" />

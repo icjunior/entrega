@@ -25,4 +25,6 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 	@Query("SELECT e FROM Endereco e WHERE e.bairro.cidade.habilitaConsulta = true "
 			+ "ORDER BY e.bairro.cidade.nome, e.bairro.nome, e.logradouro")
 	List<Endereco> buscarPorCidadesAtivas();
+
+	List<Endereco> findTop100ByBairro_Cidade_HabilitaConsultaIsTrue();
 }

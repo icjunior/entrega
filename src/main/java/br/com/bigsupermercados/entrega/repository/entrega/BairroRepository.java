@@ -13,4 +13,6 @@ public interface BairroRepository extends JpaRepository<Bairro, Long>{
 
 	@Query("SELECT b FROM Bairro b WHERE b.cidade.habilitaConsulta = true")
 	List<Bairro> buscarBairrosHabilitados();
+	
+	List<Bairro> findTop100ByCidade_HabilitaConsultaIsTrue();
 }

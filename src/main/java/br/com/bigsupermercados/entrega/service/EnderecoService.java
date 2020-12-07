@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.bigsupermercados.entrega.controller.filter.EnderecoFilter;
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
 import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 
@@ -40,8 +41,17 @@ public class EnderecoService {
 		repository.save(endereco);
 	}
 
-	public Page<Endereco> buscarPaginado(Pageable pageable) {
-		List<Endereco> enderecos = repository.findAll();
+	public Page<Endereco> buscarPaginado(Pageable pageable, EnderecoFilter enderecoFilter) {
+
+		List<Endereco> enderecos;
+
+		if (enderecoFilter.getEndereco() == null || enderecoFilter.getEndereco() == "") {
+			enderecos = repository.findTop100ByBairro_Cidade_HabilitaConsultaIsTrue();
+		} else {
+			String endereco = enderecoFilter.getEndereco();
+			Long cidade = enderecoFilter.getCidade();
+			enderecos = repository.buscar(endereco, cidade);
+		}
 
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();

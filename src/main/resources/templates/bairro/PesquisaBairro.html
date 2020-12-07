@@ -45,7 +45,7 @@
 					<tbody>
 						<tr th:each="bairro : ${bairros}">
 							<td th:text="${bairro.nome}">Teste</td>
-							<td th:text="${bairro.cidade}"></td>
+							<td th:text="${bairro.cidade.nome}"></td>
 							<td th:text="${bairro.porcentagem}"></td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar"
@@ -54,7 +54,7 @@
 								</a> 
 							</td>
 						</tr>
-						<tr th:if="${clientes == null}">
+						<tr th:if="${bairros == null}">
 							<td colspan="7">Nenhum bairro encontrado</td>
 						</tr>
 					</tbody>
@@ -62,7 +62,7 @@
 				<div class="col-sm-12 text-center" th:if="${bairros.totalPages > 0}">
 					<nav>
 						<ul class="pagination pagination-sm" th:with="paginaAtual=${bairros.number}">
-							<th:block th:each="p : ${#numbers.sequence(1, tiposLancamento.totalPages)}" th:with="numeroPagina=${p - 1}">
+							<th:block th:each="p : ${#numbers.sequence(1, bairros.totalPages)}" th:with="numeroPagina=${p - 1}">
 								<li th:class="${paginaAtual == numeroPagina} ? active">
 									<a th:href="@{/bairro(size=${bairros.size}, page=${pageNumber})}">[[${p}]]</a>
 								</li>

@@ -21,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.controller.dto.EnderecoDTO;
+import br.com.bigsupermercados.entrega.controller.filter.EnderecoFilter;
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
+import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
 import br.com.bigsupermercados.entrega.service.EnderecoService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 
@@ -31,6 +33,9 @@ public class EnderecoController {
 
 	@Autowired
 	private EnderecoService service;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	@GetMapping
 	public ResponseEntity<EnderecoDTO> findByCEP(@RequestParam String cep) {
@@ -57,16 +62,22 @@ public class EnderecoController {
 
 	@GetMapping("/cadastro")
 	public ModelAndView findAll(@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
+			@RequestParam("size") Optional<Integer> size, EnderecoFilter enderecoFilter) {
+
 		ModelAndView mv = new ModelAndView("endereco/PesquisaEnderecoPadrao");
+
+		Page<Endereco> enderecoPage;
 
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
+		
+		enderecoPage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize), enderecoFilter);
+		
+		mv.addObject("enderecos", enderecoPage);
+		mv.addObject("cidades", cidadeRepository.cidadesAtendidas());
+		
+		int totalPages = enderecoPage.getTotalPages();
 
-		Page<Endereco> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
-		mv.addObject("enderecos", clientePage);
-
-		int totalPages = clientePage.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
 			mv.addObject("pageNumbers", pageNumbers);

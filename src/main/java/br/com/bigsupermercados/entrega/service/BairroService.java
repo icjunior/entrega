@@ -32,7 +32,7 @@ public class BairroService {
 	}
 
 	public Page<Bairro> buscarPaginado(Pageable pageable) {
-		List<Bairro> bairros = repository.findAll();
+		List<Bairro> bairros = repository.findTop100ByCidade_HabilitaConsultaIsTrue();
 
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Bairro;
+import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
 import br.com.bigsupermercados.entrega.service.BairroService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 
@@ -29,6 +30,9 @@ public class BairroController {
 
 	@Autowired
 	private BairroService service;
+
+	@Autowired
+	private CidadeRepository cidadeRepository;
 
 	@GetMapping
 	public ModelAndView lista(@RequestParam("page") Optional<Integer> page,
@@ -61,11 +65,11 @@ public class BairroController {
 	@GetMapping("/novo")
 	public ModelAndView cadastro(Bairro bairro) {
 		ModelAndView mv = new ModelAndView("bairro/CadastroBairro");
-
+		mv.addObject("cidades", cidadeRepository.cidadesAtendidas());
 		return mv;
 	}
 
-	@PostMapping({ "/nova", "{\\+d}" })
+	@PostMapping({ "/novo", "{\\+d}" })
 	public ModelAndView salvar(Bairro bairro, BindingResult result, Model model, RedirectAttributes attributes) {
 
 		if (result.hasErrors()) {

@@ -16,4 +16,6 @@ public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
 	@Query("SELECT c FROM Cidade c ORDER BY habilitaConsulta DESC, c.estado.nome, nome")
 	List<Cidade> buscar();
+	
+	List<Cidade> findTop100ByHabilitaConsultaIsTrue();
 }
