@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "endereco")
@@ -23,6 +24,9 @@ public class Endereco {
 	private String cep;
 
 	private String complemento;
+
+	@Transient
+	private Cidade cidade;
 
 	public Long getCodigo() {
 		return codigo;
@@ -62,6 +66,14 @@ public class Endereco {
 
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
 	}
 
 	@Override

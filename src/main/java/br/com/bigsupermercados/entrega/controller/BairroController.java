@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.bigsupermercados.entrega.controller.filter.BairroFilter;
 import br.com.bigsupermercados.entrega.modelo.entrega.Bairro;
 import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
 import br.com.bigsupermercados.entrega.service.BairroService;
@@ -36,14 +38,15 @@ public class BairroController {
 
 	@GetMapping
 	public ModelAndView lista(@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
+			@RequestParam("size") Optional<Integer> size, BairroFilter filter) {
 		ModelAndView mv = new ModelAndView("bairro/PesquisaBairro");
 
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
 
-		Page<Bairro> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		Page<Bairro> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize), filter);
 		mv.addObject("bairros", clientePage);
+		mv.addObject("cidades", cidadeRepository.cidadesAtendidas());
 
 		int totalPages = clientePage.getTotalPages();
 		if (totalPages > 0) {
@@ -85,6 +88,13 @@ public class BairroController {
 
 		attributes.addFlashAttribute("mensagem", "Bairro salvo com sucesso");
 		return new ModelAndView("redirect:/bairro/novo");
+	}
+
+	@GetMapping("/buscaPorCidade")
+	public ResponseEntity<?> buscaPorCidade(@RequestParam Long codigoCidade) {
+		
+		List<Bairro> bairros = service.buscarPorCidade(codigoCidade);
+		return ResponseEntity.ok(bairros);
 	}
 
 }

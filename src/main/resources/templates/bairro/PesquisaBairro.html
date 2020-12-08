@@ -31,6 +31,26 @@
 		</div>
 
 		<div class="container-fluid">
+			<form method="GET" th:object="${bairroFilter}" th:action="@{/bairro}">
+				<div class="row">
+					<div class="col-sm-6 form-group">
+						<label class="control-label" for="nome">Bairro</label>
+						<input type="text" class="form-control" id="nome" autofocus="autofocus" th:field="*{bairro}"/>
+					</div>
+					<div class="col-sm-4 form-group">
+						<label for="lojaCupom" class="control-label">Cidade</label>							
+						<div class="bw-field-action">
+							<select id="cidadeSelect" class="form-control" th:field="*{cidade}">
+								<option value="">Selecione a cidade</option>
+								<option th:each="cidade : ${cidades}"
+									th:value="${cidade.codigo}" th:text="${cidade.nome}">
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Pesquisar</button>
+			</form>
 			<div class="table-responsive bw-tabela-simples">
 				<table class="table table-hover">
 					<thead>

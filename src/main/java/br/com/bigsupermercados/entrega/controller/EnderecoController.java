@@ -96,6 +96,7 @@ public class EnderecoController {
 	@GetMapping("/novo")
 	public ModelAndView cadastro(Endereco endereco) {
 		ModelAndView mv = new ModelAndView("endereco/CadastroEndereco");
+		mv.addObject("cidades", cidadeRepository.cidadesAtendidas());
 		return mv;
 	}
 

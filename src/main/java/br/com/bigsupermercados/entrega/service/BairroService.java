@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.bigsupermercados.entrega.controller.filter.BairroFilter;
 import br.com.bigsupermercados.entrega.modelo.entrega.Bairro;
 import br.com.bigsupermercados.entrega.repository.entrega.BairroRepository;
 
@@ -31,8 +32,15 @@ public class BairroService {
 		repository.save(bairro);
 	}
 
-	public Page<Bairro> buscarPaginado(Pageable pageable) {
-		List<Bairro> bairros = repository.findTop100ByCidade_HabilitaConsultaIsTrue();
+	public Page<Bairro> buscarPaginado(Pageable pageable, BairroFilter filter) {
+		List<Bairro> bairros;
+		if(filter.getBairro() == null || filter.getBairro() == "") {
+			bairros = repository.findTop100ByCidade_HabilitaConsultaIsTrue();			
+		} else {
+			String bairro = filter.getBairro();
+			Long cidade = filter.getCidade();
+			bairros = repository.findByNomeContainingAndCidade_CodigoAndCidade_HabilitaConsultaTrue(bairro, cidade);
+		}
 
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();
@@ -50,5 +58,9 @@ public class BairroService {
 		Page<Bairro> page = new PageImpl<Bairro>(bairrosList, PageRequest.of(currentPage, pageSize), bairros.size());
 
 		return page;
+	}
+
+	public List<Bairro> buscarPorCidade(Long codigoCidade) {
+		return repository.findByCidade_Codigo(codigoCidade);
 	}
 }

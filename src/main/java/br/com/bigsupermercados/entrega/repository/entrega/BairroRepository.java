@@ -15,4 +15,8 @@ public interface BairroRepository extends JpaRepository<Bairro, Long>{
 	List<Bairro> buscarBairrosHabilitados();
 	
 	List<Bairro> findTop100ByCidade_HabilitaConsultaIsTrue();
+	
+	List<Bairro> findByNomeContainingAndCidade_CodigoAndCidade_HabilitaConsultaTrue(String bairro, Long cidade);
+
+	List<Bairro> findByCidade_Codigo(Long codigoCidade);
 }
