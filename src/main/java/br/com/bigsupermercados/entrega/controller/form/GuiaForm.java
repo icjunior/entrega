@@ -46,6 +46,7 @@ public class GuiaForm {
 	private String complemento;
 	private BigDecimal porcentagem;
 	private String chaveAcesso;
+	private String nome;
 
 	public Long getCodigo() {
 		return codigo;
@@ -173,6 +174,14 @@ public class GuiaForm {
 
 	public void setChaveAcesso(String chaveAcesso) {
 		this.chaveAcesso = chaveAcesso;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Guia converter(Clientes clienteRepository, Lojas lojaRepository) {

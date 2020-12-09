@@ -25,7 +25,6 @@ public class Cliente {
 	@NotBlank(message = "Nome não pode ser em branco")
 	private String nome;
 
-	@NotBlank(message = "CPF não pode ser em branco")
 	private String cpf;
 
 	@Column(name = "data_nascimento")

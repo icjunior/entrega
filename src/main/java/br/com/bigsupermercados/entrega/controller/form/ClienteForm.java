@@ -3,8 +3,6 @@ package br.com.bigsupermercados.entrega.controller.form;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
@@ -17,11 +15,8 @@ public class ClienteForm {
 	@NotBlank(message = "O nome não pode ser em branco")
 	private String nome;
 
-	@NotBlank(message = "O CPF não pode ser em branco")
 	private String cpf;
 
-	@NotNull(message = "A data de nascimento precisa ser preenchida")
-	@Past(message = "A data de nascimento não pode ser no futuro")
 	private LocalDate dataNascimento;
 
 	@NotBlank(message = "O número de telefone não pode ser em branco")
