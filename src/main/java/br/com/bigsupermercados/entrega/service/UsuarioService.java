@@ -85,4 +85,9 @@ public class UsuarioService {
 
 		return usuarioPage;
 	}
+	
+	@Transactional
+	public void alterarStatus(Long[] codigos, StatusUsuario statusUsuario) {
+		statusUsuario.executar(codigos, repository);
+	}
 }

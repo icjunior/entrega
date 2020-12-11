@@ -80,12 +80,9 @@
 									<label></label>
 								</div>
 							</th>
-							<th class="table-clientes-col-nome">
-								Nome
-							</th>							
-							<th class="table-clientes-col-cpfOuCnpj">
-								Login
-							</th>
+							<th class="table-clientes-col-nome">Nome</th>							
+							<th class="table-clientes-col-cpfOuCnpj">Login</th>
+							<th class="table-clientes-col-cpfOuCnpj">Status</th>
 							<th class="table-clientes-col-acoes"></th>
 						</tr>
 					</thead>
@@ -100,6 +97,7 @@
 							</td>
 							<td th:text="${usuario.nome}">AA1111</td>
 							<td th:text="${usuario.login}">Teste</td>
+							<td th:text="${usuario.ativo == true ? 'Ativo' : 'Inativo'}">Teste</td>
 							<td class="text-center">
 								<a class="btn btn-link btn-xs js-tooltip" title="Editar" 
 									th:href="@{/usuarios/{codigo}(codigo=${usuario.codigo})}"> 
@@ -130,8 +128,6 @@
 					</nav>				
 				</div>
 			</div>
-			
-			<brewer:pagination page="${pagina}"/>
 		</div>
 	</section>
 		<th:block layout:fragment="javascript-extra">

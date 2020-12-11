@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,6 +32,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Usuario;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.repository.entrega.Usuarios;
 import br.com.bigsupermercados.entrega.repository.entrega.filter.UsuarioFilter;
+import br.com.bigsupermercados.entrega.service.StatusUsuario;
 import br.com.bigsupermercados.entrega.service.UsuarioService;
 import br.com.bigsupermercados.entrega.service.exception.ImpossivelExcluirEntidadeException;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
@@ -114,5 +118,12 @@ public class UsuarioController {
 		ModelAndView mv = novo(usuario);
 		mv.addObject(usuario);
 		return mv;
+	}
+	
+	@PutMapping("/status")
+	@ResponseStatus(HttpStatus.OK)
+	public void atualizarStatus(@RequestParam("codigos[]") Long[] codigos,
+			@RequestParam("status") StatusUsuario statusUsuario) {
+		service.alterarStatus(codigos, statusUsuario);
 	}
 }
