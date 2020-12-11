@@ -23,7 +23,7 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String login;
 	private String senha;
-	private boolean ativo;
+	private boolean ativo = true;
 
 	@ManyToOne
 	private Loja loja;

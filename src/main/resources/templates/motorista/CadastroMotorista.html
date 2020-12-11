@@ -69,6 +69,20 @@
 						<input type="text" class="form-control js-phone-number" id="telefone" th:field="*{telefone}" />
 					</div>
 				</div>
+				
+				<div class="row">
+					<div class="col-sm-6 form-group bw-required" brewer:classforerror="loja">
+						<label for="loja" class="control-label">Loja</label>
+						<div class="bw-field-action">
+							<select id="lojaCupom" class="form-control" th:field="*{loja}">
+								<option value="">Selecione a loja</option>
+								<option th:each="loja : ${lojas}"
+									th:value="${loja.codigo}" th:text="${loja.apelido}">
+								</option>
+							</select>
+						</div> 
+					</div>
+				</div>
 
 				<div class="form-group">
 					<button class="btn  btn-primary" type="submit">Salvar</button>

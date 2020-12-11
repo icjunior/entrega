@@ -38,9 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/cidades/novo").hasRole("CADASTRAR_CIDADE")
-				.antMatchers("/usuarios/novo").hasRole("CADASTRAR_USUARIO")
-				.antMatchers("/endereco/consulta").permitAll()
+//				.antMatchers("/cidades/novo").hasRole("CADASTRAR_CIDADE")
+//				.antMatchers("/usuarios/novo").hasRole("CADASTRAR_USUARIO")
+//				.antMatchers("/endereco/consulta").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

@@ -47,7 +47,7 @@ public class UsuarioController {
 	@Autowired
 	private Lojas lojas;
 
-	@RequestMapping("/novo")
+	@GetMapping("/novo")
 	public ModelAndView novo(Usuario usuario) {
 		ModelAndView mv = new ModelAndView("usuario/CadastroUsuario");
 		mv.addObject("lojas", lojas.findAll());

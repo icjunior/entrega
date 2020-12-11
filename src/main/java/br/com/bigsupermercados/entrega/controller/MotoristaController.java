@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
+import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.service.CadastroMotoristaService;
 
 @Controller
@@ -30,6 +31,9 @@ public class MotoristaController {
 
 	@Autowired
 	private CadastroMotoristaService service;
+	
+	@Autowired
+	private Lojas lojaRepository;
 
 	@GetMapping
 	public ModelAndView listar(@RequestParam("page") Optional<Integer> page,
@@ -62,6 +66,7 @@ public class MotoristaController {
 	@GetMapping("/nova")
 	public ModelAndView nova(Motorista motorista) {
 		ModelAndView mv = new ModelAndView("motorista/CadastroMotorista");
+		mv.addObject("lojas", lojaRepository.findAll());
 		return mv;
 	}
 

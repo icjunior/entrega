@@ -41,6 +41,7 @@
 							<th class="table-cervejas-col-estilo">RG</th>
 							<th class="table-cervejas-col-origem">CNH</th>
 							<th class="table-cervejas-col-sku">Telefone</th>
+							<th class="table-cervejas-col-sku">Loja</th>
 							<th class="table-cervejas-col-origem">Ações</th>
 						</tr>
 					</thead>
@@ -53,6 +54,7 @@
 							<td th:text="${motorista.rg}"></td>
 							<td th:text="${motorista.cnh}"></td>
 							<td th:text="${motorista.telefone}"></td>
+							<td th:text="${motorista.loja.apelido}"></td>
 							<td class="text-center"><a
 								class="btn btn-link btn-xs js-tooltip" title="Editar"
 								th:href="@{/motorista/{codigo}(codigo=${motorista.codigo})}"> <i
