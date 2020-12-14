@@ -16,23 +16,24 @@ import br.com.bigsupermercados.entrega.service.HoleriteService;
 @Controller
 @RequestMapping("/relatorio")
 public class RelatorioController {
-	
+
 	@Autowired
 	private HoleriteService holeriteService;
 
 	@GetMapping("/holerite")
-	public ResponseEntity<byte[]> holerite(@RequestParam("codigoBordero") Bordero bordero){
+	public ResponseEntity<byte[]> holerite(@RequestParam("codigoBordero") Bordero bordero) {
 		byte[] relatorio = null;
-		
+
 		try {
 			relatorio = holeriteService.gerar(bordero);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
-		headers.set("Content-disposition", "inline; filename=bordero_" + bordero.getCodigo() + ".pdf");
+		headers.set("Content-disposition", "inline; filename=holerite-bordero-" + bordero.getCodigo() + "-"
+				+ bordero.getMotorista().getNome() + ".pdf");
 		return new ResponseEntity<>(relatorio, headers, HttpStatus.OK);
 	}
 }
