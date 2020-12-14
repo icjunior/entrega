@@ -15,17 +15,13 @@ import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 import br.com.bigsupermercados.entrega.repository.entrega.TipoLancamentoRepository;
 
 @Service
-public class TipoLancamentoService {
+public class SelecaoTipoLancamentoService {
 
 	@Autowired
 	private TipoLancamentoRepository repository;
 
 	public List<TipoLancamento> listar() {
 		return repository.findAll();
-	}
-
-	public void salvar(TipoLancamento tipoLancamento) {
-		repository.save(tipoLancamento);
 	}
 
 	public Page<TipoLancamento> buscarPaginado(Pageable pageable) {

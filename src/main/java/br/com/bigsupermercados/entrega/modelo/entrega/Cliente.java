@@ -153,6 +153,10 @@ public class Cliente {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+	
+	public boolean isNovo() {
+		return this.codigo == null;
+	}
 
 	@Override
 	public int hashCode() {

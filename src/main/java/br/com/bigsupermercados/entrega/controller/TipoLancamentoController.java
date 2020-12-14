@@ -22,7 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.controller.form.TipoLancamentoForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
-import br.com.bigsupermercados.entrega.service.TipoLancamentoService;
+import br.com.bigsupermercados.entrega.service.CadastroTipoLancamentoService;
+import br.com.bigsupermercados.entrega.service.SelecaoTipoLancamentoService;
 import groovyjarjarpicocli.CommandLine.Model;
 
 @Controller
@@ -30,7 +31,10 @@ import groovyjarjarpicocli.CommandLine.Model;
 public class TipoLancamentoController {
 
 	@Autowired
-	TipoLancamentoService service;
+	private CadastroTipoLancamentoService service;
+
+	@Autowired
+	private SelecaoTipoLancamentoService selecaoTipoLancamentoService;
 
 	@GetMapping
 	public ModelAndView listar(@RequestParam("page") Optional<Integer> page,
@@ -40,7 +44,8 @@ public class TipoLancamentoController {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
 
-		Page<TipoLancamento> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		Page<TipoLancamento> clientePage = selecaoTipoLancamentoService
+				.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
 		mv.addObject("tiposLancamento", clientePage);
 
 		int totalPages = clientePage.getTotalPages();

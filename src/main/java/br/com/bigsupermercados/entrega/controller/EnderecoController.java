@@ -24,7 +24,8 @@ import br.com.bigsupermercados.entrega.controller.dto.EnderecoDTO;
 import br.com.bigsupermercados.entrega.controller.filter.EnderecoFilter;
 import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
 import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
-import br.com.bigsupermercados.entrega.service.EnderecoService;
+import br.com.bigsupermercados.entrega.service.CadastroEnderecoService;
+import br.com.bigsupermercados.entrega.service.SelecaoEnderecoService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 
 @RestController
@@ -32,14 +33,17 @@ import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoExc
 public class EnderecoController {
 
 	@Autowired
-	private EnderecoService service;
-	
+	private CadastroEnderecoService service;
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
+	@Autowired
+	private SelecaoEnderecoService selecaoEnderecoService;
+
 	@GetMapping
 	public ResponseEntity<EnderecoDTO> findByCEP(@RequestParam String cep) {
-		Optional<Endereco> enderecoOpt = service.findByCEP(cep);
+		Optional<Endereco> enderecoOpt = selecaoEnderecoService.findByCEP(cep);
 
 		if (enderecoOpt.isPresent()) {
 			return ResponseEntity.ok(EnderecoDTO.converter(enderecoOpt.get()));
@@ -51,7 +55,7 @@ public class EnderecoController {
 	@GetMapping("/pesquisaEnderecoPorLogradouro")
 	public ResponseEntity<List<EnderecoDTO>> findByLogradouro(@RequestParam String logradouro,
 			@RequestParam(defaultValue = "8928") Long cidade) {
-		List<Endereco> enderecos = service.findByLogradouro(logradouro, cidade);
+		List<Endereco> enderecos = selecaoEnderecoService.findByLogradouro(logradouro, cidade);
 
 		if (enderecos.isEmpty()) {
 			return ResponseEntity.notFound().build();
@@ -70,12 +74,12 @@ public class EnderecoController {
 
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
-		
-		enderecoPage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize), enderecoFilter);
-		
+
+		enderecoPage = selecaoEnderecoService.buscarPaginado(PageRequest.of(currentPage - 1, pageSize), enderecoFilter);
+
 		mv.addObject("enderecos", enderecoPage);
 		mv.addObject("cidades", cidadeRepository.cidadesAtendidas());
-		
+
 		int totalPages = enderecoPage.getTotalPages();
 
 		if (totalPages > 0) {

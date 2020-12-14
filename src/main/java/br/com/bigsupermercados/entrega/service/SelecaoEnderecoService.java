@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,7 +17,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Endereco;
 import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 
 @Service
-public class EnderecoService {
+public class SelecaoEnderecoService {
 
 	@Autowired
 	private EnderecoRepository repository;
@@ -34,11 +32,6 @@ public class EnderecoService {
 
 	public List<Endereco> findAll() {
 		return repository.buscarPorCidadesAtivas();
-	}
-
-	@Transactional
-	public void salvar(Endereco endereco) {
-		repository.save(endereco);
 	}
 
 	public Page<Endereco> buscarPaginado(Pageable pageable, EnderecoFilter enderecoFilter) {

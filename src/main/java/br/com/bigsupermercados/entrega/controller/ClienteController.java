@@ -29,6 +29,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.repository.entrega.CidadeRepository;
 import br.com.bigsupermercados.entrega.repository.entrega.EnderecoRepository;
 import br.com.bigsupermercados.entrega.service.CadastroClienteService;
+import br.com.bigsupermercados.entrega.service.SelecaoClienteService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 
 @Controller
@@ -37,6 +38,9 @@ public class ClienteController {
 
 	@Autowired
 	private CadastroClienteService cadastroClienteService;
+
+	@Autowired
+	private SelecaoClienteService selecaoClienteService;
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
@@ -52,7 +56,7 @@ public class ClienteController {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
 
-		Page<Cliente> clientePage = cadastroClienteService.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		Page<Cliente> clientePage = selecaoClienteService.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
 		mv.addObject("clientes", clientePage);
 
 		int totalPages = clientePage.getTotalPages();
@@ -76,7 +80,7 @@ public class ClienteController {
 
 	@GetMapping("/buscaPorCPF")
 	public ResponseEntity<ClienteDTO> buscarPorCPF(@RequestParam("filtro") String cpf) {
-		Optional<Cliente> clienteOpt = cadastroClienteService.buscaPorCPF(cpf);
+		Optional<Cliente> clienteOpt = selecaoClienteService.buscaPorCPF(cpf);
 
 		if (clienteOpt.isPresent()) {
 			return ResponseEntity.ok(new ClienteDTO(clienteOpt.get()));
@@ -87,7 +91,7 @@ public class ClienteController {
 
 	@GetMapping("/buscaPorNome")
 	public ResponseEntity<List<ClienteDTO>> buscaPorNome(@RequestParam("filtro") String nome) {
-		List<Cliente> clientes = cadastroClienteService.buscaPorNome(nome);
+		List<Cliente> clientes = selecaoClienteService.buscaPorNome(nome);
 
 		if (!clientes.isEmpty()) {
 			return ResponseEntity.ok(ClienteDTO.converter(clientes));

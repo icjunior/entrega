@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.service.CadastroLojaService;
+import br.com.bigsupermercados.entrega.service.SelecaoLojaService;
 
 @Controller
 @RequestMapping("/loja")
@@ -30,6 +31,9 @@ public class LojaController {
 
 	@Autowired
 	private CadastroLojaService service;
+
+	@Autowired
+	private SelecaoLojaService selecaoLojaService;
 
 	@GetMapping
 	public ModelAndView listar(@RequestParam("page") Optional<Integer> page,
@@ -39,7 +43,7 @@ public class LojaController {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(20);
 
-		Page<Loja> clientePage = service.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
+		Page<Loja> clientePage = selecaoLojaService.buscarPaginado(PageRequest.of(currentPage - 1, pageSize));
 		mv.addObject("lojas", clientePage);
 
 		int totalPages = clientePage.getTotalPages();

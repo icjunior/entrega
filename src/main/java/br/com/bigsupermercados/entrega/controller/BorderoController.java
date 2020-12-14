@@ -24,7 +24,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.service.BorderoService;
-import br.com.bigsupermercados.entrega.service.TipoLancamentoService;
+import br.com.bigsupermercados.entrega.service.SelecaoTipoLancamentoService;
 
 @Controller
 @RequestMapping("/bordero")
@@ -34,8 +34,8 @@ public class BorderoController {
 	private BorderoService service;
 
 	@Autowired
-	private TipoLancamentoService tipoLancamentoService;
-	
+	private SelecaoTipoLancamentoService selecaoTipoLancamento;
+
 	@Autowired
 	private Lojas lojaRepository;
 
@@ -61,7 +61,7 @@ public class BorderoController {
 	public ModelAndView pesquisaPorBodero(@PathVariable Long codigoBordero) {
 		ModelAndView mv = new ModelAndView("bordero/DetalheBordero");
 		Optional<Bordero> bordero = service.buscarBordero(codigoBordero);
-		List<TipoLancamento> tiposLancamento = tipoLancamentoService.listar();
+		List<TipoLancamento> tiposLancamento = selecaoTipoLancamento.listar();
 
 		mv.addObject("lojas", lojaRepository.findAll());
 		mv.addObject("bordero", BorderoDetalheDTO.converter(bordero));
