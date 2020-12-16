@@ -38,6 +38,7 @@
 							<th class="table-cervejas-col-sku">Código</th>
 							<th class="table-cervejas-col-nome">Motorista</th>
 							<th class="table-cervejas-col-origem">Incluído em</th>
+							<th class="table-cervejas-col-origem">Fechado em</th>
 							<th class="table-cervejas-col-origem">Qtd. guias</th>
 							<th class="table-cervejas-col-origem">Valor total</th>
 							<th class="table-cervejas-col-origem">Valor guias</th>
@@ -54,6 +55,7 @@
 							<td class="text-center" th:text="${bordero.codigo}">AA1111</td>
 							<td th:text="${bordero.motorista}">Teste</td>
 							<td th:text="${#temporals.format(bordero.dataHoraLancamento, 'dd/MM/yyyy')}"></td>
+							<td th:text="${#temporals.format(bordero.dataHoraFechamento, 'dd/MM/yyyy')}"></td>
 							<td th:text="${bordero.quantidadeLancadas}"></td>
 							<td th:text="${#numbers.formatCurrency(bordero.valor)}"></td>
 							<td th:text="${#numbers.formatCurrency(bordero.valorAReceber)}"></td>

@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.entrega.controller.filter.GuiaFilter;
-import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
@@ -49,16 +48,6 @@ public class GuiaService {
 		guia.setChaveAcesso(cupomZanthusOpt.get().getM45xb());
 
 		repository.save(guia);
-	}
-
-	public void liberarGuia(GuiaLiberarForm guiaLiberarForm) {
-		List<Guia> guias = guiaLiberarForm.getGuias();
-
-		guias.forEach(guia -> {
-			guia.setMotorista(guiaLiberarForm.getMotorista());
-		});
-
-		repository.saveAll(guias);
 	}
 
 	public List<Bordero> buscarPorBordero(Bordero bordero) {

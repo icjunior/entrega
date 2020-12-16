@@ -38,7 +38,9 @@ import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.repository.entrega.Motoristas;
+import br.com.bigsupermercados.entrega.service.GuiaLiberarService;
 import br.com.bigsupermercados.entrega.service.GuiaService;
+import br.com.bigsupermercados.entrega.service.UsuarioAutenticadoService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
 import br.com.bigsupermercados.entrega.service.exception.RegistroNaoEncontradoException;
 
@@ -60,6 +62,9 @@ public class GuiaController {
 
 	@Autowired
 	private Motoristas motoristaRepository;
+
+	@Autowired
+	private GuiaLiberarService guiaLiberarService;
 
 	@GetMapping("/nova")
 	public ModelAndView nova(GuiaForm guiaForm) {
@@ -94,7 +99,8 @@ public class GuiaController {
 	public ModelAndView listaGuiasALiberar(GuiaLiberarForm guiaLiberarForm) {
 		ModelAndView mv = new ModelAndView("guia/LiberarGuia");
 		List<Motorista> motoristas = motoristaRepository.findByAtivoTrue();
-		List<Guia> guiasALiberar = repository.findByMotoristaIsNullAndExcluidoFalse();
+		List<Guia> guiasALiberar = repository.findByMotoristaIsNullAndExcluidoFalseAndLoja_Codigo(
+				UsuarioAutenticadoService.usuarioAutenticado().getLoja().getCodigo());
 		mv.addObject("guiasALiberar", guiasALiberar);
 		mv.addObject("motoristas", motoristas);
 		return mv;
@@ -108,7 +114,7 @@ public class GuiaController {
 			return listaGuiasALiberar(guiaLiberarForm);
 		}
 
-		service.liberarGuia(guiaLiberarForm);
+		guiaLiberarService.liberarGuia(guiaLiberarForm);
 		attributes.addFlashAttribute("mensagem", "Guias vinculadas com sucesso");
 
 		return new ModelAndView("redirect:/guia/liberar");

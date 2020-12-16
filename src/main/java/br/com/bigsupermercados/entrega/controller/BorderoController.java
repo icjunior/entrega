@@ -42,7 +42,7 @@ public class BorderoController {
 
 	@Autowired
 	private Lojas lojaRepository;
-
+	
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("bordero/PesquisaBordero");
@@ -54,7 +54,7 @@ public class BorderoController {
 	}
 
 	@GetMapping("/fechados")
-	public ModelAndView listarFechados() {
+	public ModelAndView listarFechados() {		
 		ModelAndView mv = new ModelAndView("bordero/PesquisaFechados");
 		List<Bordero> borderos = service.listaFechados();
 		mv.addObject("borderos", BorderoDTO.converter(borderos));

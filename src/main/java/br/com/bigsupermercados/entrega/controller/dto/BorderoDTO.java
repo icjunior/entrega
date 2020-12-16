@@ -19,6 +19,7 @@ public class BorderoDTO {
 	private BigDecimal valorAcrescimos;
 	private BigDecimal valorDescontos;
 	private BigDecimal valorTotalLiquido;
+	private LocalDateTime dataHoraFechamento;
 
 	public BorderoDTO(Bordero bordero) {
 		this.codigo = bordero.getCodigo();
@@ -31,6 +32,7 @@ public class BorderoDTO {
 		this.valorDescontos = bordero.getValorDescontos();
 		this.valorTotalLiquido = bordero.getValorLiquido();
 		this.quantidadeLancadas = bordero.getGuias().size();
+		this.dataHoraFechamento = bordero.getDatahoraFechamento();
 	}
 
 	public Long getCodigo() {
@@ -71,6 +73,10 @@ public class BorderoDTO {
 
 	public BigDecimal getValorTotalLiquido() {
 		return valorTotalLiquido;
+	}
+
+	public LocalDateTime getDataHoraFechamento() {
+		return dataHoraFechamento;
 	}
 
 	public static List<BorderoDTO> converter(List<Bordero> borderos) {

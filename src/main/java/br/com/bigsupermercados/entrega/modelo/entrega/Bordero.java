@@ -40,6 +40,9 @@ public class Bordero {
 	@OneToMany(mappedBy = "bordero")
 	private List<LancamentoBordero> lancamentos;
 
+	@Column(name = "data_hora_fechamento")
+	private LocalDateTime datahoraFechamento;
+
 	public Bordero() {
 
 	}
@@ -118,6 +121,14 @@ public class Bordero {
 
 	public BigDecimal getValorLiquido() {
 		return getValorAReceberBruto().add(getValorAcrescimo()).subtract(getValorDescontos());
+	}
+
+	public LocalDateTime getDatahoraFechamento() {
+		return datahoraFechamento;
+	}
+
+	public void setDatahoraFechamento(LocalDateTime datahoraFechamento) {
+		this.datahoraFechamento = datahoraFechamento;
 	}
 
 	@Override
