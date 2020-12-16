@@ -1,5 +1,6 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -96,6 +97,27 @@ public class Bordero {
 
 	public void setLancamentos(List<LancamentoBordero> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	public BigDecimal getValorAReceberBruto() {
+		return guias.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem()).divide(new BigDecimal(100))
+				.setScale(2, BigDecimal.ROUND_DOWN)).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal getValorAcrescimo() {
+		return lancamentos.stream()
+				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal getValorDescontos() {
+		return lancamentos.stream()
+				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
+				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
+
+	public BigDecimal getValorLiquido() {
+		return getValorAReceberBruto().add(getValorAcrescimo()).subtract(getValorDescontos());
 	}
 
 	@Override

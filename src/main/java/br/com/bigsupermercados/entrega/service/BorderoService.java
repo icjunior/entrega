@@ -46,12 +46,6 @@ public class BorderoService {
 		return repository.findById(codigoBordero);
 	}
 
-	public void reabrir(Long codigo) {
-		Bordero bordero = repository.getOne(codigo);
-		// apagar os registros de arredondamento na parte das listas
-		bordero.setAberto(true);
-	}
-
 	public List<Bordero> listaFechados() {
 		return repository.findByAbertoFalse();
 	}
@@ -95,10 +89,8 @@ public class BorderoService {
 	public BigDecimal calculaTotalGuias(List<Guia> guias) {
 		// return guias.stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO,
 		// BigDecimal::add);
-		return guias
-				.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem())
-						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		return guias.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem()).divide(new BigDecimal(100))
+				.setScale(2, BigDecimal.ROUND_DOWN)).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public BigDecimal calculaArredondamento(BigDecimal descontos, BigDecimal acrescimos, BigDecimal guias) {

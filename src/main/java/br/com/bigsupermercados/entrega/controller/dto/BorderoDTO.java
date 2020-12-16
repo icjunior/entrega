@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
-import br.com.bigsupermercados.entrega.modelo.entrega.ModoLancamento;
 
 public class BorderoDTO {
 
@@ -27,22 +26,10 @@ public class BorderoDTO {
 		this.dataHoraLancamento = bordero.getDataHoraLancamento();
 		this.aberto = bordero.isAberto();
 		this.valor = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		this.valorAReceber = bordero
-				.getGuias().stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem())
-						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		this.valorAcrescimos = bordero.getLancamentos().stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		this.valorDescontos = bordero.getLancamentos().stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-		this.valorTotalLiquido = valorAReceber.add(valorAcrescimos).subtract(valorDescontos);
-
+		this.valorAReceber = bordero.getValorAReceberBruto();
+		this.valorAcrescimos = bordero.getValorAcrescimo();
+		this.valorDescontos = bordero.getValorDescontos();
+		this.valorTotalLiquido = bordero.getValorLiquido();
 		this.quantidadeLancadas = bordero.getGuias().size();
 	}
 

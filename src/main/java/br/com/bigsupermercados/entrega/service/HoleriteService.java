@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.service;
 
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +30,9 @@ public class HoleriteService {
 
 		List<LancamentoHoleriteDTO> lancamentos = LancamentoHoleriteDTO.converter(bordero.getLancamentos());
 
-		BigDecimal valorAReceber = bordero
-				.getGuias().stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem())
-						.divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN))
-				.reduce(BigDecimal.ZERO, BigDecimal::add);
-
 		LancamentoHoleriteDTO lancamento = new LancamentoHoleriteDTO(1L, ModoLancamento.ACRESCIMO.getDescricao(),
-				"Valor à receber", valorAReceber);
+				"Valor à receber", bordero.getValorAReceberBruto());
+		
 		lancamentos.add(lancamento);
 
 		JRDataSource jrDataSource = new JRBeanCollectionDataSource(lancamentos);

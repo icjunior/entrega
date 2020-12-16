@@ -23,6 +23,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
+import br.com.bigsupermercados.entrega.service.BorderoReabrirService;
 import br.com.bigsupermercados.entrega.service.BorderoService;
 import br.com.bigsupermercados.entrega.service.SelecaoTipoLancamentoService;
 
@@ -32,6 +33,9 @@ public class BorderoController {
 
 	@Autowired
 	private BorderoService service;
+	
+	@Autowired
+	private BorderoReabrirService borderoReabrirService;
 
 	@Autowired
 	private SelecaoTipoLancamentoService selecaoTipoLancamento;
@@ -71,9 +75,8 @@ public class BorderoController {
 	}
 
 	@PatchMapping("/reabrir/{codigo}")
-	@Transactional
 	public ResponseEntity<?> reabrir(@PathVariable Long codigo) {
-		service.reabrir(codigo);
+		borderoReabrirService.reabrir(codigo);
 		return ResponseEntity.ok("Reaberto");
 	}
 
