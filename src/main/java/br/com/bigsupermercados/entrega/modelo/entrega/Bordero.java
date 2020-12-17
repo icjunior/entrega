@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class Bordero {
 	private Motorista motorista;
 
 	@Column(name = "data_hora_lancamento")
-	private LocalDateTime dataHoraLancamento;
+	private LocalDateTime dataHoraLancamento = LocalDateTime.now();
 
 	@Column(name = "aberto")
-	private boolean aberto;
+	private boolean aberto = true;
 
 	@OneToMany(mappedBy = "bordero", fetch = FetchType.EAGER)
 	private List<Guia> guias;
@@ -47,11 +48,9 @@ public class Bordero {
 
 	}
 
-	public Bordero(Motorista motorista, LocalDateTime dataHoraLancamento, boolean aberto) {
+	public Bordero(Motorista motorista) {
 		super();
 		this.motorista = motorista;
-		this.dataHoraLancamento = dataHoraLancamento;
-		this.aberto = aberto;
 	}
 
 	public Long getCodigo() {
@@ -123,6 +122,15 @@ public class Bordero {
 		return getValorAReceberBruto().add(getValorAcrescimo()).subtract(getValorDescontos());
 	}
 
+	public BigDecimal getValorArredondamento() {
+		BigDecimal fatorArredondamento = new BigDecimal("5");
+		BigDecimal valorBorderoSemArredondamento = getValorLiquido();
+		BigDecimal valorBorderoArredondado = valorBorderoSemArredondamento.divide(fatorArredondamento)
+				.setScale(0, RoundingMode.UP).multiply(fatorArredondamento);
+
+		return valorBorderoArredondado.subtract(valorBorderoSemArredondamento);
+	}
+
 	public LocalDateTime getDatahoraFechamento() {
 		return datahoraFechamento;
 	}
@@ -155,4 +163,5 @@ public class Bordero {
 			return false;
 		return true;
 	}
+
 }

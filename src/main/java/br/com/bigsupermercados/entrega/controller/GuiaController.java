@@ -38,7 +38,7 @@ import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.repository.entrega.Motoristas;
-import br.com.bigsupermercados.entrega.service.GuiaLiberarService;
+import br.com.bigsupermercados.entrega.service.LiberarGuiaService;
 import br.com.bigsupermercados.entrega.service.GuiaService;
 import br.com.bigsupermercados.entrega.service.UsuarioAutenticadoService;
 import br.com.bigsupermercados.entrega.service.exception.RegistroJaCadastradoException;
@@ -64,7 +64,7 @@ public class GuiaController {
 	private Motoristas motoristaRepository;
 
 	@Autowired
-	private GuiaLiberarService guiaLiberarService;
+	private LiberarGuiaService guiaLiberarService;
 
 	@GetMapping("/nova")
 	public ModelAndView nova(GuiaForm guiaForm) {

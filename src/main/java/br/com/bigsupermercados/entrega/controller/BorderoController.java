@@ -3,8 +3,6 @@ package br.com.bigsupermercados.entrega.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,12 +18,14 @@ import br.com.bigsupermercados.entrega.controller.dto.BorderoDetalheDTO;
 import br.com.bigsupermercados.entrega.controller.dto.GuiaDTO;
 import br.com.bigsupermercados.entrega.controller.dto.TipoLancamentoDTO;
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
-import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.TipoLancamento;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.service.BorderoReabrirService;
 import br.com.bigsupermercados.entrega.service.BorderoService;
+import br.com.bigsupermercados.entrega.service.FecharBorderoService;
 import br.com.bigsupermercados.entrega.service.SelecaoTipoLancamentoService;
+import br.com.bigsupermercados.entrega.service.ValidarGuiaService;
+import br.com.bigsupermercados.entrega.service.exception.RegistroNaoEncontradoException;
 
 @Controller
 @RequestMapping("/bordero")
@@ -33,7 +33,7 @@ public class BorderoController {
 
 	@Autowired
 	private BorderoService service;
-	
+
 	@Autowired
 	private BorderoReabrirService borderoReabrirService;
 
@@ -42,7 +42,13 @@ public class BorderoController {
 
 	@Autowired
 	private Lojas lojaRepository;
+
+	@Autowired
+	private ValidarGuiaService validarGuiaService;
 	
+	@Autowired
+	private FecharBorderoService fecharBorderoService;
+
 	@GetMapping
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("bordero/PesquisaBordero");
@@ -54,7 +60,7 @@ public class BorderoController {
 	}
 
 	@GetMapping("/fechados")
-	public ModelAndView listarFechados() {		
+	public ModelAndView listarFechados() {
 		ModelAndView mv = new ModelAndView("bordero/PesquisaFechados");
 		List<Bordero> borderos = service.listaFechados();
 		mv.addObject("borderos", BorderoDTO.converter(borderos));
@@ -81,24 +87,19 @@ public class BorderoController {
 	}
 
 	@PatchMapping("/fechar")
-	@Transactional
 	public ResponseEntity<BorderoDTO> fechar(@RequestParam(value = "bordero") Long codigo) {
-		Bordero bordero = service.fechar(codigo);
+		Bordero bordero = fecharBorderoService.fechar(codigo);
 
 		return ResponseEntity.ok(new BorderoDTO(bordero));
 	}
 
 	@PatchMapping("/validarCupomBordero")
-	@Transactional
 	public ResponseEntity<GuiaDTO> validarCupomBordero(@RequestParam Long bordero, @RequestParam String chaveAcesso) {
-
-		Optional<Guia> guiaOpt = service.validarCupomBordero(bordero, chaveAcesso);
-
-		if (guiaOpt.isPresent()) {
-			Guia guia = guiaOpt.get();
-			return ResponseEntity.ok(new GuiaDTO(guia));
+		try {
+			GuiaDTO guiaDTO = validarGuiaService.validarCupomBordero(bordero, chaveAcesso);
+			return ResponseEntity.ok(guiaDTO);
+		} catch (RegistroNaoEncontradoException e) {
+			return ResponseEntity.notFound().build();
 		}
-
-		return ResponseEntity.notFound().build();
 	}
 }

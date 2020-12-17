@@ -13,6 +13,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
+import br.com.bigsupermercados.entrega.service.UsuarioAutenticadoService;
 
 public class GuiaForm {
 
@@ -186,7 +187,7 @@ public class GuiaForm {
 
 	public Guia converter(Clientes clienteRepository, Lojas lojaRepository) {
 		Cliente cliente = clienteRepository.findByCpf(cpf).get();
-		Loja loja = lojaRepository.findById(codigoLoja).get();
+		Loja loja = UsuarioAutenticadoService.usuarioAutenticado().getLoja();
 
 		return new Guia(codigo, data, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento,
 				null, null, false, valor, porcentagem, chaveAcesso);

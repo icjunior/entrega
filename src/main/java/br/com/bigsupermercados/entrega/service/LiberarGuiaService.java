@@ -10,7 +10,7 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 
 @Service
-public class GuiaLiberarService {
+public class LiberarGuiaService {
 
 	@Autowired
 	private GuiaRepository repository;

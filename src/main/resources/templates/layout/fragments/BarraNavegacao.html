@@ -22,7 +22,10 @@
 			<ul class="nav navbar-nav  navbar-right">
 				<li>
 					<!-- Authenticated as <span sec:authentication="principal.usuario.nome"></span> -->
-					<p class="navbar-text" sec:authentication="principal.usuario.nome">Usuário</p>
+					<p class="navbar-text">Usuário:</p>
+					<p class="navbar-text" sec:authentication="principal.usuario.nome" />
+					<p class="navbar-text">Loja:</p>
+					<p class="navbar-text" sec:authentication="principal.usuario.loja.apelido">Usuário</p>
 				</li>
 			
 				<li><a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a></li>
