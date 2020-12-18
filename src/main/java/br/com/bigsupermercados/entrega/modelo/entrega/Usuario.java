@@ -1,14 +1,19 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "usuario")
@@ -30,6 +35,11 @@ public class Usuario implements Serializable {
 
 	@Transient
 	private String confirmacaoSenha;
+
+	@Size(min = 1, message = "Selecione pelo menos um grupo")
+	@ManyToMany
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "codigo_usuario"), inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))
+	private List<Grupo> grupos;
 
 	public boolean isNovo() {
 		return codigo == null;
@@ -89,6 +99,14 @@ public class Usuario implements Serializable {
 
 	public void setConfirmacaoSenha(String confirmacaoSenha) {
 		this.confirmacaoSenha = confirmacaoSenha;
+	}
+
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 
 	@Override

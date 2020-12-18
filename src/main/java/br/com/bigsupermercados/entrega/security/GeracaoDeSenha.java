@@ -6,7 +6,7 @@ public class GeracaoDeSenha {
 
 	public static void main(String[] args) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		System.out.println(encoder.encode("yz4jhq"));
+		System.out.println(encoder.encode("123456"));
 	}
 }
 
