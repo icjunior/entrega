@@ -102,20 +102,23 @@ public class Bordero {
 	}
 
 	public BigDecimal getValorAReceberBruto() {
-		return guias.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem()).divide(new BigDecimal(100))
-				.setScale(2, BigDecimal.ROUND_DOWN)).reduce(BigDecimal.ZERO, BigDecimal::add);
+		return guias == null ? BigDecimal.ZERO
+				: guias.stream().map(guia -> guia.getValor().multiply(guia.getPorcentagem()).divide(new BigDecimal(100))
+						.setScale(2, BigDecimal.ROUND_DOWN)).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public BigDecimal getValorAcrescimo() {
-		return lancamentos.stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		return lancamentos == null ? BigDecimal.ZERO
+				: lancamentos.stream().filter(
+						lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO)
+						.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public BigDecimal getValorDescontos() {
-		return lancamentos.stream()
-				.filter(lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
-				.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		return lancamentos == null ? BigDecimal.ZERO
+				: lancamentos.stream().filter(
+						lancamento -> lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO)
+						.map(lancamento -> lancamento.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
 	public BigDecimal getValorLiquido() {

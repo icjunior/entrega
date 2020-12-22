@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,9 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "loja")
-public class Loja {
+public class Loja implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

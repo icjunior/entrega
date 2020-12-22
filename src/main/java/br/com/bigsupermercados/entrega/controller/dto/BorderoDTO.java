@@ -26,12 +26,13 @@ public class BorderoDTO {
 		this.motorista = bordero.getMotorista().getNome();
 		this.dataHoraLancamento = bordero.getDataHoraLancamento();
 		this.aberto = bordero.isAberto();
-		this.valor = bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
+		this.valor = bordero.getGuias() == null ? BigDecimal.ZERO
+				: bordero.getGuias().stream().map(guia -> guia.getValor()).reduce(BigDecimal.ZERO, BigDecimal::add);
 		this.valorAReceber = bordero.getValorAReceberBruto();
 		this.valorAcrescimos = bordero.getValorAcrescimo();
 		this.valorDescontos = bordero.getValorDescontos();
 		this.valorTotalLiquido = bordero.getValorLiquido();
-		this.quantidadeLancadas = bordero.getGuias().size();
+		this.quantidadeLancadas = bordero.getGuias() == null ? 0 : bordero.getGuias().size();
 		this.dataHoraFechamento = bordero.getDatahoraFechamento();
 	}
 
@@ -81,5 +82,9 @@ public class BorderoDTO {
 
 	public static List<BorderoDTO> converter(List<Bordero> borderos) {
 		return borderos.stream().map(BorderoDTO::new).collect(Collectors.toList());
+	}
+
+	public static BorderoDTO converter(Bordero bordero) {
+		return new BorderoDTO(bordero);
 	}
 }

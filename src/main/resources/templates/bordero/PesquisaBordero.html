@@ -7,6 +7,7 @@
 	xmlns:data="http://www.thymeleaf.org/extras/data">
 <head>
 <title>Pesquisa de borderôs</title>
+<meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
 </head>
 
 <body>
@@ -68,8 +69,18 @@
 					</tbody>
 				</table>
 			</div>
+			
+			<div class="row">
+				<div class="col-sm-12 form-group">
+					<button class="btn  btn-primary" type="button" data-toggle="modal" data-target="#modalNovoBordero">Novo</button>
+				</div>
+			</div>
 		</div>
+		<th:block th:replace="bordero/CadastroBordero"></th:block>
 	</section>
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/bordero.criar.js}"></script>
+	</th:block>
 </body>
 
 </html>
