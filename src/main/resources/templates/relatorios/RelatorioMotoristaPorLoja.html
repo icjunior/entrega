@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:brewer="http://brewer.algaworks.com"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://brewer.algaworks.com">
+
+<head>
+<title>Relatório de guias por motorista</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>Relatório de guias por motorista</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<form method="GET" th:object="${relatorioMotoristaPorLojaForm}">
+			<brewer:message />
+			<div class="row">
+				<div class="col-sm-3 form-group bw-required">
+					<label for="tipo" class="control-label">Motorista</label>
+					<div class="bw-field-action">
+						<select id="tipo" class="form-control" th:field="*{motorista}">
+							<option value="">Selecione o motorista</option>
+							<option th:each="motorista : ${motoristas}"
+								th:value="${motorista.codigo}" th:text="${motorista.nome}">
+							</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-4 form-group bw-required">
+					<label for="dataInicial" class="control-label">Data inicial</label>
+					<input id="dataInicial" type="text" class="form-control" th:field=*{dataInicial} autocomplete="off"/>	
+				</div>
+				<div class="col-sm-4 form-group bw-required">
+					<label for="dataFinal" class="control-label">Data final</label>
+					<input id="dataFinal" type="text" class="form-control" th:field=*{dataFinal} autocomplete="off"/>	
+				</div>
+			</div>
+			<button type="submit" class="btn  btn-primary">Buscar</button>
+			
+			<div class="container-fluid">
+			<div class="table-responsive bw-tabela-simples">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="table-cervejas-col-foto">Data</th>
+							<th class="table-cervejas-col-nome">Loja</th>
+							<th class="table-cervejas-col-sku">PDV</th>
+							<th class="table-cervejas-col-estilo">Cupom</th>
+							<th class="table-cervejas-col-origem">Valor</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="guia : ${guias}">
+							<td class="text-center" th:text="${guia.data}">AA1111</td>
+							<td th:text="${guia.loja.apelido}">Teste</td>
+							<td th:text="${guia.pdv}"></td>
+							<td th:text="${guia.cupom}"></td>
+							<td th:text="${guia.valor}"></td>
+						</tr>
+						<tr th:if="${guias == null}">
+							<td colspan="7">Nenhuma guia encontrada</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="col-sm-12 text-center" th:if="${guias.totalPages > 0}">
+					<nav>
+						<ul class="pagination pagination-sm" th:with="paginaAtual=${guias.number}">
+							<th:block th:each="p : ${#numbers.sequence(1, guias.totalPages)}" th:with="numeroPagina=${p - 1}">
+								<li th:class="${paginaAtual == numeroPagina} ? active">
+									<a th:href="@{/relatorioMotoristaPorLoja(size=${guias.size}, page=${pageNumber})}">[[${p}]]</a>
+								</li>
+							</th:block>
+						</ul>
+					</nav>				
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+</section>
+<th:block layout:fragment="javascript-extra">
+	<script>
+			$(function() {
+			    $( "#dataInicial" ).datepicker({
+							language : "pt-BR",
+							maxViewMode : 2,
+							minViewMode : 0,
+							clearBtn : true,
+							todayHighlight : true,
+							todayBtn : true,
+							format : "dd/mm/yyyy",
+							autoclose : true,
+							forceParse : true
+				});
+			    $( "#dataFinal" ).datepicker({
+					language : "pt-BR",
+					maxViewMode : 2,
+					minViewMode : 0,
+					clearBtn : true,
+					todayHighlight : true,
+					todayBtn : true,
+					format : "dd/mm/yyyy",
+					autoclose : true,
+					forceParse : true
+		});
+			});
+		</script>
+</th:block>
+</html>

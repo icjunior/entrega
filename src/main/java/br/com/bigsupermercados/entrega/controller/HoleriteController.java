@@ -14,13 +14,13 @@ import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.service.HoleriteService;
 
 @Controller
-@RequestMapping("/relatorio")
-public class RelatorioController {
+@RequestMapping("/holerite")
+public class HoleriteController {
 
 	@Autowired
 	private HoleriteService holeriteService;
 
-	@GetMapping("/holerite")
+	@GetMapping
 	public ResponseEntity<byte[]> holerite(@RequestParam("codigoBordero") Bordero bordero) {
 		byte[] relatorio = null;
 

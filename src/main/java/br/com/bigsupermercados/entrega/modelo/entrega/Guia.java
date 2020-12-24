@@ -262,6 +262,10 @@ public class Guia {
 		this.excluido = excluido;
 	}
 
+	public BigDecimal getValorAReceber() {
+		return this.valor.multiply(this.porcentagem).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

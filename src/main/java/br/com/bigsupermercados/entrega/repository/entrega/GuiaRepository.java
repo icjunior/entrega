@@ -38,4 +38,7 @@ public interface GuiaRepository extends JpaRepository<Guia, Long> {
 	Optional<Guia> buscarGuiaLiberada(Long motorista, String cupom, BigDecimal valor);
 
 	List<Guia> findByMotoristaIsNullAndExcluidoFalseAndLoja_Codigo(Long codigoLoja);
+
+	@Query("SELECT g FROM Guia g WHERE motorista.codigo = ?1 AND data BETWEEN ?2 AND ?3")
+	List<Guia> guiaPorMotoristaEPeriodo(Long codigoMotorista, LocalDate dataInicial, LocalDate dataFinal);
 }
