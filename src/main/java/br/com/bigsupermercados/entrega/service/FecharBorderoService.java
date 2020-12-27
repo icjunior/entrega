@@ -15,9 +15,12 @@ public class FecharBorderoService {
 
 	@Autowired
 	private Borderos repository;
-	
+
+//	@Autowired
+//	private LancamentoBorderoService lancamentoBorderoService;
+
 	@Autowired
-	private LancamentoBorderoService lancamentoBorderoService;
+	private CalculaArredondamento arredondamento;
 
 	@Transactional
 	public Bordero fechar(Long codigo) {
@@ -26,7 +29,7 @@ public class FecharBorderoService {
 		BigDecimal valorArredondamento = bordero.getValorArredondamento();
 
 		// gravando o registro de arredondamento
-		lancamentoBorderoService.gravarArredondamento(bordero, valorArredondamento);
+		arredondamento.gravarArredondamento(bordero, valorArredondamento);
 
 		// fazer a inserção do registro do arredondamento na tela de lançamentos
 		bordero.setAberto(false);

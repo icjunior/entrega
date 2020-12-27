@@ -42,7 +42,7 @@ public class Bordero {
 	private List<LancamentoBordero> lancamentos;
 
 	@Column(name = "data_hora_fechamento")
-	private LocalDateTime datahoraFechamento;
+	private LocalDateTime dataHoraFechamento;
 
 	public Bordero() {
 
@@ -135,11 +135,11 @@ public class Bordero {
 	}
 
 	public LocalDateTime getDatahoraFechamento() {
-		return datahoraFechamento;
+		return dataHoraFechamento;
 	}
 
-	public void setDatahoraFechamento(LocalDateTime datahoraFechamento) {
-		this.datahoraFechamento = datahoraFechamento;
+	public void setDatahoraFechamento(LocalDateTime dataHoraFechamento) {
+		this.dataHoraFechamento = dataHoraFechamento;
 	}
 
 	@Override

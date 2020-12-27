@@ -19,7 +19,7 @@ import br.com.bigsupermercados.entrega.repository.entrega.LancamentoBorderoRepos
 import br.com.bigsupermercados.entrega.repository.entrega.TipoLancamentoRepository;
 
 @Service
-public class LancamentoBorderoService {
+public class LancamentoBorderoService implements CalculaArredondamento {
 
 	@Autowired
 	private LancamentoBorderoRepository repository;
@@ -46,7 +46,16 @@ public class LancamentoBorderoService {
 	}
 
 	@Transactional
+	@Override
 	public void gravarArredondamento(Bordero bordero, BigDecimal valor) {
+		TipoLancamento tipoLancamento = tipoLancamentoRepository.findByNome("Arredondamento");
+		LancamentoBordero lancamento = new LancamentoBordero(bordero, tipoLancamento, valor, LocalDateTime.now());
+		repository.save(lancamento);
+	}
+
+	@Transactional
+	@Override
+	public void gravarArredondamentoAnterior(Bordero bordero, BigDecimal valor) {
 		TipoLancamento tipoLancamento = tipoLancamentoRepository.findByNome("Arredondamento");
 		LancamentoBordero lancamento = new LancamentoBordero(bordero, tipoLancamento, valor, LocalDateTime.now());
 		repository.save(lancamento);

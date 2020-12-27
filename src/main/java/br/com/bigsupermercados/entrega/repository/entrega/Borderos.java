@@ -17,4 +17,5 @@ public interface Borderos extends JpaRepository<Bordero, Long> {
 	
 	List<Bordero> findByAbertoTrue();
 
+	Optional<Bordero> findTop1ByMotorista_CodigoAndAbertoFalseOrderByDataHoraFechamentoDesc(Long codigo);
 }

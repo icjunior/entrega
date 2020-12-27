@@ -20,14 +20,29 @@ public class CadastroBorderoService {
 
 	@Transactional
 	public Bordero criar(Motorista motorista) {
-		Optional<Bordero> borderoOpt = repository.findByMotorista_CodigoAndAbertoTrue(motorista.getCodigo());
+		Optional<Bordero> borderoAbertoOpt = repository.findByMotorista_CodigoAndAbertoTrue(motorista.getCodigo());
 
-		if (borderoOpt.isPresent()) {
-			throw new RegistroJaCadastradoException("O borderô " + borderoOpt.get().getCodigo()
+		if (borderoAbertoOpt.isPresent()) {
+			throw new RegistroJaCadastradoException("O borderô " + borderoAbertoOpt.get().getCodigo()
 					+ " já está vinculado ao motorista " + motorista.getNome());
 		}
 
+//		Optional<Bordero> borderoFechadoOpt = repository
+//				.findTop1ByMotorista_CodigoAndAbertoFalseOrderByDataHoraFechamentoDesc(motorista.getCodigo());
+//
+//		BigDecimal arredondamentoAnterior;
+//		if (borderoFechadoOpt.isPresent()) {
+//			List<LancamentoBordero> lancamentos = borderoFechadoOpt.get().getLancamentos();
+//			
+//			arredondamentoAnterior = lancamentos.stream()
+//					.filter(lancamento -> "Arredondamento".equals(lancamento.getTipoLancamento().getNome()))
+//					.map(LancamentoBordero::getValor)
+//					.findAny()
+//					.orElse(BigDecimal.ZERO);
+//		}
+
 		Bordero bordero = new Bordero(motorista);
+
 		return repository.save(bordero);
 	}
 }
