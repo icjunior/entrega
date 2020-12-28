@@ -32,18 +32,16 @@ public class LancamentoBordero {
 	private BigDecimal valor;
 
 	@Column(name = "data_hora_inclusao")
-	private LocalDateTime dataHoraInclusao;
+	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
 	public LancamentoBordero() {
 		
 	}
 	
-	public LancamentoBordero(Bordero bordero, TipoLancamento tipoLancamento, BigDecimal valor,
-			LocalDateTime dataHoraInclusao) {
+	public LancamentoBordero(Bordero bordero, TipoLancamento tipoLancamento, BigDecimal valor) {
 		this.bordero = bordero;
 		this.tipoLancamento = tipoLancamento;
 		this.valor = valor;
-		this.dataHoraInclusao = dataHoraInclusao;
 	}
 
 	public Long getCodigo() {

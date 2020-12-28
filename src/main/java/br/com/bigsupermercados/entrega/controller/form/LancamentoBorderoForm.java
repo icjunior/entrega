@@ -1,7 +1,6 @@
 package br.com.bigsupermercados.entrega.controller.form;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.Bordero;
 import br.com.bigsupermercados.entrega.modelo.entrega.LancamentoBordero;
@@ -33,6 +32,6 @@ public class LancamentoBorderoForm {
 	public LancamentoBordero converter(Long codigoBordero, Borderos borderoRepository, TipoLancamentoRepository tipoLancamentoRepository) {
 		Bordero bordero = borderoRepository.getOne(codigoBordero);
 		TipoLancamento tipoLancamento = tipoLancamentoRepository.getOne(this.tipoLancamento);
-		return new LancamentoBordero(bordero, tipoLancamento, valor, LocalDateTime.now());
+		return new LancamentoBordero(bordero, tipoLancamento, valor);
 	}
 }

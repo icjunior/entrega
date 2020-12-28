@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.bigsupermercados.entrega.controller.dto.LancamentoBorderoDTO;
 import br.com.bigsupermercados.entrega.controller.form.LancamentoBorderoForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.LancamentoBordero;
+import br.com.bigsupermercados.entrega.service.EliminaLancamentoBorderoService;
 import br.com.bigsupermercados.entrega.service.LancamentoBorderoService;
 
 @CrossOrigin
@@ -25,6 +26,9 @@ public class LancamentoBorderoController {
 
 	@Autowired
 	private LancamentoBorderoService services;
+	
+	@Autowired
+	private EliminaLancamentoBorderoService eliminaLancamentoBorderoService;
 
 	@GetMapping("/lancamento")
 	public ResponseEntity<List<LancamentoBorderoDTO>> listarPorBordero(@PathVariable Long bordero) {
@@ -42,7 +46,7 @@ public class LancamentoBorderoController {
 	
 	@DeleteMapping("/eliminaLancamento/{codigo}")
 	public ResponseEntity<String> eliminaLancamento(@PathVariable Long codigo) {
-		services.eliminaLancamento(codigo);
+		eliminaLancamentoBorderoService.eliminaLancamento(codigo);
 		
 		return ResponseEntity.ok("Excluido");
 	}

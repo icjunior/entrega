@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.entrega.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.transaction.Transactional;
 
@@ -33,6 +34,7 @@ public class FecharBorderoService {
 
 		// fazer a inserção do registro do arredondamento na tela de lançamentos
 		bordero.setAberto(false);
+		bordero.setDatahoraFechamento(LocalDateTime.now());
 
 		return bordero;
 	}
