@@ -1,5 +1,7 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,9 @@ public class Motorista {
 
 	@ManyToOne
 	private Loja loja;
+
+	@Column(name = "porcentagem_excecao")
+	private BigDecimal porcentagemExcecao;
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
 	private boolean ativo = true;
@@ -102,6 +107,14 @@ public class Motorista {
 		this.ativo = ativo;
 	}
 
+	public BigDecimal getPorcentagemExcecao() {
+		return porcentagemExcecao;
+	}
+
+	public void setPorcentagemExcecao(BigDecimal porcentagemExcecao) {
+		this.porcentagemExcecao = porcentagemExcecao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,5 +138,9 @@ public class Motorista {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+	
+	public boolean isPossuiPorcentagemDeExcecao() {
+		return porcentagemExcecao.compareTo(BigDecimal.ZERO) == 0;
 	}
 }
