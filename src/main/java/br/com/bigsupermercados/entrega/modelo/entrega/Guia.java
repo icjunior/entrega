@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,18 +31,34 @@ public class Guia {
 	@Column(name = "data")
 	private LocalDate data;
 
+	@Column(name = "pdv")
 	private Integer pdv;
+
+	@Column(name = "cupom")
 	private String cupom;
+
+	@Column(name = "valor")
 	private BigDecimal valor;
 
 	@ManyToOne
 	private Cliente cliente;
 
+	@Column(name = "cep")
 	private String cep;
+
+	@Column(name = "endereco")
 	private String endereco;
+
+	@Column(name = "numero")
 	private String numero;
+
+	@Column(name = "bairro")
 	private String bairro;
+
+	@Column(name = "cidade")
 	private String cidade;
+
+	@Column(name = "complemento")
 	private String complemento;
 
 	@ManyToOne
@@ -49,6 +67,7 @@ public class Guia {
 	@ManyToOne
 	private Bordero bordero;
 
+	@Column(name = "reentrega")
 	private boolean reentrega = false;
 
 	@Column(name = "porcentagem")
@@ -63,12 +82,17 @@ public class Guia {
 	@Column(name = "data_hora_inclusao")
 	private LocalDateTime dataHoraInclusao = LocalDateTime.now();
 
+	@Column(name = "tipo_guia")
+	@Enumerated(EnumType.STRING)
+	private TipoGuiaEnum tipoGuia;
+
 	public Guia() {
 	}
 
 	public Guia(Long codigo, LocalDate data, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep,
 			String endereco, String numero, String bairro, String cidade, String complemento, Motorista motorista,
-			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem, String chaveAcesso) {
+			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem, String chaveAcesso,
+			TipoGuiaEnum tipoGuia) {
 		super();
 		this.codigo = codigo;
 		this.data = data;
@@ -86,6 +110,7 @@ public class Guia {
 		this.valor = valor;
 		this.porcentagem = porcentagem;
 		this.chaveAcesso = chaveAcesso;
+		this.tipoGuia = tipoGuia;
 	}
 
 	public Guia(Guia guia) {
@@ -108,6 +133,7 @@ public class Guia {
 		this.porcentagem = guia.getPorcentagem();
 		this.chaveAcesso = guia.getChaveAcesso();
 		this.excluido = guia.isExcluido();
+		this.tipoGuia = guia.getTipoGuia();
 	}
 
 	public Long getCodigo() {
@@ -262,6 +288,22 @@ public class Guia {
 		this.excluido = excluido;
 	}
 
+	public LocalDateTime getDataHoraInclusao() {
+		return dataHoraInclusao;
+	}
+
+	public void setDataHoraInclusao(LocalDateTime dataHoraInclusao) {
+		this.dataHoraInclusao = dataHoraInclusao;
+	}
+
+	public TipoGuiaEnum getTipoGuia() {
+		return tipoGuia;
+	}
+
+	public void setTipoGuia(TipoGuiaEnum tipoGuia) {
+		this.tipoGuia = tipoGuia;
+	}
+
 	public BigDecimal getValorAReceber() {
 		return this.valor.multiply(this.porcentagem).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN);
 	}
@@ -289,5 +331,9 @@ public class Guia {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+
+	public boolean isCupom() {
+		return TipoGuiaEnum.CUPOM_PDV.equals(this.tipoGuia);
 	}
 }

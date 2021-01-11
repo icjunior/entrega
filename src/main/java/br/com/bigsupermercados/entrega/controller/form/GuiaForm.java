@@ -11,6 +11,7 @@ import javax.validation.constraints.PastOrPresent;
 import br.com.bigsupermercados.entrega.modelo.entrega.Cliente;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
 import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
+import br.com.bigsupermercados.entrega.modelo.entrega.TipoGuiaEnum;
 import br.com.bigsupermercados.entrega.repository.entrega.Clientes;
 import br.com.bigsupermercados.entrega.repository.entrega.Lojas;
 import br.com.bigsupermercados.entrega.service.UsuarioAutenticadoService;
@@ -26,7 +27,6 @@ public class GuiaForm {
 	@Min(value = 1, message = "A loja não pode ser em branco")
 	private Long codigoLoja;
 
-	@NotNull(message = "O número do PDV não pode ser em branco")
 	private Integer pdv;
 
 	@NotBlank(message = "O número do cupom não pode ser em branco")
@@ -48,6 +48,8 @@ public class GuiaForm {
 	private BigDecimal porcentagem;
 	private String chaveAcesso;
 	private String nome;
+
+	private String tipoGuia;
 
 	public Long getCodigo() {
 		return codigo;
@@ -185,11 +187,20 @@ public class GuiaForm {
 		this.nome = nome;
 	}
 
+	public String getTipoGuia() {
+		return tipoGuia;
+	}
+
+	public void setTipoGuia(String tipoGuia) {
+		this.tipoGuia = tipoGuia;
+	}
+
 	public Guia converter(Clientes clienteRepository, Lojas lojaRepository) {
 		Cliente cliente = clienteRepository.findByCpf(cpf).get();
 		Loja loja = UsuarioAutenticadoService.usuarioAutenticado().getLoja();
+		TipoGuiaEnum tipoGuiaEnum = TipoGuiaEnum.valueOf(tipoGuia);
 
 		return new Guia(codigo, data, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento,
-				null, null, false, valor, porcentagem, chaveAcesso);
+				null, null, false, valor, porcentagem, chaveAcesso, tipoGuiaEnum);
 	}
 }

@@ -30,12 +30,16 @@ public class GuiaService {
 	private ZanM45Service zanM45Service;
 
 	public void salvar(Guia guia) {
-		Optional<ZanM45> cupomZanthusOpt = zanM45Service.buscarCupom(guia.getData(), guia.getLoja().getCodigo(),
-				guia.getPdv(), Integer.parseInt(guia.getCupom()));
-
-		if (!cupomZanthusOpt.isPresent()) {
-			throw new RegistroNaoEncontradoException(
-					"Cupom fiscal não encontrado. Revise as informações e tente novamente.");
+		if(guia.isCupom()) {
+			Optional<ZanM45> cupomZanthusOpt = zanM45Service.buscarCupom(guia.getData(), guia.getLoja().getCodigo(),
+					guia.getPdv(), Integer.parseInt(guia.getCupom()));
+			
+			if (!cupomZanthusOpt.isPresent()) {
+				throw new RegistroNaoEncontradoException(
+						"Cupom fiscal não encontrado. Revise as informações e tente novamente.");
+			}
+		
+			guia.setChaveAcesso(cupomZanthusOpt.get().getM45xb());
 		}
 
 		Optional<Guia> guiaOpt = repository.buscarCupom(guia.getData(), guia.getLoja().getCodigo(), guia.getPdv(),
@@ -44,8 +48,6 @@ public class GuiaService {
 		if (guiaOpt.isPresent()) {
 			throw new RegistroJaCadastradoException("Guia já lançada no sistema.");
 		}
-
-		guia.setChaveAcesso(cupomZanthusOpt.get().getM45xb());
 
 		repository.save(guia);
 	}

@@ -37,6 +37,8 @@
 				<input type="hidden" th:field="*{chaveAcesso}" id="hiddenChaveAcesso"/>
 				<input type="hidden" th:field="*{porcentagem}" id="hiddenPorcentagem"/>
 				
+				
+				
 				<div class="row">
 					<div class="form-group  col-lg-12">
 						<ul class="nav nav-tabs  js-abas-venda">
@@ -49,22 +51,22 @@
 				<div class="tab-content">
 					<div class="tab-pane active" id="dadosCupom">
 						<div class="row">
+							<div  class="col-sm-4 form-group bw-required">
+								<label for="tipoGuiaSelect" class="control-label">Tipo de guia</label>							
+								<div class="bw-field-action">
+									<select id="tipoGuiaSelect" class="form-control" th:field="*{tipoGuia}" onchange="escondeInput()">
+										<option value="CUPOM_PDV">Cupom pdv</option>
+										<option value="NOTA_FISCAL">Nota fiscal</option>
+									</select>
+								</div>
+							 </div>
+						</div>
+					
+						<div class="row">
 							<div class="col-sm-4 form-group bw-required">
 								<label for="dataCupom" class="control-label">Data</label>
 								<input id="dataCupom" type="text" class="form-control" th:field=*{data} autocomplete="off"/>
 							</div> 
-							
-							<!-- <div class="col-sm-4 form-group bw-required">
-								<label for="lojaCupom" class="control-label">Loja</label>							
-								<div class="bw-field-action">
-									<select id="lojaCupom" class="form-control" th:field="*{codigoLoja}">
-										<option value="">Selecione a loja</option>
-										<option th:each="loja : ${lojas}"
-											th:value="${loja.codigo}" th:text="${loja.apelido}">
-										</option>
-									</select>
-								</div>
-							 </div>-->
 						</div>
 						<div class="row">
 							<div class="col-sm-2 form-group bw-required">
@@ -73,18 +75,16 @@
 							</div>
 							
 							<div class="col-sm-2 form-group bw-required">
-								<label for="numeroCupom" class="control-label">Cupom</label>
+								<label for="numeroCupom" id="lbNumeroCupom" class="control-label">Cupom</label>
+								<label for="numeroCupom" id="lbNumeroNota" class="control-label" style="display:none;">Nota</label>
 								<input id="numeroCupom" type="text" class="form-control" th:field="*{cupom}" />
-							</div> 
+							</div>
 							
 							<div class="col-sm-2 form-group bw-required">
 								<label for="valorCupom" class="control-label">Valor</label>
 								<input id="valorCupom" type="text" class="form-control" th:field="*{valor}" />
 							</div> 
 						</div>
-						<!-- <div class="form-group">
-							<button class="btn  btn-primary" type="button" onclick="pesquisaCupom()">Validar cupom</button>
-						</div> -->
 					</div>
 
 					<div class="tab-pane" id="dadosCliente">
@@ -178,6 +178,7 @@
 			});
 		</script>
 		<script th:src="@{/javascripts/cliente.cadastro.js}"></script>
+		<script th:src="@{/javascripts/guia.trata-input-cadastro.js}"></script>
 		<script>
 			$(function() {
 			    $( "#dataCupom" ).datepicker({
