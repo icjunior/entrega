@@ -1,6 +1,7 @@
 package br.com.bigsupermercados.entrega.modelo.entrega;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "loja")
-public class Loja implements Serializable{
+public class Loja implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,6 +51,7 @@ public class Loja implements Serializable{
 	@NotBlank(message = "CEP não pode ser em branco")
 	private String cep;
 
+	@Column(name = "ativo")
 	private boolean ativo = true;
 
 	@Column(name = "email_gerente")
@@ -62,6 +64,9 @@ public class Loja implements Serializable{
 
 	@Column(name = "loja_zanthus")
 	private Integer lojaZanthus;
+
+	@Column(name = "porcentagem_excecao")
+	private BigDecimal porcentagemExcecao = BigDecimal.ZERO;
 
 	public String getTelefone() {
 		return telefone;
@@ -181,6 +186,14 @@ public class Loja implements Serializable{
 
 	public void setLojaZanthus(Integer lojaZanthus) {
 		this.lojaZanthus = lojaZanthus;
+	}
+
+	public BigDecimal getPorcentagemExcecao() {
+		return porcentagemExcecao;
+	}
+
+	public void setPorcentagemExcecao(BigDecimal porcentagemExcecao) {
+		this.porcentagemExcecao = porcentagemExcecao;
 	}
 
 	@Override

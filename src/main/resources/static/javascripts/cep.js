@@ -12,7 +12,7 @@ function pesquisaCEP() {
 	}
 	
 	getCEP(cepInput.value).then((resposta) => {
-		enderecoInput.value = resposta.endereco;
+		enderecoInput.value = resposta.logradouro;
 		bairroInput.value = resposta.bairro;
 		cidadeInput.value = resposta.cidade;
 	})
