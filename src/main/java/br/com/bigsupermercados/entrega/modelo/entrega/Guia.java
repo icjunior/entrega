@@ -336,4 +336,8 @@ public class Guia {
 	public boolean isCupom() {
 		return TipoGuiaEnum.CUPOM_PDV.equals(this.tipoGuia);
 	}
+
+	public boolean isNotaFiscal() {
+		return TipoGuiaEnum.NOTA_FISCAL.equals(this.tipoGuia);
+	}
 }

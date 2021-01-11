@@ -141,6 +141,6 @@ public class Motorista {
 	}
 
 	public boolean isPossuiPorcentagemDeExcecao() {
-		return porcentagemExcecao.compareTo(BigDecimal.ZERO) == 0;
+		return porcentagemExcecao.compareTo(BigDecimal.ZERO) == 1;
 	}
 }

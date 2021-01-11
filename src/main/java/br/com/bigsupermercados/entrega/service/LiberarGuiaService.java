@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.bigsupermercados.entrega.controller.form.GuiaLiberarForm;
 import br.com.bigsupermercados.entrega.modelo.entrega.Guia;
+import br.com.bigsupermercados.entrega.modelo.entrega.Loja;
 import br.com.bigsupermercados.entrega.modelo.entrega.Motorista;
 import br.com.bigsupermercados.entrega.repository.entrega.GuiaRepository;
 
@@ -21,14 +22,30 @@ public class LiberarGuiaService {
 
 		guias.forEach(guia -> {
 			Motorista motorista = guiaLiberarForm.getMotorista();
-			
-			if(motorista.isPossuiPorcentagemDeExcecao()) {
-				guia.setPorcentagem(motorista.getPorcentagemExcecao());
-			}
-			
+
+//			if(motorista.isPossuiPorcentagemDeExcecao()) {
+//				guia.setPorcentagem(motorista.getPorcentagemExcecao());
+//			}
+
+			tratarPorcentagem(guia, motorista);
+
 			guia.setMotorista(motorista);
 		});
 
 		repository.saveAll(guias);
+	}
+
+	public void tratarPorcentagem(Guia guia, Motorista motorista) {
+		Loja loja = guia.getLoja();
+
+		if (loja.isPossuiPorcentagemExcecao()) {
+			guia.setPorcentagem(loja.getPorcentagemExcecao());
+			return;
+		}
+
+		if (motorista.isPossuiPorcentagemDeExcecao()) {
+			guia.setPorcentagem(motorista.getPorcentagemExcecao());
+			return;
+		}
 	}
 }

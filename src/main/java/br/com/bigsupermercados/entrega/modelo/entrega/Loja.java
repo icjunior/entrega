@@ -196,6 +196,10 @@ public class Loja implements Serializable {
 		this.porcentagemExcecao = porcentagemExcecao;
 	}
 
+	public boolean isPossuiPorcentagemExcecao() {
+		return porcentagemExcecao.compareTo(BigDecimal.ZERO) == 1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
