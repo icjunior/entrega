@@ -38,7 +38,7 @@ public class Motorista {
 	private Loja loja;
 
 	@Column(name = "porcentagem_excecao")
-	private BigDecimal porcentagemExcecao;
+	private BigDecimal porcentagemExcecao = BigDecimal.ZERO;
 
 	@Column(name = "ativo", columnDefinition = "boolean default true")
 	private boolean ativo = true;
@@ -139,7 +139,7 @@ public class Motorista {
 			return false;
 		return true;
 	}
-	
+
 	public boolean isPossuiPorcentagemDeExcecao() {
 		return porcentagemExcecao.compareTo(BigDecimal.ZERO) == 0;
 	}
