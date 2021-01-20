@@ -48,8 +48,8 @@ public class GuiaForm {
 	private BigDecimal porcentagem;
 	private String chaveAcesso;
 	private String nome;
-
 	private String tipoGuia;
+	private String observacao;
 
 	public Long getCodigo() {
 		return codigo;
@@ -195,12 +195,20 @@ public class GuiaForm {
 		this.tipoGuia = tipoGuia;
 	}
 
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
 	public Guia converter(Clientes clienteRepository, Lojas lojaRepository) {
 		Cliente cliente = clienteRepository.findByCpf(cpf).get();
 		Loja loja = UsuarioAutenticadoService.usuarioAutenticado().getLoja();
 		TipoGuiaEnum tipoGuiaEnum = TipoGuiaEnum.valueOf(tipoGuia);
 
 		return new Guia(codigo, data, loja, pdv, cupom, cliente, cep, endereco, numero, bairro, cidade, complemento,
-				null, null, false, valor, porcentagem, chaveAcesso, tipoGuiaEnum);
+				null, null, false, valor, porcentagem, chaveAcesso, tipoGuiaEnum, observacao);
 	}
 }

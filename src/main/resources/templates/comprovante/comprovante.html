@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:brewer="http://brewer.algaworks.com"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:hti="http://brewer.algaworks.com">
+
+<head>
+<title>Comprovante</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>Comprovante</h1>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<form method="GET" th:object="${motorista}" th:action="@{/comprovante/emitir}" target="_blank">
+
+			<brewer:message />
+			<div class="row">			
+				<button type="submit" class="btn  btn-primary">Emitir</button>
+			</div>
+		</form>
+	</div>
+</section>
+
+</html>

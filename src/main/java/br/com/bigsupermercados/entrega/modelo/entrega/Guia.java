@@ -86,13 +86,16 @@ public class Guia {
 	@Enumerated(EnumType.STRING)
 	private TipoGuiaEnum tipoGuia;
 
+	@Column(name = "observacao")
+	private String observacao;
+
 	public Guia() {
 	}
 
 	public Guia(Long codigo, LocalDate data, Loja loja, Integer pdv, String cupom, Cliente cliente, String cep,
 			String endereco, String numero, String bairro, String cidade, String complemento, Motorista motorista,
 			Bordero bordero, boolean reentrega, BigDecimal valor, BigDecimal porcentagem, String chaveAcesso,
-			TipoGuiaEnum tipoGuia) {
+			TipoGuiaEnum tipoGuia, String observacao) {
 		super();
 		this.codigo = codigo;
 		this.data = data;
@@ -111,6 +114,7 @@ public class Guia {
 		this.porcentagem = porcentagem;
 		this.chaveAcesso = chaveAcesso;
 		this.tipoGuia = tipoGuia;
+		this.observacao = observacao;
 	}
 
 	public Guia(Guia guia) {
@@ -134,6 +138,7 @@ public class Guia {
 		this.chaveAcesso = guia.getChaveAcesso();
 		this.excluido = guia.isExcluido();
 		this.tipoGuia = guia.getTipoGuia();
+		this.observacao = guia.getObservacao();
 	}
 
 	public Long getCodigo() {
@@ -306,6 +311,14 @@ public class Guia {
 
 	public BigDecimal getValorAReceber() {
 		return this.valor.multiply(this.porcentagem).divide(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN);
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 
 	@Override
