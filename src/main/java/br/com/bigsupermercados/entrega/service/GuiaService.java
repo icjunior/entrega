@@ -58,7 +58,7 @@ public class GuiaService {
 
 	public void eliminarCupomBordero(Guia guia) {
 		guia.setBordero(null);
-		guia.setMotorista(null);
+//		guia.setMotorista(null);
 	}
 
 	public Page<Guia> buscar(GuiaFilter guiaFilter, Pageable paginacao) {
