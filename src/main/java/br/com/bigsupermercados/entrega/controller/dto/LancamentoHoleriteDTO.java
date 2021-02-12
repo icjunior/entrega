@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.bigsupermercados.entrega.modelo.entrega.LancamentoBordero;
+import br.com.bigsupermercados.entrega.modelo.entrega.ModoLancamento;
 
 public class LancamentoHoleriteDTO {
 
@@ -18,14 +19,14 @@ public class LancamentoHoleriteDTO {
 		this.codigo = lancamento.getCodigo();
 		this.tipoLancamento = lancamento.getTipoLancamento().getModoLancamento().getDescricao();
 		this.descricao = lancamento.getTipoLancamento().getNome();
-//		this.valorVencimento = lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO
-//				? lancamento.getValor()
-//				: BigDecimal.ZERO;
-//		this.valorVencimento = lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO
-//				? lancamento.getValor()
-//				: BigDecimal.ZERO;
+		this.valorVencimento = lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.ACRESCIMO
+				? lancamento.getValor()
+				: BigDecimal.ZERO;
+		this.valorDesconto = lancamento.getTipoLancamento().getModoLancamento() == ModoLancamento.DESCONTO
+				? lancamento.getValor()
+				: BigDecimal.ZERO;
 
-		this.valorVencimento = lancamento.getValor();
+//		this.valorVencimento = lancamento.getValor();
 	}
 
 	public LancamentoHoleriteDTO(Long codigo, String tipoLancamento, String descricao, BigDecimal valor) {
